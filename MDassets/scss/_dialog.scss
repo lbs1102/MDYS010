@@ -1,0 +1,114 @@
+.fancybox-opened .fancybox-skin{
+    background: transparent;
+}
+.fancybox-inner{
+    width: 100% !important;
+}
+
+.fancybox-close{
+    width: 22px;
+    height: 22px;
+    background: transparent;
+    &::after,
+    &::before{
+        content: '';
+        width: 100%;
+        height: 1px;
+        margin: auto;
+        background-color: #a0a4ae;
+        position: absolute;
+        @include pos(tbl,0);
+    }
+    &::after{
+        transform: rotate(45deg);
+    }
+    &::before{
+        transform: rotate(-45deg);
+    }
+}
+
+.popup-title{
+    padding: 60px 20px 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #a0a4ae;
+    letter-spacing: 1px;
+}
+
+.fancybox-wrap{
+    width: 100% !important;
+    max-width: 420px !important;
+    background-color: #242A37;   
+    .fancybox-skin{
+        box-shadow: unset !important;
+    }
+}
+
+.popup-holder{
+    padding: 0 20px 20px;
+    background: transparent;
+    .row{
+        width: 100%;
+        input{
+            width: 100%;
+            padding: 0 10px;
+            font-size: 14px;
+            border-radius: 3px;
+            border: none;
+            background: #29303F;
+            color: #a0a4ae;
+            font-weight: bold;
+            &::placeholder{
+                color: #a0a4ae;
+            }
+            &:-webkit-autofill {
+                box-shadow: unset;
+                box-shadow: 0 0 0 40px #353e50 inset !important;
+                -webkit-text-fill-color: #fff;
+            }
+        }
+    }
+    .bottom{
+        width: 100%;
+        padding-top: 20px;
+        .submit{
+            width: 100%;
+            order: 0;
+            background-color: #eb4a76;
+            border-radius: 5px;
+        }
+        .links{
+            padding-top: 5px;
+            display: flex;
+            justify-content: space-between;
+            a{
+                color: #eb4a76 !important;
+            }
+        }
+    }
+}
+.no-touch form .submit:hover{
+    background: #a5284a !important;
+}
+
+.diaCode{
+    display: flex;
+    justify-content: space-between;
+    .textfield{
+        width: 100% !important;
+        border-radius: 3px 0 0 3px;
+        background: #29303F;
+        border: none;
+        &::placeholder{
+            color: #a0a4ae;
+        }
+    }
+    img{
+        width: 120px !important;
+        height: 40px !important;
+        margin: 0 !important; 
+        flex-shrink: 0;
+    }
+}
+
+

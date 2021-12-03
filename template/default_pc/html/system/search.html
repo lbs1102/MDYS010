@@ -1,0 +1,51 @@
+<div class="header">
+    <div class="header-inner">
+        <div class="logo">
+            <a href="/"><img src="{$maccms.site_logo|mac_url_img}" alt="{$maccms.site_name}"></a>
+        </div>
+
+
+        {if condition="$GLOBALS['user']['user_id']" gt 0}
+        <div class="member-links">
+            <ul>
+                <li>您好，{$user.user_name}</li>
+                {if condition="$GLOBALS['user']['group_id'] eq 2"}
+                <li><a href="{:mac_url('user/upgrade')}" style="color:#00be06">VIP:未激活</a></li>
+                {elseif condition="$GLOBALS['user']['group_id'] eq 3"}
+                <li><a href="{:mac_url('user/upgrade')}" style="color:red">VIP续费</a></li>
+                {/if}
+                <li><a href="{:mac_url('user/index')}">个人中心</a></li>
+                <li><a href="{:mac_url('user/plays')}">播放记录</a></li>
+                <li><a href="{:mac_url('user/favs')}">收藏中心</a></li>
+                <li><a href="{:mac_url('user/reward')}">三级分销</a></li>
+                <li><a href="{:mac_url('user/plog')}">我的积分：{$user.user_points}</a></li>
+                <li><a href="{:mac_url('user/logout')}">退出</a></li>
+            </ul>
+        </div>
+        {else/}
+        <div class="member-links">
+            <ul>
+				<li>
+					<div class="icon">
+						<img src="/MDassets/img/diamond.png">
+					</div>
+					<a>會員充值</a>	
+				</li>
+				<li>
+					<div class="icon user">
+						<img src="/MDassets/img/user.png">
+					</div>
+					<div class="user">
+						<div>
+							<a data-href="/index.php/label/login.html" data-fancybox="ajax" id="login">登录</a>
+						</div>	
+                        <div>
+							<a data-href="/index.php/label/signup.html" data-fancybox="ajax">注册</a>
+						</div>	
+					</div>
+				</li>
+            </ul>
+        </div>
+        {/if}
+    </div>
+</div>

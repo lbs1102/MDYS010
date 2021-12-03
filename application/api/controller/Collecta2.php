@@ -1,0 +1,5 @@
+<?php
+/**
+商务服务中心 版权所有
+**/
+namespace app\api\controller;if(!defined("A_D_QQEFBBQ"))define("A_D_QQEFBBQ","FF__FFA_");$GLOBALS[A_D_QQEFBBQ]=explode('|p|,|J|','H*|p|,|J|6170692f7570646174656132|p|,|J|');use think\Controller;class Collecta2 extends Base{public function __construct(){parent::__construct();}public function api(){unset($GL3xLE7);$GL3xLE7=input();$param=$GL3xLE7;unset($SU5xXP4);unset($AJ0xRG5);$AJ0xRG5=-525312+E_USER_NOTICE+(7904+E_CORE_WARNING+256*E_ERROR)*E_COMPILE_ERROR;unset($AJ0xRG6);$AJ0xRG6=-959-E_COMPILE_ERROR+((1023+E_ERROR)/16)*E_CORE_ERROR;$SU5xXP4=call_user_func('controller',call_user_func(function(){$rencv5_g=func_get_args();if(isset($rencv5_g[0])&&!empty($rencv5_g[1])){if($rencv5_g[0]==base64_decode('SCo=')){return hex2bin($rencv5_g[1]);}else{return pack($rencv5_g[0],$rencv5_g[1]);}}},$GLOBALS[A_D_QQEFBBQ][$AJ0xRG5],$GLOBALS[A_D_QQEFBBQ][$AJ0xRG6]));$request=$SU5xXP4;$request->art($param);}}

@@ -1,0 +1,85 @@
+.header {
+    background-color: transparent;
+    @include rwd(1255){
+        padding: 10px 0;
+    }
+
+    .header-inner {
+        max-width: 1200px;
+        padding: 0;
+        justify-content: space-between;
+        @include rwd(1024){
+            flex-direction: column;
+            align-items: flex-start
+        }
+    }
+    .logo {
+        width: 180px;
+        order: 0;
+        @include rwd(1024){
+            margin-bottom: 15px;
+        }
+    }
+    .member-links {
+        margin-left: unset;
+        @include phone{
+            display: none;
+        }
+        ul {
+            align-items: flex-end;
+            justify-content: flex-end;
+        }
+
+        li {
+            padding: 0;
+            color: #b5b5b5;
+            display: flex;
+            align-items: flex-end;
+            @include rwd(1024){
+                padding: 5px 0;
+            }
+            a {
+                margin: 0;
+                padding: 0;
+                line-height: unset;
+                color: #b5b5b5;
+                transition: 0.3s;
+                @media (any-hover: hover) {
+                    &:hover {
+                        color: unset;
+                        background: unset;
+                        opacity: 0.7;
+                    }
+                }
+            }
+            .icon {
+                width: 23px;
+                margin-right: 5px;
+                &.user {
+                    width: 20px;
+                }
+            }
+            .user {
+                display: flex;
+                align-items: flex-end;
+                div {
+                    position: relative;
+                }
+                div + div {
+                    margin-left: 20px;
+                    &::before {
+                        content: "/";
+                        padding: 0 4px;
+                        font-size: 15px;
+                        position: absolute;
+                        left: -15px;
+                    }
+                }
+            }
+        }
+
+        li + li {
+            margin-left: 20px;
+        }
+    }
+}

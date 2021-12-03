@@ -1,0 +1,93 @@
+img {
+    width: 100%;
+    vertical-align: middle;
+}
+
+.tags-cloud,
+.footer,
+.footer-margin {
+    display: none;
+}
+
+.container {
+    padding: 0 10px;
+    background-color: #1B1F29;
+}
+
+.content {
+    max-width: 1200px;
+    padding: 0;
+}
+
+.main-content {
+    min-height: calc(100vh - 168px);
+    @include rwd(1024){
+        min-height: calc(100vh - 211px);
+    }
+    @include rwd(640){
+        min-height: calc(100vh - 250px);
+    }
+    @include phone{
+        min-height: calc(100vh - 210px);
+        padding-bottom: 80px;
+    }
+}
+
+.sidebar{
+    background-color: rgba(0, 0, 0, 0.2);
+    @include phone{
+        display: none;
+    }
+}
+
+.list-playlists .item,
+.list-models .item,
+.list-sponsors .item,
+.list-channels .item,
+.list-categories .item,
+.list-albums .item,
+.list-albums-images .item,
+.list-videos .item,
+.list-videos-screenshots .item {
+    background-color: transparent;
+    box-shadow: unset;
+    .duration {
+        position: absolute;
+        bottom: 2px;
+        right: 5px;
+    }
+    .title {
+        padding: 0.5rem 1rem 2rem;
+        height: auto;
+        margin: 0;
+    }
+    .wrap {
+        .views {
+            padding-bottom: 1px;
+            padding-left: 17px;
+            display: flex;
+            position: relative;
+            &::before {
+                content: "";
+                width: 15px;
+                height: 10px;
+                background: url(../img/redviews.png) no-repeat center/cover;
+            }
+        }
+    }
+}
+
+
+// gototop
+#gototop {
+    right: 0px !important;
+    bottom: 100px !important;
+    z-index: 50;
+    opacity: 0.7;
+    @media screen and (max-width: 500px) {
+        & {
+            width: 60px;
+            height: 60px;
+        }
+    }
+}

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>在線充值 - {$maccms.site_name}</title>
+    <meta name="keywords" content="个人中心,{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" /> {include file="user/include"}
+</head>
+
+<body class="noIndex">
+    {include file="system/headtop"}
+    <div class="container">
+        {include file="system/search"} {include file="system/headmeun"}
+        <div class="fed-min">
+            <div class="userTitle">充值中心</div>
+            <div class="fed-userBody">
+                <div class="leftBox">
+                    <div class="infoBox">
+                        <div class="msg">
+                            <ul>
+                                <li>
+                                    <div class="tag">積分(個)</div>
+                                    <div class="num">{$obj.user_points}</div>
+                                    <div class="btn">充值</div>
+                                </li>
+                                <li>
+                                    <div class="tag">VIP剩於(天)</div>
+                                    <div class="num">0</div>
+                                    <div class="btn">續期</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="name">{$obj.user_name}</div>
+                        <a class="vipBtn" href="{:mac_url('user/upgrade')}">充值VIP</a>
+                    </div>
+                    {include file="user/menu"}
+                </div>
+                <div class="rightBox">
+                  <div class="payBox">
+                    <form method="post" target="_blank" action="{:mac_url('user/gopay')}">
+                      <input type="hidden" name="order_id" value="{$info.order_id}" />
+                      <input type="hidden" name="order_code" value="{$info.order_code}" />
+                      <ul class="fed-user-list fed-part-rows fed-back-whits">
+                          <li class="fed-padding-x fed-part-rows fed-line-bottom">
+                              <div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+                                  <p class="title">订单编号：</p>
+                                  <div class="msg">{$info.order_code}</div>
+                              </div>
+                          </li>
+                          <li class="fed-padding-x fed-part-rows fed-line-bottom">
+                              <div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+                                  <p class="title">订单金额</p>
+                                  <div class="msg">{$info.order_price}元</div>
+                              </div>
+                          </li>
+                          <li class="fed-padding-x fed-part-rows fed-line-bottom">
+                            <p class="title">支付方式：</p>
+                              <!-- 主選單 -->
+                              <select  id="selSort" class="patySel" name="payment">
+                                 {if$config['alipay']['appid']!=''}
+                                  <option value="alipay" id="payment1" >支付宝</option>
+                                 {/if} 
+                                 {if$config['weixin']['appid']!=''}
+                                 <option value="weixin" id="payment2">微信</option>
+                                 {/if} 
+                                 {if$config['codepay']['appid']!=''}
+                                 <option value="codepay" id="payment3">码支付</option>
+                                 {/if} 
+                                 {if$config['zhapay']['appid']!=''}
+                                 <option value="zhapay" id="payment4">幻兮支付</option>
+                                 {/if} 
+                                 {if$config['yipay']['appid']!=''}
+                                 <option value="yipay" id="payment5">易支付</option>
+                                 {/if}      
+                              </select>
+                              {if$config['alipay']['appid']==''&&$config['weixin']['appid']==''&&$config['codepay']['appid']==''&&$config['zhapay']['appid']==''&&$config['yipay']['appid']==''}支付未启用{/if} 
+
+                              <!-- 码支付子選單 -->
+                              {if$config['codepay']['appid']!=''}
+                              <select  id="codepay" class="patySel" name="paytype" style="display:none;">
+                                <option value="1">支付宝</option>
+                                <option value="2">QQ钱包</option>
+                                <option value="3">微信</option>
+                             </select>  
+                              {/if} 
+
+                              <!-- 幻兮支付子選單 -->
+                              {if$config['zhapay']['appid']!=''}
+                              <select  id="zhapay" class="patySel" name="paytype" style="display:none;">
+                                <option value="1">微信</option>
+                                <option value="2">支付宝</option>
+                             </select>
+                              {/if} 
+
+                              <!-- 易支付子選單 -->
+                              {if$config['zhapay']['appid']!=''}
+                              <select  id="yipay" class="patySel" name="paytype" style="display:none;">
+                                <option value="1">支付宝</option>
+                                <option value="2">QQ钱包</option>
+                                <option value="3">微信</option>
+                             </select>
+                              {/if} 
+
+
+
+<!-- 
+                              <div class="fed-user-pays fed-user-input fed-visible fed-font-xvi fed-part-rows">
+                                  <span class="fed-hide-xs fed-col-sm3 fed-part-eone">&nbsp;</span>
+                                  <span class="fed-col-xs12 fed-col-sm6 fed-part-eone"> 
+{if$config['alipay']['appid']!=''}<label style="display: revert;"><input type="radio" name="payment" value="alipay" id="payment1" checked="" />支付宝</label>{/if} 
+{if$config['weixin']['appid']!=''}<label style="display: revert;"><input type="radio" name="payment" value="weixin" id="payment2" />微信</label>{/if} 
+{if$config['codepay']['appid']!=''}<label style="display: revert;"><input type="radio" name="payment" value="codepay" id="payment3" />码支付</label>{/if} 
+{if$config['zhapay']['appid']!=''}<label style="display: revert;"><input type="radio" name="payment" value="zhapay" id="payment4" />幻兮支付</label>{/if}  
+{if$config['yipay']['appid']!=''}<label style="display: revert;"><input type="radio" name="payment" value="yipay" id="payment5" />易支付</label>{/if}  
+{if$config['alipay']['appid']==''&&$config['weixin']['appid']==''&&$config['codepay']['appid']==''&&$config['zhapay']['appid']==''&&$config['yipay']['appid']==''}支付未启用{/if} 
+</span>
+                              </div>
+                          </li>
+                          {if$config['codepay']['appid']!=''}
+                          <div id="codepay2" style="display:none;">
+                              <li class="fed-user-mpay fed-padding-x fed-part-rows fed-line-bottom">
+                                  <div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+                                      <span class="fed-col-xs4 fed-col-sm3 fed-part-eone">码支付</span>
+                                      <span class="fed-col-xs7 fed-col-sm6 fed-part-eone">请选择下方支付途径</span>
+                                      <span class="fed-col-xs1 fed-col-sm3 fed-part-eone fed-text-right"><i class="fed-icon-font fed-icon-you"></i></span>
+                                  </div>
+                              </li>
+                              <li class="fed-user-mpay fed-padding-x fed-part-rows fed-line-bottom">
+                                  <div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+                                      <span class="fed-hide-xs fed-col-sm3 fed-part-eone">&nbsp;</span>
+                                      <span class="fed-col-xs12 fed-col-sm6 fed-part-eone">
+<label style="display: revert;"><input type="radio" name="paytype" value="1" checked="" />支付宝</label> 
+<label style="display: revert;"><input type="radio" name="paytype" value="2" />QQ钱包</label> 
+<label style="display: revert;"><input type="radio" name="paytype" value="3" />微信</label> 
+</span>
+                                  </div>
+                              </li>
+                          </div>
+                          {/if} {if$config['zhapay']['appid']!=''}
+                          <div id="zhapay2" style="display:none;">
+                              <li class="fed-user-zpay fed-padding-x fed-part-rows fed-line-bottom">
+                                  <div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+                                      <span class="fed-col-xs4 fed-col-sm3 fed-part-eone">幻兮支付</span>
+                                      <span class="fed-col-xs7 fed-col-sm6 fed-part-eone">请选择下方支付途径</span>
+                                      <span class="fed-col-xs1 fed-col-sm3 fed-part-eone fed-text-right"><i class="fed-icon-font fed-icon-you"></i></span>
+                                  </div>
+                              </li>
+                              <li class="fed-user-zpay fed-padding-x fed-part-rows fed-line-bottom">
+                                  <div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+                                      <span class="fed-hide-xs fed-col-sm3 fed-part-eone">&nbsp;</span>
+                                      <span class="fed-col-xs12 fed-col-sm6 fed-part-eone"> 
+<label style="display: revert;"><input type="radio" name="paytype" value="1" />微信</label>
+<label style="display: revert;"><input type="radio" name="paytype" value="2" checked="" />支付宝</label> 
+</span>
+                                  </div>
+                              </li>
+                          </div>
+                          {/if} {if$config['yipay']['appid']!=''}
+                          <div id="yipay2" style="display:none;">
+                              <li class="fed-user-mpay fed-padding-x fed-part-rows fed-line-bottom">
+                                  <div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+                                      <span class="fed-col-xs4 fed-col-sm3 fed-part-eone">易支付</span>
+                                      <span class="fed-col-xs7 fed-col-sm6 fed-part-eone">请选择下方支付途径</span>
+                                      <span class="fed-col-xs1 fed-col-sm3 fed-part-eone fed-text-right"><i class="fed-icon-font fed-icon-you"></i></span>
+                                  </div>
+                              </li>
+                              <li class="fed-user-mpay fed-padding-x fed-part-rows fed-line-bottom">
+                                  <div class="fed-user-input fed-visible fed-font-xvi fed-part-rows">
+                                      <span class="fed-hide-xs fed-col-sm3 fed-part-eone">&nbsp;</span>
+                                      <span class="fed-col-xs12 fed-col-sm6 fed-part-eone">
+<label style="display: revert;"><input type="radio" name="paytype" value="1" checked="" />支付宝</label> 
+<label style="display: revert;"><input type="radio" name="paytype" value="2" />QQ钱包</label> 
+<label style="display: revert;"><input type="radio" name="paytype" value="3" />微信</label> 
+</span>
+                                  </div>
+                              </li>
+                          </div>
+                          {/if} -->
+                          
+                          <li class="fed-padding-x fed-part-rows"> 
+                            <button id="btn_submit" >支付</button>
+                          </li>
+                      </ul>
+                  </form>
+                  </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+
+
+
+        $(function() {
+            showCont();
+            // $("input[name=payment]").click(function() {
+            //     showCont();
+            // });
+
+
+            $('#selSort').change(function(){
+            let selData = $('#selSort').val();
+            switch (selData) {
+                case "alipay":
+                    $("#codepay").hide();
+                    $("#zhapay").hide();
+                    $("#yipay").hide();
+                    break;
+                case "weixin":
+                    $("#codepay").hide();
+                    $("#zhapay").hide();
+                    $("#yipay").hide();
+                    break;
+                case "codepay":
+                    $("#codepay").show();
+                    $("#zhapay").hide();
+                    $("#yipay").hide();
+                    break;
+                case "zhapay":
+                    $("#codepay").hide();
+                    $("#zhapay").show();
+                    $("#yipay").hide();
+                    break;
+                case "yipay":
+                    $("#codepay").hide();
+                    $("#zhapay").hide();
+                    $("#yipay").show();
+                    break;
+                default:
+                    break;
+            }
+        })
+        });
+
+
+        function showCont() {
+            switch ($("input[name=payment]:checked").attr("id")) {
+                case "payment1":
+                    $("#codepay").hide();
+                    $("#zhapay").hide();
+                    $("#yipay").hide();
+                    break;
+                case "payment2":
+                    $("#codepay").hide();
+                    $("#zhapay").hide();
+                    $("#yipay").hide();
+                    break;
+                case "payment3":
+                    $("#codepay").show();
+                    $("#zhapay").hide();
+                    $("#yipay").hide();
+                    break;
+                case "payment4":
+                    $("#codepay").hide();
+                    $("#zhapay").show();
+                    $("#yipay").hide();
+                    break;
+                case "payment5":
+                    $("#codepay").hide();
+                    $("#zhapay").hide();
+                    $("#yipay").show();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        $(".face").imageUpload({
+            formAction: "{:url('user/portrait')}",
+            inputFileName: 'file',
+            browseButtonValue: '',
+            browseButtonClass: 'btn btn-default btn-xs fed-user-alter fed-part-roun fed-icon-font fed-icon-xiugai',
+            automaticUpload: true,
+            hideDeleteButton: true,
+            hover: true
+        })
+        $(".jQuery-image-upload-controls").mouseenter(function() {
+            $(".jQuery-image-upload-controls").css("display", "block");
+        });
+        $(".jQuery-image-upload-controls").mouseleave(function() {
+            $(".jQuery-image-upload-controls").css("display", "none");
+        });
+        $(".face").on("imageUpload.uploadFailed", function(ev, err) {
+            alert(err);
+        });
+    </script>
+    {include file="system/footer"}
+    {include file="system/M_menu"}
+</body>
+
+</html>

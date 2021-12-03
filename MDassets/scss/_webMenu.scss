@@ -1,0 +1,75 @@
+.M_menu {
+    width: 100%;
+    height: 55px;
+    background-color: #242a38;
+    box-shadow: 0 -1px 4px #000;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 90;
+    display: none;
+    @include phone{
+        display: block;
+    }
+    ul {
+        height: 100%;
+        display: flex;
+    }
+    li {
+        flex: 1;
+        font-size: 0.8rem;
+
+        font-weight: 600;
+        letter-spacing: 1px;
+        a {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &.on {
+            span {
+                color: #c55355;
+            }
+            .icon {
+                &.home {
+                    background-image: url(../img/fhome_active.png);
+                }
+                &.find {
+                    background-image: url(../img/ffind_active.png);
+                }
+                &.topic {
+                    background-image: url(../img/ftopic_active.png);
+                }
+                &.user {
+                    background-image: url(../img/fuser_active.png);
+                }
+            }
+        }
+    }
+    .icon {
+        width: 20px;
+        height: 20px;
+        margin: 0 auto 5px;
+        background: no-repeat center / cover;
+        &.home {
+            background-image: url(../img/fhome.png);
+        }
+        &.find {
+            background-image: url(../img/ffind.png);
+        }
+        &.topic {
+            background-image: url(../img/ftopic.png);
+        }
+        &.user {
+            background-image: url(../img/fuser.png);
+        }
+    }
+
+    span {
+        color: #999;
+    }
+}
