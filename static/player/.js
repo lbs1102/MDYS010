@@ -1,2 +1,2 @@
-MacPlayer.Html = '<iframe border="0" src="'+maccms.path+'/static/player/dplayer.html" width="100%" height="100%" marginWidth="0" frameSpacing="0" marginHeight="0" frameBorder="0" scrolling="no" vspale="0" noResize></iframe>';
-MacPlayer.Show();
+<status>1</status><sort>999</sort><from>lym3u8</from><show>老鸭资源</show><des>www.laoyazy.com</des><tip></tip><code>MacPlayer.Html = '<iframe width="100%" height="'+MacPlayer.Height+'" src="//player.77lehuo.com/aliplayer/?url='+MacPlayer.PlayUrl+'" frameborder="0" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>';
+MacPlayer.Show();</code>

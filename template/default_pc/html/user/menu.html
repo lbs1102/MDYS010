@@ -1,3 +1,28 @@
+<div class="infoBox">       
+    <div class="msg">
+        <ul>
+            <li>
+                <div class="tag">積分(個)</div>
+                <div class="num">{$user.user_points} {if$user.user_points==null}*{/if}</div>
+                <a href="{:mac_url('user/upgrade')}">
+                    <div class="btn">充值</div>
+                </a>
+               
+            </li>
+            <li>
+                <div class="tag">VIP剩於(天)</div>
+                <!-- {$obj.user_end_time} -->
+                <div class="num">{$user.user_end_time}{if$user.user_points==null}*{/if} </div>
+                <a href="{:mac_url('user/upgrade')}">
+                    <div class="btn">續期</div>
+                </a>    
+            </li>
+        </ul>
+    </div>
+    <div class="name">{$user.user_name}</div>
+    <a class="vipBtn" href="{:mac_url('user/upgrade')}">充值VIP</a>
+</div>
+
 <div class="userMenu">
     <ul>
         <li class="index">
@@ -33,7 +58,7 @@
             </a>
         </li>  
         <li>
-            <a href="">
+            <a href="{:mac_url('label/question')}">
                 <div class="icon">
                     <img src="/MDassets/img/question.png">
                 </div>
@@ -49,9 +74,9 @@
             </a>
         </li>
         <li>
-            <a href="{:mac_url('user/index')}">
+            <a href="">
                 <div class="icon">
-                    <img src="/MDassets/img/headset.svg">
+                    <img src="/MDassets/img/pass.png">
                 </div>
                 <span>在線客服</span>
             </a>

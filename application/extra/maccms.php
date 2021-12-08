@@ -33,7 +33,7 @@ return array (
     'site_carousel_5' => 'upload/site/20211202-1/ca18e4d9fdaff6080e8f4de74a577ee5.png',
     'site_logo' => 'MDassets/images/logo.png',
     'site_waplogo' => 'MDassets/images/logo.png',
-    'yjurl' => 'https://madouym.com',
+    'yjurl' => 'forfuns.net',
     'site_point_0' => '30',
     'site_time_0' => '1',
     'site_point_1' => '50',
@@ -202,7 +202,7 @@ return array (
   'interface' => 
   array (
     'status' => 0,
-    'pass' => 'KKEAU5HW7CI7WOGX',
+    'pass' => 'S5WBXK9IZKAEUIY3',
     'vodtype' => '动作片=动作',
     'arttype' => '头条=头条',
   ),

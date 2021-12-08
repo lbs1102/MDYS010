@@ -103,30 +103,6 @@ return array (
     'tip' => '无需安装任何插件	',
     'id' => 'flv',
   ),
-  '' => 
-  array (
-    'status' => '1',
-    'from' => '',
-    'show' => 'dbm3u8',
-    'des' => '百度雲資源',
-    'target' => '_self',
-    'ps' => '1',
-    'parse' => '',
-    'sort' => '',
-    'tip' => '',
-  ),
-  'dbm3u8' => 
-  array (
-    'status' => '1',
-    'from' => 'dbm3u8',
-    'show' => '百度雲資源',
-    'des' => '百度雲資源',
-    'target' => '_self',
-    'ps' => '1',
-    'parse' => '',
-    'sort' => '',
-    'tip' => '',
-  ),
   'MDYM' => 
   array (
     'status' => '1',

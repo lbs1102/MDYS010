@@ -136,6 +136,10 @@
                 border-radius: unset;
                 background-color: transparent;
                 color: #fff;
+                &:-webkit-autofill {
+                    box-shadow: 0 0 0 50px #1e232f inset !important;
+                    -webkit-text-fill-color: #fff;
+                }
             }
         }
         .search-button {
