@@ -1,0 +1,185 @@
+.header + nav {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    box-shadow: unset;
+}
+
+.navigation {
+    max-width: 1200px;
+    padding: 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    @include rwd(1200) {
+        flex-direction: column-reverse;
+        & .button {
+            display: none;
+        }
+    }
+    @include phone {
+        padding: 0;
+    }
+    .primary {
+        flex: flex;
+        justify-content: flex-start;
+        &.pc {
+            li {
+                &.selected,
+                &:hover {
+                    a {
+                        color: #f66063 !important;
+                    }
+                }
+                a {
+                    color: #fff;
+                    padding-bottom: 8px;
+                    @include rwd(1200) {
+                        &:hover::before {
+                            display: none;
+                        }
+                    }
+                    &::before {
+                        height: 2px;
+                        background-color: #f66063;
+                    }
+                }
+            }
+        }
+        &.web {
+            display: none;
+            padding-bottom: 3px;
+            &::-webkit-scrollbar {
+                height: 0;
+            }
+            li {
+                position: relative;
+                opacity: 0.5;
+                &::before {
+                    content: "";
+                    width: 45%;
+                    height: 3px;
+                    margin: auto;
+                    border-radius: 3px;
+                    background: linear-gradient(45deg, #edeeff, #9b9cfd);
+                    position: absolute;
+                    @include pos(lrb, 0);
+                    opacity: 0;
+                }
+                &.on {
+                    opacity: 1;
+                    font-weight: bold;
+                    &::before {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+        li:first-child {
+            flex: unset;
+        }
+        li {
+            font-size: 2.1rem;
+            letter-spacing: 1.5px;
+        }
+        li + li {
+            margin-left: 35px;
+        }
+        @include rwd(1200) {
+            padding: 0;
+            position: relative;
+            opacity: 1;
+            background-color: transparent;
+            transform: unset;
+            flex-wrap: nowrap;
+            visibility: unset;
+            box-shadow: unset;
+        }
+        @include rwd(1200) {
+            min-width: 100%;
+            li {
+                flex: 1 !important;
+            }
+            li + li {
+                margin-left: 15px;
+            }
+            &.pc {
+                width: 100%;
+                flex-wrap: wrap;
+                li {
+                    min-width: calc(100% / 3);
+                    max-width: calc(100% / 2 - 20px);
+                    margin: 0 10px;
+                    padding: 10px 0;
+                }
+                li + li {
+                    margin: 0 10px;
+                }
+            }
+        }
+        @include phone {
+            &.pc {
+                display: none;
+            }
+            &.web {
+                display: flex;
+            }
+        }
+    }
+    .search {
+        margin-left: 50px;
+        flex-shrink: 0;
+        background-color: #fff;
+        border-radius: 5px;
+        overflow: hidden;
+        flex: unset;
+        padding: 0 0 0 10px;
+        display: flex;
+        align-items: center;
+        @include rwd(1200) {
+            width: 100%;
+            margin-bottom: 8px;
+            order: -1;
+            margin-left: 0 !important;
+            form {
+                display: flex;
+            }
+            .search-text {
+                width: 100%;
+                input {
+                    width: 100%;
+                }
+            }
+        }
+        .icon {
+            width: 12px;
+        }
+        form {
+            padding: 0;
+            display: flex;
+            border-radius: 0;
+        }
+        .search-text {
+            input {
+                height: 35px;
+                padding: 0 10px;
+                border-radius: unset;
+                background-color: transparent;
+                color: #252942;
+                &:-webkit-autofill {
+                    box-shadow: 0 0 0 50px #fff inset !important;
+                    -webkit-text-fill-color: #252942;
+                }
+            }
+        }
+        .search-button {
+            width: 50px;
+            height: 35px;
+            position: relative;
+            color: #fff;
+            border-radius: 5px;
+            background: linear-gradient(180deg, #3f3eb6, #c3c2f7);
+            text-indent: unset;
+            order: 1;
+        }
+    }
+}

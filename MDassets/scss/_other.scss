@@ -1,0 +1,820 @@
+img {
+    width: 100%;
+    vertical-align: middle;
+}
+
+body {
+    background-color: #252942;
+    /* iOS 11.0 */
+    padding-bottom: constant(safe-area-inset-bottom);
+    /* 11.2+ */
+    padding-bottom: env(safe-area-inset-bottom);
+}
+.sort {
+    display: none;
+}
+
+// 廣告圖
+.fullAdb {
+    width: 100%;
+    max-width: 1200px;
+    margin: 15px auto;
+    @include phone {
+        margin: 5px auto 0;
+    }
+}
+
+.block-channel {
+    align-items: center;
+    background-color: transparent;
+    justify-content: center;
+    display: block;
+    padding: 2rem 0 4rem;
+    .img {
+        width: calc(100% - 20px);
+        max-width: 900px;
+        margin: auto;
+        outline: 0.5rem solid #fff;
+        padding: 0;
+    }
+    .channel-rating {
+        display: none;
+        strong {
+            background-color: #276fdb;
+        }
+        a {
+            background-color: #f67361;
+            &.disabled {
+                background-color: #252932;
+            }
+        }
+    }
+}
+
+.headline {
+    h1,
+    h2 {
+        font-weight: 550;
+        display: flex;
+        align-items: center;
+        .icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            background: no-repeat center / cover;
+            flex-shrink: 0;
+            &.official {
+                background-image: url(../img/icons/headline/official.png);
+            }
+            &.actor {
+                background-image: url(../img/icons/headline/actor.png);
+            }
+            &.free {
+                background-image: url(../img/icons/headline/free.png);
+            }
+            &.like {
+                background-image: url(../img/icons/headline/like.png);
+            }
+        }
+    }
+    .sort:last-child {
+        margin: 0 0 0 20px;
+    }
+    .sort:focus,
+    .sort:hover {
+        background-color: #f54f64;
+    }
+    strong {
+        flex-shrink: 0;
+        margin-left: 30px;
+        a {
+            span {
+                padding-left: 4px;
+                font-size: 18px;
+            }
+        }
+        @include hover {
+            &:hover a {
+                color: #f67361;
+            }
+        }
+    }
+}
+
+.block-model {
+    .img {
+        a {
+            border-radius: 8px;
+        }
+    }
+    .model-list {
+        li {
+            color: #f54f64;
+        }
+    }
+}
+
+.pagination {
+    @include phone {
+        display: none;
+    }
+    .page-current {
+        a,
+        span {
+            background-color: #f54f64;
+        }
+    }
+}
+
+.tags-cloud,
+.footer-margin {
+    display: none;
+}
+
+.container {
+    padding: 0 10px;
+    background-color: transparent;
+    &.question {
+        .fed-userBody {
+            @include phone {
+                padding: 20px 0 80px;
+                @include rwd(1024) {
+                    padding: 0 0 80px;
+                }
+            }
+        }
+    }
+}
+
+.content {
+    max-width: 1200px;
+    padding: 0;
+    overflow: unset;
+}
+
+.sidebar + .main-container {
+    width: 100%;
+    .headline {
+        margin: 0 0 20px !important;
+        // @include rwd(895) {
+        //     padding: 2vw 0 40px;
+        // }
+    }
+}
+
+.main-content {
+    min-height: calc(100vh - 168px);
+    @include rwd(1024) {
+        min-height: calc(100vh - 211px);
+    }
+    @include rwd(640) {
+        min-height: calc(100vh - 250px);
+    }
+    @include phone {
+        min-height: calc(100vh - 210px);
+        padding-bottom: 80px;
+    }
+}
+
+.sidebar {
+    background-color: rgba(0, 0, 0, 0.2);
+    display: none;
+    @include phone {
+        display: none;
+    }
+}
+
+.list-videos {
+    &.web {
+        display: none;
+    }
+    @include phone {
+        &.pc {
+            display: none;
+        }
+        &.web {
+            display: block;
+        }
+    }
+
+    .item {
+        .img {
+            position: relative;
+            &::before {
+                content: "";
+                width: 100%;
+                height: 100%;
+                margin: auto;
+                background: rgba(0, 0, 0, 0.6) url(/MDassets/img/play.png) no-repeat center / 35%;
+                position: absolute;
+                @include pos(tbrl, 0);
+                z-index: 10;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+        }
+        @include hover {
+            &:hover {
+                [class*="ico-fav"] {
+                    display: none;
+                }
+                .img::before {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    // 主頁影片例外顯示
+    &.main {
+        .item {
+            @include rwd(860) {
+                &:nth-child(n + 7) {
+                    display: none;
+                }
+            }
+            @include rwd(640) {
+                &:first-child {
+                    width: calc(100% - 5px) !important;
+                }
+                &:nth-child(7) {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}
+
+.no-touch .item {
+    .duration {
+        color: #fff;
+    }
+    @include hover {
+        &:hover {
+            .title {
+                color: #f55e63;
+            }
+        }
+    }
+}
+
+.list-playlists {
+    img.video2 {
+        display: none !important;
+    }
+}
+
+.margin-fix {
+    padding-right: 2px;
+    @include rwd(640) {
+        padding-right: 2px;
+    }
+}
+
+.list-playlists .item,
+.list-models .item,
+.list-sponsors .item,
+.list-channels .item,
+.list-categories .item,
+.list-albums .item,
+.list-albums-images .item,
+.list-videos .item,
+.list-videos-screenshots .item {
+    background-color: transparent;
+    box-shadow: unset;
+    position: relative;
+    @include rwd(640) {
+        padding-left: 5px;
+    }
+    .vodTag {
+        width: 55px;
+        height: 55px;
+        background: no-repeat top right;
+        position: absolute;
+        @include pos(tr, -8px, -7px);
+        z-index: 10;
+        &.vip {
+            background-image: url(../img/icons/videoTag/vip.svg);
+        }
+        &.free {
+            background-image: url(../img/icons/videoTag/free.svg);
+        }
+        &.other {
+            background-image: url(../img/icons/videoTag/other.svg);
+            span {
+                width: 35px;
+                display: block;
+                top: 11px;
+                left: 20px;
+            }
+        }
+        &.point {
+            background-image: url(../img/icons/videoTag/point.svg);
+            span {
+                display: block;
+            }
+        }
+        span {
+            width: 19px;
+            font-size: 10px;
+            transform: rotate(46deg) scale(0.9);
+            letter-spacing: 1px;
+            position: absolute;
+            top: 14px;
+            left: 30px;
+            text-align: center;
+            color: #fff;
+            display: none;
+        }
+    }
+    .duration {
+        position: absolute;
+        bottom: 2px;
+        right: 5px;
+    }
+    .title {
+        padding: 0 1rem;
+        height: auto;
+        margin: 5px 0;
+        @include txtChip(2);
+    }
+    .wrap {
+        .views {
+            padding-bottom: 1px;
+            padding-left: 17px;
+            display: flex;
+            position: relative;
+            &::before {
+                content: "";
+                width: 15px;
+                height: 10px;
+                background: url(../img/redviews.png) no-repeat center/cover;
+            }
+        }
+    }
+    .img {
+        overflow: unset !important;
+        img {
+            height: 100%;
+        }
+    }
+}
+
+// gototop
+#gototop {
+    right: 0px !important;
+    bottom: 100px !important;
+    z-index: 50;
+    opacity: 0.7;
+    @media screen and (max-width: 500px) {
+        & {
+            width: 60px;
+            height: 60px;
+        }
+    }
+}
+
+// 影片播放頁
+.block-video {
+    padding-top: 20px;
+    margin-bottom: 60px;
+    .headline {
+        padding: 0;
+        @include rwd(785) {
+            flex-wrap: nowrap;
+        }
+        h1 {
+            color: #a0a4ae;
+            flex: unset;
+            line-height: 25px;
+            font-size: 2.1rem;
+            @include txtChip(2);
+            @include rwd(785) {
+                width: auto;
+            }
+        }
+        .addCollect {
+            width: 23px;
+            height: 23px;
+            flex-shrink: 0;
+            margin-right: 10px;
+            background: url(/MDassets/img/heart.svg) no-repeat center/cover;
+            cursor: pointer;
+            &.on {
+                background-image: url(/MDassets/img/heart_on.svg);
+            }
+        }
+    }
+    .video-holder {
+        background-color: transparent;
+        box-shadow: unset;
+    }
+
+    .player {
+        .player-wrap {
+            height: 666px;
+            @include rwd(1220) {
+                height: 54.35vw;
+            }
+        }
+    }
+    .info-buttons {
+        display: none;
+    }
+    .tab-content {
+        padding: 0;
+    }
+    .item {
+        &:first-child {
+            margin-bottom: 0;
+        }
+        span {
+            em {
+                color: #6f727a;
+            }
+        }
+        a {
+            background-color: #292f3b;
+            color: #abaeb6;
+            margin-top: 5px;
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+    .item + .item {
+        margin-top: 10px;
+    }
+}
+
+.showVideo {
+    .content {
+        @include phone {
+            padding-bottom: 80px;
+        }
+    }
+}
+
+// 特別設定 - 專題類型
+.selfTopic {
+    .topicBanner,
+    .sort {
+        display: none;
+    }
+    @include phone {
+        padding: 0;
+        .navigation,
+        .fullAdb,
+        .wrap,
+        .headline,
+        .header{
+            display: none;
+        }
+        .topicBanner {
+            display: block;
+        }
+    }
+    .main-content {
+        .item {
+            margin-bottom: 10px;
+            @include rwd(450) {
+                width: calc(100% - 5px);
+            }
+            .img {
+                border-radius: 5px;
+                overflow: hidden;
+                box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+            }
+            .title {
+                padding-top: 3px;
+                font-weight: bold;
+                letter-spacing: 1px;
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+.selfDetail {
+    @include phone {
+        padding: 0;
+        .navigation,
+        .fullAdb,
+        .channel-info {
+            display: none;
+        }
+        .topicBanner {
+            display: block;
+        }
+        .headline {
+            .button {
+                display: none;
+            }
+        }
+    }
+    .main-content {
+        .headline {
+            padding: 10px;
+            @include rwd(895) {
+                padding: 2vw 10px 10px;
+            }
+            .button {
+                flex-shrink: 0;
+            }
+            .mainTitle {
+                width: 100%;
+                letter-spacing: 1.2px;
+                h2 {
+                    font-size: 2.6rem;
+                }
+                p {
+                    padding-top: 1px;
+                    font-size: 1.5rem;
+                    color: #ee4a63;
+                }
+            }
+        }
+        .block-channel {
+            margin-top: 20px;
+            padding: 0;
+            box-shadow: none;
+            position: relative;
+            @include phone {
+                margin-top: 0;
+            }
+            .collect {
+                padding: 7px 20px;
+                border-radius: 15px;
+                background: linear-gradient(30deg, #5895f0, #276fdb, #a5c6f8);
+                box-shadow: -1px 1px 4px rgba(16, 60, 126, 0.7);
+                color: #fff;
+                display: inline-block;
+                position: absolute;
+                @include pos(tr, 10px);
+                display: none;
+                @include phone {
+                    display: block;
+                }
+            }
+            .img {
+                width: 100%;
+                max-width: unset;
+                outline: none;
+            }
+            .quantityBox {
+                min-width: 180px;
+                height: 180px;
+                position: absolute;
+                @include pos(bl, 30px, 15px);
+                transform-origin: bottom left;
+                @for $vw from 895 through 500 {
+                    @include rwd($vw) {
+                        transform: scale(#{$vw / 895});
+                    }
+                }
+                @include rwd(895) {
+                    @include pos(bl, 3vw, 1.5vw);
+                }
+                @include rwd(500) {
+                    @include pos(bl, 15px, 8px);
+                }
+                .minImg {
+                    width: 160px;
+                    height: 160px;
+                    margin: auto;
+                    background: no-repeat top left/cover;
+                    border-radius: 10px;
+                    border: 3px solid #fff;
+                    box-shadow: 3px -3px 6px rgba(0, 0, 0, 0.4);
+                }
+                .numTxt {
+                    width: 100%;
+                    height: 35px;
+                    padding: 0 10px;
+                    font-size: 16px;
+                    letter-spacing: 1.5px;
+                    border-radius: 35px;
+                    background: linear-gradient(30deg, #9cc5ff, #a878df, #72beff);
+                    transform: translateY(-3px);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    box-shadow: 2px -2px 4px rgba(28, 65, 117, 0.5);
+                }
+            }
+        }
+        .item {
+            margin-bottom: 10px;
+            .title {
+                padding-top: 3px;
+                font-weight: bold;
+                letter-spacing: 1px;
+                font-size: 15px;
+            }
+            .wrap {
+                color: #ee4a63;
+            }
+        }
+        .detailList {
+            padding: 30px 10px 0;
+            .headline {
+                padding: 0 0 8px;
+                margin: 0;
+                h1 {
+                    font-size: 2.2rem;
+                    font-weight: 550;
+                    font-family: "微軟正黑體";
+                }
+            }
+            .box {
+                padding: 0;
+                margin: 0;
+            }
+        }
+    }
+}
+
+#list_videos_latest_videos_list {
+    .box {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+
+// 特別設定 - 分類頁
+.selfType {
+    .header{
+        padding: 10px 10px 0;
+    }
+    .sort {
+        display: none;
+    }
+    .mainTitle {
+        p {
+            padding-top: 1px;
+            font-size: 1.5rem;
+            color: #ee4a63;
+        }
+    }
+    @include phone {
+        .navigation {
+            .search {
+                display: none;
+            }
+        }
+        .fullAdb,
+        .headline {
+            display: none;
+        }
+    }
+    .topTool {
+        width: 100%;
+        z-index: 20;
+        @include phone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #252942;
+            box-shadow: 0 2px 8px #000;
+        }
+        .floatTag {
+            opacity: 1;
+            transform: translateY(0%);
+            position: relative;
+            display: none;
+            box-shadow: unset;
+            @include phone {
+                display: flex;
+            }
+        }
+    }
+    .primary.web {
+        padding: 0 10px;
+    }
+
+    .list-videos.web {
+        padding-top: 130px;
+        .title {
+            @include txtChip(2);
+        }
+        .wrap {
+            padding: 0 1rem;
+        }
+    }
+}
+
+.selfSel {
+    .headline {
+        padding: 10px 0 40px;
+        @include rwd(895) {
+            padding: 2vw 0 40px;
+        }
+    }
+}
+
+// 特別設定 - 最新影片頁(發現) / 搜尋頁
+.selfSearch {
+    @include phone { 
+        .fullAdb,
+        .headline {
+            display: none;
+        }
+    }
+    .header{
+        padding: 10px 10px 0;
+    }
+    .topTool {
+        width: 100%;
+        z-index: 20;
+        @include phone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #252942;
+            box-shadow: 0 2px 8px #000;
+        }
+        .navigation{
+            padding: 0 10px 0;
+        }
+        .floatTag {
+            opacity: 1;
+            transform: translateY(0%);
+            position: relative;
+            display: none;
+            box-shadow: unset;
+            @include phone {
+                display: flex;
+            }
+        }
+        h1{
+            font-size: 14px;
+            font-weight: bold;
+        }
+    }
+}
+
+// 特別設定 - 浮動標籤
+.floatTag {
+    width: 100%;
+    padding: 15px 30px;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    text-align: center;
+    position: fixed;
+    @include pos(tl, 0);
+    background: linear-gradient(45deg, #e18931, #31272c);
+    box-shadow: 0 2px 8px #000;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(-120%);
+    transition: 0.5s;
+    display: none;
+    z-index: 20;
+    @include phone {
+        display: block;
+    }
+    &.on {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+
+    &.flex {
+        padding: 15px 10px;
+        display: block;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        text-align: left;
+        .total {
+            text-align: left;
+            line-height: 20px;
+        }
+        .nowShow {
+            text-align: right;
+            margin-left: 30px;
+            line-height: 20px;
+            span {
+                padding: 0 5px;
+            }
+        }
+    }
+}
+
+// 增加頭像額外設定
+.controls.jQuery-image-upload-controls {
+    button {
+        width: 100px !important;
+        height: 100px !important;
+        cursor: pointer;
+        @include phone {
+            width: 50px !important;
+            height: 50px !important;
+        }
+        &::before {
+            font-size: 25px;
+            @include phone {
+                font-size: 18px;
+            }
+        }
+    }
+}

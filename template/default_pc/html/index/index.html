@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <title>{$maccms.site_name}</title>
+  <meta name="keywords" content="{$maccms.site_keywords}" />
+  <meta name="description" content="{$maccms.site_description}" /> {include file="system/include"}
+</head>
+
+<body class="{$maccms['html_hue']}">
+  {include file="system/headtop"}
+  <div class="container">
+    {include file="system/search"} {include file="system/headmeun"} {include file="system/swipeslider"}
+    <div class="content">
+      <div class="main-content">
+        <div class="main-container">
+          <div class="headline">
+            <h1>
+              <div class="icon official"></div>
+              {:platform_lang('level_8')}
+            </h1>
+            <strong><a href="{:mac_url_search(['wd'=>$param['wd'],'area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>'8','letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'time' ],'vod')}">
+                {:platform_lang('platform/vod/show/more')}<span>&#187;</span>
+              </a></strong>
+          </div>
+
+          <div class="box">
+            <div class="list-videos main">
+              <div class="margin-fix" id="list_videos_videos_watched_right_now_items">
+                {maccms:vod num="8" level="8" order="desc"} {include
+                file="module/vodlist"} {/maccms:vod}
+              </div>
+            </div>
+          </div>
+          <div id="list_videos_most_recent_videos">
+            <div class="headline">
+              <h2>
+                <div class="icon actor"></div>
+                {:platform_lang('level_9')}
+              </h2>
+              
+              <strong><a href="{:mac_url_search(['wd'=>$param['wd'],'area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>'9','letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'time' ],'vod')}">
+                  {:platform_lang('platform/vod/show/more')}<span>&#187;</span>
+                </a></strong>
+            </div>
+
+            <div class="box">
+              <div class="list-videos main">
+                <div class="margin-fix" id="list_videos_most_recent_videos_items">
+                  {maccms:vod num="8" level="9" order="desc"} {include
+                  file="module/vodlist"} {/maccms:vod}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="list_videos_free_videos">
+            <div class="headline">
+              <h2>
+                <div class="icon free"></div>
+                {:platform_lang('platform/label/free/free_video')}
+              </h2>
+              <strong><a href="/index.php/vod/type/id/9.html">
+                {:platform_lang('platform/vod/show/more')}<span>&#187;</span>
+              </a></strong>
+            </div>
+            <div class="box">
+              <div class="list-videos main">
+                <div class="margin-fix" id="list_videos_most_recent_videos_items">
+                  {maccms:vod num="8" by="time" type="'.$maccms['free_watch_type'].'" order="desc"} {include
+                  file="module/vodlist"} {/maccms:vod}
+                </div>
+              </div>
+            </div>
+          </div>
+          {if (cookie('platform_lang')=='zh-tw'||cookie('platform_lang')=='zh-cn')}
+          <div id="list_playlists_common_playlists_list">
+            <div class="headline">
+              <h1>
+                <div class="icon like"></div>
+                {:platform_lang('platform/index/index/popular_topic')}
+              </h1>
+              <strong><a href="{:mac_url('topic/index')}">
+                {:platform_lang('platform/vod/show/more')}<span>&#187;</span>
+              </a></strong>
+
+              <!-- <div class="sort">
+                <span class="icon type-sort"></span>
+                <strong>{:platform_lang('platform/index/index/popular')}</strong>
+                <ul id="list_playlists_common_playlists_list_sort_list">
+                  <li>
+                    <a href="{:mac_url('/topic/index/by/time')}">{:platform_lang('platform/index/index/latest')}</a>
+                  </li>
+                  <li>
+                    <a href="{:mac_url('/topic/index/by/hist')}">{:platform_lang('platform/index/index/hot')}</a>
+                  </li>
+                  <li>
+                    <a href="{:mac_url('/topic/index/by/up')}">{:platform_lang('platform/index/index/like')}</a>
+                  </li>
+                  <li>
+                    <a href="{:mac_url('/topic/index/by/score')}">{:platform_lang('platform/index/index/score')}</a>
+                  </li>
+                </ul>
+              </div> -->
+            </div>
+
+            <div class="box">
+              <div class="list-playlists">
+                <div class="margin-fix" id="list_playlists_common_playlists_list_items">
+                  {maccms:topic num="4" order="desc" by="time"}
+                  <div class="item">
+                    <a href="{:mac_url_topic_detail($vo)}" title="{$vo.topic_name}">
+                      <div class="img">
+                        <img class="thumb video1 lazy-load" src="{$vo.topic_pic|mac_url_img}" alt="{$vo.topic_name}" title="{$vo.topic_name}" width="320" height="180" style="display: block" />
+                        <img class="thumb video2 lazy-load" src="{$vo.topic_pic|mac_url_img}" alt="{$vo.topic_name}" title="{$vo.topic_name}" width="320" height="180" style="display: block" />
+                      </div>
+                      <strong class="title"> {$vo.topic_name} </strong>
+                      <div class="wrap">
+                        <div class="videos">
+                          {$vo.topic_rel_vod|explode=',',###|count}{:platform_lang('platform/index/index/videos')}
+                        </div>
+
+                        <div class="rating positive">{$vo.topic_up}</div>
+                      </div>
+                      <div class="wrap">
+                        <!-- <div class="added">
+                                <em>{$vo.topic_time|mac_friend_date}</em>
+                            </div> -->
+                        <!-- <div class="views">{$vo.topic_hits}</div> -->
+                      </div>
+                    </a>
+                  </div>
+                  {/maccms:topic}
+                </div>
+              </div>
+            </div>
+          </div>
+          {else}
+          <div id="list_playlists_common_playlists_list">
+            <div class="headline">
+              <h1>{:platform_lang('platform/index/index/popular_topic')}</h1>
+
+              <div class="sort">
+                <span class="icon type-sort"></span>
+                <strong>{:platform_lang('platform/index/index/popular')}</strong>
+                <ul id="list_playlists_common_playlists_list_sort_list">
+                  <li>
+                    <a href="{:mac_url('/topic/index/by/time')}">{:platform_lang('platform/index/index/latest')}</a>
+                  </li>
+                  <li>
+                    <a href="{:mac_url('/topic/index/by/hist')}">{:platform_lang('platform/index/index/hot')}</a>
+                  </li>
+                  <li>
+                    <a href="{:mac_url('/topic/index/by/up')}">{:platform_lang('platform/index/index/like')}</a>
+                  </li>
+                  <li>
+                    <a href="{:mac_url('/topic/index/by/score')}">{:platform_lang('platform/index/index/score')}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="box">
+              <div class="list-playlists">
+                <div class="margin-fix" id="list_playlists_common_playlists_list_items">
+                  {maccms:topic num="4" order="desc" by="time"}
+                  <div class="item">
+                    <a href="{:mac_url_topic_detail($vo)}" title="{$vo.topic_en}">
+                      <div class="img">
+                        <img class="thumb video1 lazy-load" src="{$vo.topic_pic|mac_url_img}" alt="{$vo.topic_en}" title="{$vo.topic_en}" width="320" height="180" style="display: block" />
+                        <img class="thumb video2 lazy-load" src="{$vo.topic_pic|mac_url_img}" alt="{$vo.topic_en}" title="{$vo.topic_en}" width="320" height="180" style="display: block" />
+                      </div>
+                      <strong class="title"> {$vo.topic_en} </strong>
+                      <div class="wrap">
+                        <div class="videos">
+                          {$vo.topic_rel_vod|explode=',',###|count}{:platform_lang('platform/index/index/videos')}
+                        </div>
+
+                        <div class="rating positive">{$vo.topic_up}</div>
+                      </div>
+                      <div class="wrap">
+                        <!-- <div class="added">
+                        <em>{$vo.topic_time|mac_friend_date}</em>
+                    </div> -->
+                        <div class="views">{$vo.topic_hits}</div>
+                      </div>
+                    </a>
+                  </div>
+                  {/maccms:topic}
+                </div>
+              </div>
+            </div>
+          </div>
+          {/if}
+        </div>
+      </div>
+      {include file="module/tag"}
+    </div>
+    {include file="module/footer_ad"}
+    <div class="footer-margin">
+      <div class="content">
+        <div style="font-size: 14px">
+          <span>友情链接</span>: {maccms:link num="1000" type="all" order="desc" by="id"}
+          <a target="_blank" rel="nofollow" style="margin-left: 10px" href="{$vo.link_url}"><u><span>{$vo.link_name}</span></u></a>
+          {/maccms:link}
+        </div>
+      </div>
+    </div>
+  </div>
+  {include file="system/footer"} {include file="system/M_menu"}
+
+  <script src="/MDassets/js/swipeslider.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#full_feature").swipeslider({ autoPlayTimeout: 7000 });
+    });
+  </script>
+</body>
+
+</html>

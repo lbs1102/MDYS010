@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title>
+        {:platform_lang('platform/vod/show_title',[$obj.type_title, $obj.type_title, $param.page, $maccms.site_name])}
+    </title>
+    <meta name="keywords" content="{$obj.type_key}" />
+    <meta name="description" content="{$obj.type_des}" /> {include file="system/include"}
+</head>
+
+<body class="{$maccms['html_hue']}">
+    {include file="system/headtop"}
+    <div class="container">
+        {include file="system/search"} {include file="system/headmeun"}
+        <div class="content">
+            <div class="main-content">
+                <div class="sidebar">
+                    <div class="headline">
+                        <h2>
+                            <a class="icon icon-categories" href="{:mac_url('label/sort')}">{:platform_lang('platform/vod/show/show_more_categories')}</a
+                >
+              </h2>
+            </div>
+            <ul class="list">
+              {maccms:type ids="parent" order="asc" by="sort"} {if
+              (cookie('platform_lang')=='zh-tw'||cookie('platform_lang')=='zh-cn')}
+              <li>
+                <a href="{:mac_url_type($vo)}"
+                  >{$vo.type_name}<span class="rating"
+                    >{$vo.type_id|mac_data_count=all}</span
+                  ></a
+                >
+              </li>
+              {else}
+              <li>
+                <a href="{:mac_url_type($vo)}"
+                  >{$vo.type_en}<span class="rating"
+                    >{$vo.type_id|mac_data_count=all}</span
+                  ></a
+                >
+              </li>
+              {/if} {/maccms:type}
+            </ul>
+          </div>
+          <div class="main-container">
+            <div id="list_videos_latest_videos_list">
+              <div class="headline">
+                {if
+                (cookie('platform_lang')=='zh-tw'||cookie('platform_lang')=='zh-cn')}
+                <h1>
+                  {:platform_lang('platform/vod/show/category_new_vod',[$obj.type_name])}
+                </h1>
+                {else}
+                <h1>
+                  {:platform_lang('platform/vod/show/category_new_vod',[$obj.type_en])}
+                </h1>
+                {/if}
+                <div class="sort">
+                  <span class="icon type-sort"></span>
+                  <strong>
+                    {if$param.by==''||$param.by=='time'}
+                    {:platform_lang('platform/vod/show/newest')} {/if}
+                    {if$param.by=='hits'}
+                    {:platform_lang('platform/vod/show/popular')} {/if}
+                    {if$param.by=='up'}
+                    {:platform_lang('platform/vod/show/likes')} {/if}
+                    {if$param.by=='score'}
+                    {:platform_lang('platform/vod/show/rating')} {/if}</strong
+                  >
+                  <ul id="list_videos_common_videos_list_sort_list">
+                    <li>
+                      <a
+                        href="{:mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'time' ],'type')}"
+                        >{:platform_lang('platform/vod/show/newest')}</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="{:mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'hits' ],'show')}"
+                        >{:platform_lang('platform/vod/show/popular')}</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="{:mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'up' ],'show')}"
+                        >{:platform_lang('platform/vod/show/likes')}</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="{:mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'score' ],'show')}"
+                        >{:platform_lang('platform/vod/show/rating')}</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="box">
+                <div class="list-videos">
+                  <div
+                    class="margin-fix"
+                    id="list_videos_latest_videos_list_items"
+                  >
+                    {maccms:vod num="24" paging="yes" pageurl="vod/type"
+                    order="desc" by="time"} {include file="module/vodlist"}
+                    {/maccms:vod}
+                  </div>
+                </div>
+              </div>
+              {include file="system/paging"}
+            </div>
+          </div>
+        </div>
+        {include file="module/tag"}
+      </div>
+
+      {include file="module/footer_ad"}
+    </div>
+    {include file="system/footer"}
+    {include file="system/M_menu"}
+  </body>
+</html>

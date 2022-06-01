@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{:platform_lang('platform/label/question/question')} - {$maccms.site_name}</title>
+    <meta name="keywords" content="個人中心,{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" /> {include file="user/include"}
+</head>
+
+<body class="{$maccms['html_hue']} noIndex">
+    {include file="system/headtop"}
+    <div class="container question">
+        {include file="system/search"} {include file="system/headmeun"}
+        <div class="fed-min">
+            <div class="fed-userBody ">
+                <div class="leftBox">
+                    {include file="user/menu"}
+                </div>
+                <div class="rightBox">
+                    <div class="questionBox">
+                        <div class="selBox" id="selBox">
+                            <ul>
+                                <li class="on">{:platform_lang('platform/label/question/login')}</li>
+                                <li>{:platform_lang('platform/label/question/signup')}</li>
+                                <li>{:platform_lang('platform/label/question/level')}</li>
+                                <li>{:platform_lang('platform/label/question/diamonduse')}</li>
+                                <li>{:platform_lang('platform/label/question/cachepoint')}</li>
+                                <li>{:platform_lang('platform/label/question/watch')}</li>
+                                <li>{:platform_lang('platform/label/question/contact')}</li>
+                            </ul>
+                        </div>
+                        <div class="infoBox" id="infoBox">
+                            <div class="info">
+                                <ul>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/question')}</div>
+                                        <p>{:platform_lang('platform/label/question/question_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/connot_pay')}</div>
+                                        <ul class="list">
+                                            <li>{:platform_lang('platform/label/question/repay')}</li>
+                                            <li>{:platform_lang('platform/label/question/chpay')}</li>
+                                            <li>{:platform_lang('platform/label/question/selfpay')}</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/no_member')}</div>
+                                        <ul class="list">
+                                            <li>{:platform_lang('platform/label/question/pleaselogin')}</li>
+                                            <li>{:platform_lang('platform/label/question/check')}</li>
+                                            <li>{:platform_lang('platform/label/question/contact_onlineservice')}</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="info">
+                                <ul>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/account_exist')}</div>
+                                        <p>{:platform_lang('platform/label/question/account_exist_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/forgot')}</div>
+                                        <p>{:platform_lang('platform/label/question/forgot_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/why_receive')}</div>
+                                        <ul class="list">
+                                            <li>{:platform_lang('platform/label/question/why_receive_1')}</li>
+                                            <li>{:platform_lang('platform/label/question/why_receive_2')}</li>
+                                            <li>{:platform_lang('platform/label/question/why_receive_3')}</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="info">
+                                <ul>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/become')}</div>
+                                        <p>{:platform_lang('platform/label/question/become_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/how_become')}</div>
+                                        <p>{:platform_lang('platform/label/question/how_become_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/how_upgrade')}</div>
+                                        <p>{:platform_lang('platform/label/question/how_upgrade_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/change_year')}</div>
+                                        <p>{:platform_lang('platform/label/question/change_year_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/upgraded')}</div>
+                                        <p>{:platform_lang('platform/label/question/upgraded_1')}</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="info">
+                                <ul>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/diamond_use')}</div>
+                                        <p>{:platform_lang('platform/label/question/diamond_use_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/how_diamond_use')}</div>
+                                        <ul class="list">
+                                            <li>{:platform_lang('platform/label/question/how_diamond_use_1')}</li>
+                                            <li>{:platform_lang('platform/label/question/how_diamond_use_2')}</li>
+                                            <li>{:platform_lang('platform/label/question/how_diamond_use_3')}</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="info">
+                                <ul>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/what_cachepoint')}</div>
+                                        <p>{:platform_lang('platform/label/question/what_cachepoint_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/use_cachepoint')}</div>
+                                        <p>{:platform_lang('platform/label/question/use_cachepoint_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/notice')}</div>
+                                        <p>{:platform_lang('platform/label/question/notice_1')}</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="info">
+                                <ul>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/no_response')}</div>
+                                        <ul class="list">
+                                            <li>{:platform_lang('platform/label/question/no_response_1')}</li>
+                                            <li>{:platform_lang('platform/label/question/no_response_2')}</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/need_level')}</div>
+                                        <p>{:platform_lang('platform/label/question/need_level_1')}</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="info">
+                                <ul>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/contact_email')}</div>
+                                        <p>{:platform_lang('platform/label/question/contact_email_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="title">{:platform_lang('platform/label/question/contact_online')}</div>
+                                        <p>{:platform_lang('platform/label/question/contact_online_1')}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="system/footer"} 
+    {include file="system/M_menu"}
+    <script>
+        $('#selBox li').click(function() {
+            $('#selBox li').removeClass('on');
+            $(this).addClass('on');
+
+            let index = $('#selBox li').index(this)
+            $(`#infoBox .info`).hide()
+            $(`#infoBox .info:eq(${index})`).show();
+        })
+
+        $(`#infoBox .info`).hide()
+        $(`#infoBox .info:eq(0)`).show();
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,243 @@
+<strong class="popup-title"
+  >{:platform_lang('platform/label/login/welcome')}</strong
+>
+<div class="popup-holder">
+  <form id="madouym-signup" action="" data-form="ajax" method="post">
+    <div class="generic-error hidden"></div>
+    <div>
+      <div class="row">
+        <!-- <label for="signup_username" class="field-label required">用户名</label> -->
+        <input
+          type="text"
+          id="signup_name"
+          name="user_name"
+          class="textfield"
+          maxlength="100"
+          placeholder="{:platform_lang('platform/label/signup/enter_account')}"
+        />
+        <div class="field-error down"></div>
+      </div>
+      <div class="row">
+        <!-- <label for="signup_pass" class="field-label required">密码</label> -->
+        <input
+          type="password"
+          id="signup_pwd"
+          name="user_pwd"
+          class="textfield"
+          placeholder="{:platform_lang('platform/label/signup/atleast5')}"
+        />
+        <div class="field-error down"></div>
+      </div>
+      <div class="row">
+        <!-- <label for="signup_pass2" class="field-label required">确认密码</label> -->
+        <input
+          type="password"
+          id="signup_pwd2"
+          name="user_pwd2"
+          class="textfield"
+          placeholder="{:platform_lang('platform/label/signup/reenterpassword')}"
+        />
+        <div class="field-error down"></div>
+      </div>
+      {if condition="$user_config.reg_phone_sms neq 0"}
+      <input type="hidden" name="ac" value="phone" />
+      <div class="row">
+        <input
+          type="text"
+          id="to"
+          name="to"
+          class="textfield"
+          placeholder="{:platform_lang('platform/label/signup/placeholder_phone')}"
+        />
+        <input
+          class="textfield"
+          type="button"
+          id="btn_send_sms"
+          value="{:platform_lang('platform/label/signup/placeholder_get_verify')}"
+        />
+        <div class="field-error down"></div>
+      </div>
+      <div class="row">
+        <input
+          type="text"
+          id="code"
+          name="code"
+          class="textfield"
+          placeholder="{:platform_lang('platform/label/signup/placeholder_phone_verify')}"
+        />
+        <div class="field-error down"></div>
+      </div>
+      {elseif condition="$user_config.reg_email_sms neq 0"}
+      <input type="hidden" name="ac" value="email" />
+      <div class="row">
+        <input
+          type="text"
+          id="to"
+          name="to"
+          class="textfield"
+          placeholder="{:platform_lang('platform/label/signup/placeholder_email')}"
+        />
+        <input
+          class="textfield"
+          type="button"
+          id="btn_send_sms"
+          value="{:platform_lang('platform/label/signup/placeholder_get_verify')}"
+        />
+        <div class="field-error down"></div>
+      </div>
+      <div class="row">
+        <input
+          type="text"
+          id="code"
+          name="code"
+          class="textfield"
+          placeholder="{:platform_lang('platform/label/signup/placeholder_email_verify')}"
+        />
+        <div class="field-error down"></div>
+      </div>
+      {/if}
+      <div class="bottom">
+        {if condition="$user_config.reg_verify neq 0"}
+        <label
+          >{:platform_lang('platform/label/login/enter_verification')}</label
+        >
+        <div class="captcha-control">
+          <div class="image">
+            <img
+              id="verify_img"
+              src="{:url('verify/index')}"
+              onClick="this.src=this.src+'?'"
+              alt="{:platform_lang('platform/label/login/verification')}"
+            />
+            <label for="signup_code" class="field-label required"
+              >{:platform_lang('platform/label/login/verification')}</label
+            >
+            <input
+              type="text"
+              id="verify"
+              name="verify"
+              class="textfield"
+              autocomplete="off"
+            />
+            <div class="field-error up"></div>
+          </div>
+        </div>
+        {/if}
+        <button class="submit" id="btn_signup">
+          {:platform_lang('platform/label/signup/signup')}
+        </button>
+        <div class="links">
+          <p>
+            <a href="{:mac_url('label/login')}" data-fancybox="ajax"
+              >{:platform_lang('platform/label/signup/account_exist')}</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  var countdown = 60;
+  function settime(val) {
+    if (countdown == 0) {
+      val.removeAttribute("disabled");
+      val.value = "{:platform_lang('platform/user/titp_verify_get')}";
+      countdown = 60;
+      return true;
+    } else {
+      val.setAttribute("disabled", true);
+      val.value =
+        "{:platform_lang('platform/user/titp_resend')}" + "(" + countdown + ")";
+      countdown--;
+    }
+    setTimeout(function () {
+      settime(val);
+    }, 1000);
+  }
+  $(function () {
+    $("#btn_signup").click(function () {
+      if ($("#signup_name").val() == "") {
+        layer.msg("{:platform_lang('platform/label/signup/enteraccount')}");
+        $("#signup_name").focus();
+        return false;
+      }
+      if ($("#signup_pwd").val() == "") {
+        layer.msg("{:platform_lang('platform/label/signup/enterpassword')}");
+        $("#signup_pwd").focus();
+        return false;
+      }
+      if ($("#signup_pwd2").val() == "") {
+        layer.msg("{:platform_lang('platform/label/signup/reenterpassword')}");
+        $("#signup_pwd2").focus();
+        return false;
+      }
+      if ($("#verify").val() == "") {
+        layer.msg(
+          "{:platform_lang('platform/label/reset-password/enter_verification')}"
+        );
+        $("#verify").focus();
+        return false;
+      }
+      $.ajax({
+        url: "{:mac_url('user/reg')}",
+        type: "post",
+        dataType: "json",
+        data: $("#madouym-signup").serialize(),
+        beforeSend: function () {
+          $("#btn_signup").val("注册中...");
+        },
+        success: function (r) {
+          layer.msg(r.msg);
+          if (r.code == 1) {
+            location.href = "{:mac_url('user/login')}";
+          } else {
+            $("#verify_img").click();
+          }
+        },
+      });
+    });
+    $("#btn_send_sms").click(function () {
+      var ac = $('input[name="ac"]').val();
+      var to = $('input[name="to"]').val();
+      if (ac == "email") {
+        var pattern =
+          /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        var ex = pattern.test(to);
+        if (!ex) {
+          layer.msg("{:platform_lang('platform/user/titp_email_error')}");
+          return;
+        }
+      } else if (ac == "phone") {
+        var pattern = /^[1][0-9]{10}$/;
+        var ex = pattern.test(to);
+        if (!ex) {
+          layer.msg("{:platform_lang('platform/user/titp_phone_error')}");
+          return;
+        }
+      } else {
+        layer.msg("{:platform_lang('platform/user/titp_var_error')}");
+        return;
+      }
+
+      settime(this);
+      var data = $("#madouym-signup").serialize();
+
+      $.ajax({
+        url: "{:mac_url('user/reg_msg')}",
+        type: "post",
+        dataType: "json",
+        data: data,
+        beforeSend: function () {
+          //开启loading
+        },
+        success: function (r) {
+          layer.msg(r.msg);
+        },
+        complete: function () {
+          //结束loading
+        },
+      });
+    });
+  });
+</script>

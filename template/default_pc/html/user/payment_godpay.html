@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    {:platform_lang('platform/user_godpay')} -
+    {:platform_lang('platform/user')} - {$maccms.site_name}
+  </title>
+  <meta name="keywords" content="{:platform_lang('platform/user')},{$maccms.site_keywords}" />
+  <meta name="description" content="{$maccms.site_description}" />
+  {include file="user/include"}
+</head>
+
+<body class="{$maccms['html_hue']} fed-min-width">
+  {include file="system/headtop"}
+  <div class="container">
+    {include file="system/search"} {include file="system/headmeun"}
+    <div class="fed-min">
+      <div class="userTitle">
+        {:platform_lang('platform/user/payment_godpay/title')}
+      </div>
+      <div class="fed-userBody">
+        <div class="leftBox">{include file="user/menu"}</div>
+        <div class="rightBox">
+          <div class="payBox">
+            <form method="post" target="_blank" action="{:url('user/gopay')}">
+              <input type="hidden" name="order_id" value="{$info.order_id}" />
+              <input type="hidden" name="order_code" value="{$info.order_code}" />
+              <input type="hidden" name="order_time" value="{$info.order_time}" />
+              <ul class="fed-user-list fed-part-rows fed-back-whits">
+                <li class="fed-padding-x fed-part-rows fed-line-bottom">
+                  <p class="title">
+                    {:platform_lang('platform/user/pay_order_num')}：
+                  </p>
+                  <div class="msg">{$order.order_code}</div>
+                </li>
+                <li class="fed-padding-x fed-part-rows fed-line-bottom">
+                  <p class="title">
+                    {:platform_lang('platform/user/pay_order_amount')}：
+                  </p>
+                  <div class="msg">
+                    {:platform_lang('platform/user/pay_order_price_unit',[$order.order_price])}
+                  </div>
+                </li>
+                <li class="fed-padding-x fed-part-rows fed-line-bottom">
+                  <p class="title">
+                    帳戶：
+                  </p>
+                  <div class="msg">
+                    {$payment.pay_url}
+                  </div>
+                </li>
+                <li class="fed-padding-x fed-part-rows fed-line-bottom">
+                  <p class="title">
+                    {:platform_lang('platform/user/payment_godpay/qrcode')}：
+                  </p>
+                  <div class="payCode">
+                    <img src="{$payment.code_url}" />
+                  </div>
+                </li>
+              </ul>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function check() {
+      $.get(
+        "{:url('user/order_info')}" + "?order_id={$order.order_id}",
+        function (data) {
+          if (data.info.order_status == 1) {
+            layer.msg("{:platform_lang('platform/user/titp_pay_success')}");
+            window.location.href = "{:url('user/index')}";
+          }
+        }
+      );
+    }
+    $(function () {
+      setInterval(function () {
+        check();
+      }, 5000); //5秒查询一次支付是否成功
+    });
+
+    $(".face").imageUpload({
+      formAction: "{:url('user/portrait')}",
+      inputFileName: "file",
+      browseButtonValue: "",
+      browseButtonClass:
+        "btn btn-default btn-xs fed-user-alter fed-part-roun fed-icon-font fed-icon-xiugai",
+      automaticUpload: true,
+      hideDeleteButton: true,
+      hover: true,
+    });
+    $(".jQuery-image-upload-controls").mouseenter(function () {
+      $(".jQuery-image-upload-controls").css("display", "block");
+    });
+    $(".jQuery-image-upload-controls").mouseleave(function () {
+      $(".jQuery-image-upload-controls").css("display", "none");
+    });
+    $(".face").on("imageUpload.uploadFailed", function (ev, err) {
+      layer.msg(err);
+    });
+  </script>
+  {include file="system/footer"}
+</body>
+
+</html>

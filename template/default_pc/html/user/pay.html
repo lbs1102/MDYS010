@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    {:platform_lang('platform/user_pay')} - {:platform_lang('platform/user')}
+    - {$maccms.site_name}
+  </title>
+  <meta name="keywords" content="{:platform_lang('platform/user')},{$maccms.site_keywords}" />
+  <meta name="description" content="{$maccms.site_description}" />
+  {include file="user/include"}
+</head>
+
+<body class="{$maccms['html_hue']} noIndex">
+  {include file="system/headtop"}
+  <div class="container">
+    {include file="system/search"} {include file="system/headmeun"}
+    <div class="fed-min">
+      <div class="fed-userBody">
+        <div class="leftBox">{include file="user/menu"}</div>
+        <div class="rightBox">
+          <div class="payBox">
+            <form method="post" action="{:mac_url('user/gopay')}">
+              <input type="hidden" name="order_id" value="{$info.order_id}" />
+              <input type="hidden" name="order_code" value="{$info.order_code}" />
+              <ul class="fed-user-list fed-part-rows fed-back-whits">
+                <li class="fed-padding-x fed-part-rows fed-line-bottom">
+                  <div class="
+                        fed-user-input fed-visible fed-font-xvi fed-part-rows
+                      ">
+                    <p class="title">
+                      {:platform_lang('platform/user/pay/pay_order_num')}
+                    </p>
+                    <div class="msg">{$info.order_code}</div>
+                  </div>
+                </li>
+                <li class="fed-padding-x fed-part-rows fed-line-bottom">
+                  <div class="
+                        fed-user-input fed-visible fed-font-xvi fed-part-rows
+                      ">
+                    <p class="title">
+                      {:platform_lang('platform/user/pay/pay_order_amount')}
+                    </p>
+                    <div class="msg">
+                      {:platform_lang('platform/user/pay/pay_order_amount_unit',[$info.order_price])}
+                    </div>
+                  </div>
+                </li>
+                <li class="fed-padding-x fed-part-rows fed-line-bottom">
+                  <p class="title">
+                    {:platform_lang('platform/user/pay/pay_order_way')}
+                  </p>
+                  <!-- 主選單 -->
+                  <select id="selSort" class="patySel" name="payment">
+                    {if$config['zf777pay']['appid']!=''}
+                    <option value="zf777pay" id="payment1">
+                      {:platform_lang('platform/user/pay/777pay')}
+                    </option>
+                    {/if}
+                    {if$config['godpay']['appid']!=''}
+                    <option value="godpay" id="payment2">
+                      {:platform_lang('platform/user/pay/godpay')}
+                    </option>
+                    {/if}
+                  </select>
+                  {if($config['zf777pay']['appid']=='' && $config['godpay']['appid']=='')}支付未启用{/if}
+                  <!-- 777支付子選單 -->
+                  {if$config['zf777pay']['appid']!=''}
+                  <select id="zf777pay" class="patySel" name="paytype" style="display: none">
+                    <option value="2">Momopay</option>
+                    <option value="1">Zalopay</option>
+                    <option value="3">vietcombank</option>
+                    <option value="4">vietinbankipay</option>
+                    <!--  
+                    <option value="5">ViettelPay</option>                          
+                    <option value="6">TPBank</option> 
+                    -->
+                    <option value="7">ACBBank</option>
+                  </select>
+                  {/if}
+                  <!-- Godpay支付子選單 -->
+                  {if$config['godpay']['appid']!=''}
+                  <select id="godpay" class="patySel" name="paytype" style="display: none">
+                    <option value="1">VUSDT_ERC20</option>
+                    <option value="2">VUSDT_TRON</option>
+                  </select>
+                  {/if}
+                </li>
+
+                <li class="fed-padding-x fed-part-rows">
+                  <button id="btn_submit">
+                    {:platform_lang('platform/user/pay_btn')}
+                  </button>
+                </li>
+              </ul>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+      showCont();
+      $.cookie("paysel") != "" ? $("#selSort").val($.cookie("paysel")) : null
+      $("#selSort").change(function () {
+        let selData = $("#selSort").val();
+        $.cookie("paysel", selData);
+        switch (selData) {
+          case "zf777pay":
+            $("#zf777pay").show();
+            $("#godpay").hide();
+            break;
+          case "godpay":
+            $("#zf777pay").hide();
+            $("#godpay").show();
+            break;
+          default:
+            break;
+        }
+      });
+    });
+
+    function showCont() {
+      switch ($.cookie("paysel")) {
+        case "zf777pay":
+          $("#zf777pay").show();
+          $("#godpay").hide();
+          break;
+        case "godpay":
+          $("#zf777pay").hide();
+          $("#godpay").show();
+          break;
+        default:
+          $("#zf777pay").show();
+          $("#godpay").hide();
+          break;
+      }
+    }
+
+    $(".face").imageUpload({
+      formAction: "{:url('user/portrait')}",
+      inputFileName: "file",
+      browseButtonValue: "",
+      browseButtonClass:
+        "btn btn-default btn-xs fed-user-alter fed-part-roun fed-icon-font fed-icon-xiugai",
+      automaticUpload: true,
+      hideDeleteButton: true,
+      hover: true,
+    });
+    $(".jQuery-image-upload-controls").mouseenter(function () {
+      $(".jQuery-image-upload-controls").css("display", "block");
+    });
+    $(".jQuery-image-upload-controls").mouseleave(function () {
+      $(".jQuery-image-upload-controls").css("display", "none");
+    });
+    $(".face").on("imageUpload.uploadFailed", function (ev, err) {
+      alert(err);
+    });
+  </script>
+  {include file="system/footer"} {include file="system/M_menu"}
+</body>
+
+</html>

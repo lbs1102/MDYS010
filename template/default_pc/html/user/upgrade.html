@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+        {:platform_lang('platform/user_upgrade')} - {$maccms.site_name}
+    </title>
+    <meta name="keywords" content="{:platform_lang('platform/user')},{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" /> {include file="user/include"}
+</head>
+
+<body class="{$maccms['html_hue']} recharge">
+    {include file="system/headtop"}
+    <div class="container">
+        {include file="system/search"} {include file="system/headmeun"}
+        <div class="fed-min">
+            <div class="fed-userBody">
+                <div class="leftBox">{include file="user/menu"}</div>
+                <div class="rightBox">
+                    <div class="recharge">
+                        <div class="chSel" id="chSel">
+                            <ul>
+                                <li class="on">{:platform_lang('platform/user/upgrade/vip_by_coin')}</li>
+                                <li>{:platform_lang('platform/user/upgrade/vip_by_cash')}</li>
+                            </ul>
+                        </div>
+
+                        {include file="user/userCard"}
+                        <div class="list" id="rechList">
+                            <form class="fed-user-form fed-user-info fed-part-rows point on" action="{:mac_url('user/upgrade')}">
+                                <ul>
+                                    {volist name="group_list" id="vo"}{if condition="$vo.group_id gt 2"}
+                                    <li class="on">
+                                        <div class="grade rechItem" data-id="{$vo.group_id}" data-name="{$vo.group_name}" data-points="{$vo.group_points_day}" data-long="day" data-prompttext="{:platform_lang('platform/user/upgrade/titp_point_upgrade',[$vo.group_name,$vo.group_points_day])}">
+                                            <p class="cardName">
+                                                {:platform_lang('platform/user/upgrade/upgrade_type_1')}
+                                            </p>
+                                            <div class="deadline">
+                                                {:platform_lang('platform/user/upgrade/upgrade_day',[$group_day_list.site_time_0])}
+                                            </div>
+                                            <p class="cardPay">
+                                                {:platform_lang('platform/user/upgrade/upgrade_point_unit',[$vo.group_points_day])}
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="grade rechItem" data-id="{$vo.group_id}" data-name="{$vo.group_name}" data-points="{$vo.group_points_week}" data-long="week" data-prompttext="{:platform_lang('platform/user/upgrade/titp_point_upgrade',[$vo.group_name,$vo.group_points_week])}">
+                                            <p class="cardName">
+                                                {:platform_lang('platform/user/upgrade/upgrade_type_2')}
+                                            </p>
+                                            <div class="deadline">
+                                                {:platform_lang('platform/user/upgrade/upgrade_day',[$group_day_list.site_time_1])}
+                                            </div>
+                                            <p class="cardPay">
+                                                {:platform_lang('platform/user/upgrade/upgrade_point_unit',[$vo.group_points_week])}
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="grade rechItem" data-id="{$vo.group_id}" data-name="{$vo.group_name}" data-points="{$vo.group_points_month}" data-long="month" data-prompttext="{:platform_lang('platform/user/upgrade/titp_point_upgrade',[$vo.group_name,$vo.group_points_month])}">
+                                            <p class="cardName">
+                                                {:platform_lang('platform/user/upgrade/upgrade_type_3')}
+                                            </p>
+                                            <div class="deadline">
+                                                {:platform_lang('platform/user/upgrade/upgrade_day',[$group_day_list.site_time_2])}
+                                            </div>
+                                            <p class="cardPay">
+                                                {:platform_lang('platform/user/upgrade/upgrade_point_unit',[$vo.group_points_month])}
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="grade rechItem" data-id="{$vo.group_id}" data-name="{$vo.group_name}" data-points="{$vo.group_points_year}" data-long="year" data-prompttext="{:platform_lang('platform/user/upgrade/titp_point_upgrade',[$vo.group_name,$vo.group_points_year])}">
+                                            <p class="cardName">
+                                                {:platform_lang('platform/user/upgrade/upgrade_type_4')}
+                                            </p>
+                                            <div class="deadline">
+                                                {:platform_lang('platform/user/upgrade/upgrade_day',[$group_day_list.site_time_3])}
+                                            </div>
+                                            <p class="cardPay">
+                                                {:platform_lang('platform/user/upgrade/upgrade_point_unit',[$vo.group_points_year])}
+                                            </p>
+                                        </div>
+                                    </li>
+                                    {/if}{/volist}
+                                </ul>
+                            </form>
+
+                            <form class="fed-user-form fed-user-info fed-part-rows cash" method="post">
+                                <ul>
+                                    <li>
+                                        <div class="fed-subm-group fed-part-eonebtn-pay btn-pay rechItem" data-price="{$GLOBALS['config']['site']['site_point_0']}" data-day="{:$group_day_list.site_time_0}">
+                                            <p class="cardName">
+                                                {:platform_lang('platform/user/upgrade/upgrade_type_1')}
+                                            </p>
+                                            <div class="deadline">
+                                                {:platform_lang('platform/user/upgrade/upgrade_day',[$group_day_list.site_time_0])}
+                                            </div>
+                                            <p class="cardPay">
+                                                {:platform_lang('platform/user/upgrade/upgrade_unit',[$GLOBALS['config']['site']['site_point_0']])}
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="fed-subm-group fed-part-eonebtn-pay btn-pay rechItem" data-price="{$GLOBALS['config']['site']['site_point_1']}" data-day="{:$group_day_list.site_time_1}">
+                                            <p class="cardName">
+                                                {:platform_lang('platform/user/upgrade/upgrade_type_2')}
+                                            </p>
+                                            <div class="deadline">
+                                                {:platform_lang('platform/user/upgrade/upgrade_day',[$group_day_list.site_time_1])}
+                                            </div>
+                                            <p class="cardPay">
+                                                {:platform_lang('platform/user/upgrade/upgrade_unit',[$GLOBALS['config']['site']['site_point_1']])}
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="fed-subm-group fed-part-eonebtn-pay btn-pay rechItem" data-price="{$GLOBALS['config']['site']['site_point_2']}" data-day="{:$group_day_list.site_time_2}">
+                                            <p class="cardName">
+                                                {:platform_lang('platform/user/upgrade/upgrade_type_3')}
+                                            </p>
+                                            <div class="deadline">
+                                                {:platform_lang('platform/user/upgrade/upgrade_day',[$group_day_list.site_time_2])}
+                                            </div>
+                                            <p class="cardPay">
+                                                {:platform_lang('platform/user/upgrade/upgrade_unit',[$GLOBALS['config']['site']['site_point_2']])}
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="fed-subm-group fed-part-eonebtn-pay btn-pay rechItem" data-price="{$GLOBALS['config']['site']['site_point_3']}" data-day="{:$group_day_list.site_time_3}">
+                                            <p class="cardName">
+                                                {:platform_lang('platform/user/upgrade/upgrade_type_4')}
+                                            </p>
+                                            <div class="deadline">
+                                                {:platform_lang('platform/user/upgrade/upgrade_day',[$group_day_list.site_time_3])}
+                                            </div>
+                                            <p class="cardPay">
+                                                {:platform_lang('platform/user/upgrade/upgrade_unit',[$GLOBALS['config']['site']['site_point_3']])}
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+
+                        <div class="priv">
+                            <div class="title">
+                                <div class="titleLine"></div>
+                                <p>{:platform_lang('platform/user/upgrade/vip_content')}</p>
+                                <div class="titleLine right"></div>
+                            </div>
+                            <div class="privList lv_1" id="privList">
+                                <ul>
+                                    <li class="lv_1">
+                                        <div class="icon route"></div>
+                                        <p>{:platform_lang('platform/user/upgrade/vip_welfare_1')}</p>
+                                    </li>
+                                    <li class="lv_1">
+                                        <div class="icon money"></div>
+                                        <p>{:platform_lang('platform/user/upgrade/vip_welfare_2')}</p>
+                                    </li>
+                                    <li class="lv_1">
+                                        <div class="icon gift"></div>
+                                        <p>{:platform_lang('platform/user/upgrade/vip_welfare_3')}</p>
+                                    </li>
+                                    <li class="lv_1">
+                                        <div class="icon crown"></div>
+                                        <p>{:platform_lang('platform/user/upgrade/vip_welfare_4')}</p>
+                                    </li>
+                                    <li class="lv_1">
+                                        <div class="icon video"></div>
+                                        <p>{:platform_lang('platform/user/upgrade/vip_welfare_5')}</p>
+                                    </li>
+                                    <li class="lv_2">
+                                        <div class="icon hd"></div>
+                                        <p>{:platform_lang('platform/user/upgrade/vip_welfare_6')}</p>
+                                    </li>
+                                    <li class="lv_3">
+                                        <div class="icon girl"></div>
+                                        <p>{:platform_lang('platform/user/upgrade/vip_welfare_7')}</p>
+                                    </li>
+                                    <li class="lv_4">
+                                        <div class="icon persons"></div>
+                                        <p>{:platform_lang('platform/user/upgrade/vip_welfare_8')}</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="privPay">
+                                <p id="pay"></p>
+                                <button id="payBtn">{:platform_lang('platform/user/upgrade/vip_buy')}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // ===== 會員購買顯示 & 功能 =====
+        let group_id, long, prompttext, price, day, selGroup;
+        pointFir();
+
+        // 積分or現金切換選擇
+        $('#chSel li').click(function () {
+            let index = $('#chSel li').index(this);
+            $('#chSel li,#rechList form,#rechList li').removeClass('on');
+            $(`#rechList form:eq(${index})`).addClass('on');
+            $(this).addClass('on');
+
+            if (index == 0) {
+                pointFir();
+                selGroup = 0;
+                $('#rechList .point li:eq(0)').addClass('on');
+                $('#rechList .point').scrollLeft(0);
+            } else {
+                cashFir();
+                selGroup = 1;
+                $('#rechList .cash li:eq(0)').addClass('on');
+                $('#rechList .cash').scrollLeft(0);
+            }
+        })
+
+        // 所有清單選擇
+        $('#rechList li').click(function () {
+            $('#rechList li').removeClass('on');
+            $(this).addClass('on');
+        })
+
+        // 積分兌換選擇
+        $('.grade').click(function () {
+            var that = $(this);
+            group_id = that.attr("data-id");
+            long = that.attr("data-long");
+            prompttext = that.attr("data-prompttext");
+            $('#pay').text($(this).find('p').text());
+            selGroup = 0;
+
+            let index = $('#rechList .grade').index(this);
+            $('#privList').removeClass('lv_1 lv_2 lv_3 lv_4');
+            $('#privList').addClass(`lv_${index + 1}`);
+        })
+
+        // 現金購買選擇
+        $(".btn-pay").click(function () {
+            var that = $(this);
+            price = that.attr("data-price");
+            day = that.attr("data-day");
+
+            if (Number(price) < 1) {
+                return;
+            }
+            if (Number(day) < 1) {
+                return;
+            }
+            $('#pay').text($(this).find('p').text());
+            selGroup = 1;
+
+            let index = $('#rechList .btn-pay').index(this);
+            $('#privList').removeClass('lv_1 lv_2 lv_3 lv_4');
+            $('#privList').addClass(`lv_${index + 1}`);
+        })
+
+        // 購買按鈕送出
+        $("#payBtn").click(function () {
+            selGroup ? cashPay() : pointPay();
+        })
+
+        function pointPay() {
+            layer.confirm(
+                `<h3>${prompttext}</h3>`, {
+                title: "{:platform_lang('platform/user/confirm_title')}",
+                btn: [
+                    "{:platform_lang('platform/user/confirm_btn')}",
+                    "{:platform_lang('platform/user/cancel_btn')}",
+                ], //按钮
+            },
+                function () {
+                    $.ajax({
+                        url: "{:url('user/upgrade')}",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            group_id: group_id,
+                            long: long,
+                        },
+                        beforeSend: function () {
+                            $("#btn_submit").val("loading...");
+                        },
+                        success: function (r) {
+                            layer.msg(r.msg);
+                            if (r.code == 1) {
+                                location.reload();
+                            }
+                        },
+                        complete: function () {
+                            $("#btn_submit").val(
+                                "{:platform_lang('platform/user/titp_submit')}"
+                            );
+                        },
+                    });
+                }
+            );
+        }
+
+        function cashPay() {
+            layer.confirm(
+                "<h3>{:platform_lang('platform/user/upgrade/titp_pay_upgrade')}</h3>", {
+                title: "{:platform_lang('platform/user/confirm_title')}",
+                btn: [
+                    "{:platform_lang('platform/user/confirm_btn')}",
+                    "{:platform_lang('platform/user/cancel_btn')}",
+                ], //按钮
+            },
+                function () {
+                    $.ajax({
+                        url: "{:mac_url('user/buy')}",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            price: price,
+                            flag: "pay",
+                            day: day,
+                        },
+                        beforeSend: function () {
+                            $("#btn_submit_pay").val("loading...");
+                        },
+                        success: function (r) {
+                            if (r.code == 1) {
+                                location.href =
+                                    "{:mac_url('user/pay')}?order_code=" + r.data.order_code;
+                            } else {
+                                layer.msg(r.msg);
+                            }
+                        },
+                        complete: function () {
+                            $("#btn_submit_pay").val(
+                                "{:platform_lang('platform/user/titp_submit')}"
+                            );
+                        },
+                    });
+                }
+            );
+        }
+
+        function pointFir() {
+            let firstSel = $('#rechList .grade:eq(0)');
+            group_id = firstSel.attr("data-id");
+            long = firstSel.attr("data-long");
+            prompttext = firstSel.attr("data-prompttext");
+            $('#pay').text(firstSel.find('p').text());
+
+            $('#privList').removeClass('lv_1 lv_2 lv_3 lv_4');
+            $('#privList').addClass(`lv_1`);
+        }
+
+        function cashFir() {
+            let firstSel = $('#rechList .btn-pay:eq(0)');
+            price = firstSel.attr("data-price");
+            day = firstSel.attr("data-day");
+            $('#pay').text(firstSel.find('p').text());
+            $('#privList').removeClass('lv_1 lv_2 lv_3 lv_4');
+            $('#privList').addClass(`lv_1`);
+        }
+
+
+        // ===== 上傳圖像 =====
+        $(".face").imageUpload({
+            formAction: "{:url('user/portrait')}",
+            inputFileName: "file",
+            browseButtonValue: "",
+            browseButtonClass: "btn btn-default btn-xs fed-user-alter fed-part-roun fed-icon-font fed-icon-xiugai",
+            automaticUpload: true,
+            hideDeleteButton: true,
+            hover: true,
+        });
+        $(".jQuery-image-upload-controls").mouseenter(function () {
+            $(".jQuery-image-upload-controls").css("display", "block");
+        });
+        $(".jQuery-image-upload-controls").mouseleave(function () {
+            $(".jQuery-image-upload-controls").css("display", "none");
+        });
+        $(".face").on("imageUpload.uploadFailed", function (ev, err) {
+            layer.msg(err);
+        });
+
+
+        
+
+        /*
+        $(".grade").click(function() {
+            var that = $(this);
+            var group_id = that.attr("data-id");
+            var long = that.attr("data-long");
+            var prompttext = that.attr("data-prompttext");
+            
+            layer.confirm(
+                `<h3>${prompttext}</h3>`, {
+                    title: "{:platform_lang('platform/user/confirm_title')}",
+                    btn: [
+                        "{:platform_lang('platform/user/confirm_btn')}",
+                        "{:platform_lang('platform/user/cancel_btn')}",
+                    ], //按钮
+                },
+                function() {
+                    $.ajax({
+                        url: "{:url('user/upgrade')}",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            group_id: group_id,
+                            long: long,
+                        },
+                        beforeSend: function() {
+                            $("#btn_submit").val("loading...");
+                        },
+                        success: function(r) {
+                            layer.msg(r.msg);
+                            if (r.code == 1) {
+                                location.reload();
+                            }
+                        },
+                        complete: function() {
+                            $("#btn_submit").val(
+                                "{:platform_lang('platform/user/titp_submit')}"
+                            );
+                        },
+                    });
+                }
+            );
+        });
+
+        $(".btn-pay").click(function() {
+            var that = $(this);
+            var price = that.attr("data-price");
+            var day = that.attr("data-day");
+            if (Number(price) < 1) {
+                return;
+            }
+            if (Number(day) < 1) {
+                return;
+            }
+            layer.confirm(
+                "<h3>{:platform_lang('platform/user/upgrade/titp_pay_upgrade')}</h3>", {
+                    title: "{:platform_lang('platform/user/confirm_title')}",
+                    btn: [
+                        "{:platform_lang('platform/user/confirm_btn')}",
+                        "{:platform_lang('platform/user/cancel_btn')}",
+                    ], //按钮
+                },
+                function() {
+                    $.ajax({
+                        url: "{:mac_url('user/buy')}",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            price: price,
+                            flag: "pay",
+                            day: day,
+                        },
+                        beforeSend: function() {
+                            $("#btn_submit_pay").val("loading...");
+                        },
+                        success: function(r) {
+                            if (r.code == 1) {
+                                location.href =
+                                    "{:mac_url('user/pay')}?order_code=" + r.data.order_code;
+                            } else {
+                                layer.msg(r.msg);
+                            }
+                        },
+                        complete: function() {
+                            $("#btn_submit_pay").val(
+                                "{:platform_lang('platform/user/titp_submit')}"
+                            );
+                        },
+                    });
+                }
+            );
+        });
+        */
+    </script>
+    {include file="system/footer"} {include file="system/M_menu"}
+</body>
+
+
+</html>

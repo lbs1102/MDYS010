@@ -1,0 +1,90 @@
+<nav>
+  <div class="navigation">
+    <button class="button">
+      <span class="icon">
+        <span class="ico-bar"></span>
+        <span class="ico-bar"></span>
+        <span class="ico-bar"></span>
+      </span>
+    </button>
+    <ul class="primary pc" id="primaryPC">
+      <li class="{if condition='$maccms.aid eq 1'}selected{/if}">
+        <a href="/">{:platform_lang('platform/system/headmeun/homepage')}</a>
+      </li>
+      <li class="{if$maccms.aid==30||$maccms.aid==34}selected{/if}">
+        <a href="{:mac_url('topic/index')}">{:platform_lang('platform/system/headmeun/topic')}</a>
+      </li>
+      <li class="{if strpos($_SERVER['REQUEST_URI'],'new')}selected{/if}">
+        <a href="{:mac_url('label/new')}">{:platform_lang('platform/system/headmeun/newest')}</a>
+      </li>
+      <li class="{if strpos($_SERVER['REQUEST_URI'],'hot')}selected{/if}">
+        <a href="{:mac_url('label/hot')}">{:platform_lang('platform/system/headmeun/hottest')}</a>
+      </li>
+      <li class="{if strpos($_SERVER['REQUEST_URI'],'sort')}selected{/if}">
+        <a href="{:mac_url('label/sort')}">{:platform_lang('platform/system/headmeun/sort')}</a>
+      </li>
+    </ul>
+
+    <ul class="primary web" id="primaryWeb">
+      <li class="on" data-id="0">
+        <a href="/">{:platform_lang('recommend')}</a>
+      </li>
+      {maccms:type ids="parent" order="asc" by="sort"}
+      <li data-id="{$vo.type_id}">
+        {if (cookie('platform_lang')=='zh-tw'||cookie('platform_lang')=='zh-cn')}
+        <a href="{:mac_url_type($vo)}">{$vo.type_name}</a>
+        {elseif cookie('platform_lang')=='en-us'}
+        <a href="{:mac_url_type($vo)}">{$vo.type_en}</a>        
+        {elseif cookie('platform_lang')=='vi-vn'}
+        <a href="{:mac_url_type($vo)}">{$vo.type_vi}</a>
+        {/if}
+      </li>
+      {/maccms:type}
+      <!-- <li class="on">
+        <a href="/">{:platform_lang('recommend')}</a>
+      </li>
+      <li>
+        <a href="/index.php/vod/type/id/1.html">{:platform_lang('platform/system/headmeun/type_domestic')}</a>
+      </li>
+      <li>
+        <a href="/index.php/vod/type/id/2.html">{:platform_lang('platform/system/headmeun/type_japanese_korean')}</a>
+      </li>
+      <li>
+        <a href="/index.php/vod/type/id/3.html">{:platform_lang('platform/system/headmeun/type_western')}</a>
+      </li>
+      <li>
+        <a href="/index.php/vod/type/id/4.html">{:platform_lang('platform/system/headmeun/type_anime')}</a>
+      </li>
+      <li>
+        <a href="/index.php/vod/type/id/5.html">{:platform_lang('platform/system/headmeun/type_chinese')}</a>
+      </li>
+      <li>
+        <a href="/index.php/vod/type/id/6.html">{:platform_lang('platform/system/headmeun/type_asia')}</a>
+      </li>
+      <li>
+        <a href="/index.php/vod/type/id/7.html">{:platform_lang('platform/system/headmeun/type_vip')}</a>
+      </li> -->
+    </ul>
+
+    <div class="search">
+      <div class="icon">
+        <img src="/MDassets/img/search.png" />
+      </div>
+      <form id="search_form" action="{:mac_url('vod/search')}" method="get" data-url="{:mac_url('vod/search')}">
+        <button type="submit" class="search-button">
+          {:platform_lang('platform/system/headmeun/go')}
+        </button>
+        <div class="search-text">
+          <input type="text" name="wd" />
+        </div>
+      </form>
+    </div>
+
+  </div>
+</nav>
+
+<style>
+  ul.primary.web {
+    overflow-x: scroll;
+  }
+</style>

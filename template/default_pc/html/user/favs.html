@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{:platform_lang('platform/user_favs')} - {:platform_lang('platform/user')} - {$maccms.site_name}</title>
+    <meta name="keywords" content="{:platform_lang('platform/user')},{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" /> {include file="user/include"}
+    <script>
+        var vod_arr = `{volist name="all_list" id="vo"}{"link":"{$vo.data.link}","name":"{$vo.data.name}","pic":"{$vo.data.pic}"},{/volist}`;
+        vod_arr = vod_arr.trim();
+        vod_arr = vod_arr.substring(0, vod_arr.length - 1);
+        vod_arr = `[${vod_arr}]`;
+        var mvData = JSON.parse(vod_arr);
+        let mvLen = mvData.length;
+        console.log(mvData);
+
+        // 影片模板                 
+        function videoTemplate(link, name, pic) {
+            return `<li>
+                        <a href="${link}">
+                            <div class="picBox">
+                                <img class="thumb lazy-load" src="${pic}" alt="${name}" />
+                            </div>
+                            <div class="title">${name}</div>
+                        </a>
+                    </li>`
+        }
+    </script>
+</head>
+
+<body class="{$maccms['html_hue']} noIndex">
+    {include file="system/headtop"}
+    <div class="container recordMv">
+        {include file="system/search"} {include file="system/headmeun"}
+        <div class="fed-min">
+            <!-- <div class="userTitle">{:platform_lang('platform/user/favs/title')}</div> -->
+            <div class="fed-userBody">
+                <div class="leftBox">
+                    {include file="user/menu"}
+                </div>
+                <div class="rightBox">
+                    <div class="favTool">
+                        <div class="btnBox">
+                            <div class="clearBtn" id="btnClear">{:platform_lang('platform/user/clear_btn')}</div>
+                        </div>
+                        <div class="floatTag flex">
+                            <div class="total">{:platform_lang('platform/vod/type/type_vod_count', [$all_count])}</div>
+                            <div class="nowShow">
+                                {:platform_lang('platform/vod/type/show_vod_count')}<span id="nowShow"></span>{:platform_lang('platform/label/sort/videos')}
+                            </div>
+                        </div>
+                    </div>
+
+                    {if$__PAGING__.page_total == 0}
+                    <div class="noData">
+                        <div class="icon">
+                            <img src="/MDassets/img/noData.png">
+                        </div>
+                        <p>{:platform_lang('platform/user/favs/empty_list')}</p>
+                    </div>
+                    {/if}
+
+                    <div class="recordList">
+                        <div class="list-videos pc">
+                            <ul>
+                                {volist name="list" id="vo"}
+                                <li>
+                                    <a href="{$vo.data.link}">
+                                        <div class="picBox">
+                                            <img class="thumb lazy-load" src="{$vo.data.pic}" alt="{$vo.vod_name}" />
+                                        </div>
+                                        <div class="title">{$vo.data.name}</div>
+                                    </a>
+                                </li> {/volist}
+                            </ul>
+                        </div>
+
+                        <div class="list-videos web">
+                            <ul id="min_videoList"></ul>
+                        </div>
+                    </div>
+
+                    <div class="pageTag">
+                        {if$__PAGING__.page_total>0}
+                        <div class="fed-page-info fed-text-center">
+                            <a class="fed-btns-info fed-rims-info fed-hide fed-show-xs-inline{if$__PAGING__['page_current']==1} fed-btns-disad{/if}" href="{$__PAGING__.page_url|mac_url_page=1}">{:platform_lang('platform/user/first_page_btn')}</a>
+                            <a class="fed-btns-info fed-rims-info{if$__PAGING__['page_current']==1} fed-btns-disad{/if}" href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_prev}">{:platform_lang('platform/user/previous_page_btn')}</a> {if$__PAGING__.page_current>3}
+                            <a class="fed-btns-info fed-rims-info fed-hide fed-show-sm-inline" href="{$__PAGING__.page_url|mac_url_page=1}">1</a>
+                            <a class="fed-btns-info fed-rims-info fed-hide fed-show-sm-inline fed-btns-disad" href="javascript:;">...</a> {/if} {maccms:foreach name="$__PAGING__.page_num" id="num"}
+                            <a class="fed-btns-info fed-rims-info fed-hide fed-show-sm-inline{if$__PAGING__['page_current']==$num} fed-btns-green{/if}" href="{if$__PAGING__['page_current']==$num}javascript:;{else}{$__PAGING__.page_url|mac_url_page=$num}{/if}">{$num}</a> {/maccms:foreach} {if$__PAGING__.page_current
+                            <($__PAGING__.page_total-2)} <a class="fed-btns-info fed-rims-info fed-hide fed-show-sm-inline fed-btns-disad" href="javascript:;">...</a>
+                                <a class="fed-btns-info fed-rims-info fed-hide fed-show-sm-inline" href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_total}">{$__PAGING__.page_total}</a> {/if}
+                                <a class="fed-btns-info fed-rims-info fed-hide fed-show-xs-inline" href="javascript:;">{$__PAGING__.page_current}/{$__PAGING__.page_total}</a>
+                                <a class="fed-btns-info fed-rims-info{if$__PAGING__['page_current']==$__PAGING__.page_total} fed-btns-disad{/if}" href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_next}">{:platform_lang('platform/user/next_page_btn')}</a>
+                                <a class="fed-btns-info fed-rims-info fed-hide fed-show-xs-inline{if$__PAGING__['page_current']==$__PAGING__.page_total} fed-btns-disad{/if}" href="{$__PAGING__.page_url|mac_url_page=$__PAGING__.page_total}">{:platform_lang('platform/user/last_page_btn')}</a>
+                        </div> {/if}{if$__PAGING__.record_total!=0}
+                        <script type="text/javascript">
+                            if (document.getElementById('fed-now')) document.getElementById('fed-now').innerHTML = '{$__PAGING__.page_current}';
+                            if (document.getElementById('fed-count')) document.getElementById('fed-count').innerHTML = '{$__PAGING__.record_total}';
+                        </script> {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function delData(ids, all) {
+            var msg =
+                "{:platform_lang('platform/user/del_log')}";
+            if (all == 1) {
+                msg =
+                    "{:platform_lang('platform/user/del_log_all')}";
+            }
+            layer.confirm('<h3>' + msg + '</h3>', {
+                title: "{:platform_lang('platform/user/confirm_title')}",
+                btn: ["{:platform_lang('platform/user/confirm_btn')}", "{:platform_lang('platform/user/cancel_btn')}"] //按钮
+            }, function () {
+                $.post("{:url('user/ulog_del')}", {
+                    ids: ids,
+                    type: 2,
+                    all: all
+                }, function (data) {
+                    if (data.code == '1') {
+                        layer.msg("{:platform_lang('platform/user/titp_del_success')}");
+                        location.reload();
+                    } else {
+                        layer.msg("{:platform_lang('platform/user/titp_del_false')}" + data.msg);
+                    }
+                }, 'json')
+
+            });
+        }
+        $("#btnClear").click(function () {
+            delData('', 1);
+        });
+        $("#btnDel").click(function () {
+            var ids = MAC.CheckBox.Ids('ids[]');
+            if (ids == '') {
+                layer.msg("{:platform_lang('platform/user/titp_data_select_error')}");
+                return;
+            }
+            delData(ids, 0);
+        });
+
+        $(".face").imageUpload({
+            formAction: "{:url('user/portrait')}",
+            inputFileName: 'file',
+            browseButtonValue: '',
+            browseButtonClass: 'btn btn-default btn-xs fed-user-alter fed-part-roun fed-icon-font fed-icon-xiugai',
+            automaticUpload: true,
+            hideDeleteButton: true,
+            hover: true
+        })
+        $(".jQuery-image-upload-controls").mouseenter(function () {
+            $(".jQuery-image-upload-controls").css("display", "block");
+        });
+        $(".jQuery-image-upload-controls").mouseleave(function () {
+            $(".jQuery-image-upload-controls").css("display", "none");
+        });
+        $(".face").on("imageUpload.uploadFailed", function (ev, err) {
+            layer.msg(err);
+        });
+
+
+        // 自動加載影片列表(移動裝置下)
+        let pagNum = 0;
+        let pagSw = true;
+        let winSp = $('.container').height() - $(window).height();
+
+        if (mvLen >= 12) {
+            for (let num = 0; num < 3; num++) {
+                pagNum++;
+                addVideo();
+            }
+        } else {
+            pagNum = mvLen % 4 + 1;
+            addVideo_one();
+        }
+
+        $('#nowShow').text($('#min_videoList li').length);
+
+        $(window).scroll(function () {
+            let move = $(window).scrollTop();
+            if (move > winSp - 50 && pagSw) {
+                pagNum++;
+                pagSw = false;
+                pagNum < mvLen / 4 ? addVideo() : addVideo_one();
+                $('#nowShow').text($('#min_videoList li').length);
+            }
+        })
+
+        function addVideo() {
+            for (let num = (pagNum - 1) * 4; num < pagNum * 4; num++) {
+                let now = mvData[num]
+                $('#min_videoList').append(videoTemplate(now.link, now.name, now.pic));
+            }
+            winSp = $('.container').height() - $(window).height();
+            pagSw = true;
+        }
+
+        function addVideo_one() {
+            for (let num = $('#min_videoList li').length; num < mvLen; num++) {
+                let now = mvData[num]
+                $('#min_videoList').append(videoTemplate(now.link, now.name, now.pic));
+            }
+            winSp = $('.container').height() - $(window).height();
+            pagSw = true;
+        }
+    </script>
+    {include file="system/footer"} {include file="system/M_menu"}
+</body>
+
+</html>

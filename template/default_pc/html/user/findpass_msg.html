@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    {:platform_lang('platform/user_findpass_msg')} - {:platform_lang('platform/user')} - {$maccms.site_name}
+  </title>
+  <meta name="keywords" content="{:platform_lang('platform/user')},{$maccms.site_keywords}" />
+  <meta name="description" content="{$maccms.site_description}" /> {include file="user/include"}
+  <link rel="stylesheet" href="/MDassets/scss/systemSelf.css?ver={:rand(0,10000)}" />
+</head>
+
+<body class="{$maccms['html_hue']} fed-min-width">
+  <a class="fed-close" href="/"></a>
+  <div class="container">
+    <div class="fed-min">
+      <div class="fed-part-case">
+        <div class="fed-part-layout fed-back-whits fed-part-height" style="min-height: 35rem">
+          <div class="fed-user-login fed-part-core">
+            <form method="post" id="fm" action="">
+              <input type="hidden" name="ac" value="{$param['ac']}" />
+              <div class="fed-list-head fed-part-rows fed-padding">
+                <p class="loginTitle">
+                  {:platform_lang('platform/user/findpass_msg/find_pw',[$param['ac_text']])}
+                </p>
+              </div>
+              <input class="fed-user-text fed-col-xs12" type="text" id="to" name="to" placeholder="{:platform_lang('platform/user/findpass_msg/placeholder_find_pw',[$param['ac_text']])}" />
+
+              <button class="fed-btn" type="button" id="btn_send">
+                {:platform_lang('platform/user/send_verify_btn')}
+              </button>
+            </form>
+            <form method="post" id="fm2" action="">
+              <input type="hidden" name="ac" value="{$param['ac']}" />
+              <div class="fed-list-head fed-part-rows fed-padding">
+                <p class="loginTitle">
+                  {:platform_lang('platform/user/findpass_msg/verify_msg')}
+                </p>
+              </div>
+              <input class="fed-user-text fed-col-xs12" type="text" id="code" name="code" placeholder="{:platform_lang('platform/user/findpass_msg/placeholder_verify')}" />
+              <input class="fed-user-text fed-col-xs12" type="password" id="user_pwd" name="user_pwd" placeholder="{:platform_lang('platform/user/findpass_msg/placeholder_pw')}" maxlength="20" />
+              <input class="fed-user-text fed-col-xs12" type="password" id="user_pwd2" name="user_pwd2" placeholder="{:platform_lang('platform/user/findpass_msg/placeholder_pw_again')}" maxlength="20" />
+
+              <button class="fed-btn" type="button" id="btn_submit">
+                {:platform_lang('platform/user/reset_pw_btn')}
+              </button>
+              <div class="iptLink">
+                <a class="fed-padding fed-col-xs3 fed-text-left" href="{:mac_url('user/login')}">{:platform_lang('platform/user/login_btn')}</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+      $("#btn_send").click(function () {
+        if ($("#to").val() == "") {
+          layer.msg(
+            "{:platform_lang('platform/user/titp_enter',[$param['ac_text']])}"
+          );
+          $("#to").focus();
+          return false;
+        }
+
+        $.ajax({
+          url: "{:mac_url('user/findpass_msg')}",
+          type: "post",
+          dataType: "json",
+          data: $("#fm").serialize(),
+          beforeSend: function () {
+            $("#btn_send").val("loading...");
+          },
+          success: function (r) {
+            layer.msg(r.msg);
+          },
+          complete: function () {
+            $("#verify").click();
+            $("#btn_send").val(
+              "{:platform_lang('platform/user/titp_email_send')}"
+            );
+          },
+        });
+      });
+
+      $("#btn_submit").click(function () {
+        if ($("#to").val() == "") {
+          layer.msg(
+            "{:platform_lang('platform/user/titp_enter',[$param['ac_text']])}"
+          );
+          $("#to").focus();
+          return false;
+        }
+        if ($("#code").val() == "") {
+          layer.msg("{:platform_lang('platform/user/titp_verify_enter')}");
+          $("#code").focus();
+          return false;
+        }
+        if ($("#user_pwd").val() == "") {
+          layer.msg("{:platform_lang('platform/user/titp_new_pw_error')}");
+          $("#user_pwd").focus();
+          return false;
+        }
+        if ($("#user_pwd2").val() == "") {
+          layer.msg("{:platform_lang('platform/user/titp_new_pw_again')}");
+          $("#user_pwd2").focus();
+          return false;
+        }
+        if ($("#user_pwd").val() != $("#user_pwd2").val()) {
+          layer.msg("{:platform_lang('platform/user/titp_pw_different')}");
+          $("#user_pwd2").focus();
+          return false;
+        }
+
+        var data = {
+          ac: '{$param["ac"]}',
+          to: $("#to").val(),
+          code: $("#code").val(),
+          user_pwd: $("#user_pwd").val(),
+          user_pwd2: $("#user_pwd2").val(),
+        };
+        $.ajax({
+          url: "{:mac_url('user/findpass_reset')}",
+          type: "post",
+          dataType: "json",
+          data: data,
+          beforeSend: function () {
+            $("#btn_submit").val("loading...");
+          },
+          success: function (r) {
+            if (r.code == 1) {
+              layer.msg(r.msg);
+              location.href = "{:mac_url('index/index')}";
+            }
+            else {
+              layer.msg(r.msg);
+            }
+          },
+          complete: function () {
+            $("#btn_submit").val(
+              "{:platform_lang('platform/user/titp_reset_pw')}"
+            );
+          },
+        });
+      });
+    });
+  </script>
+  {include file="system/footer"}
+</body>
+
+</html>

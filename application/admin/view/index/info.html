@@ -1,0 +1,18 @@
+<form class="layui-form layui-form-pane" method="post" action="info">
+    <input type="hidden" name="__token__" value="{$Request.token}" />
+    <div class="layui-form-item">
+        <label class="layui-form-label">新密碼：</label>
+        <div class="layui-input-block">
+            <input type="password" class="layui-input" placeholder="" id="admin_pwd" name="admin_pwd">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">確認密碼：</label>
+        <div class="layui-input-block">
+            <input type="password" class="layui-input" placeholder="" id="admin_pwd_ck" name="admin_pwd_ck">
+        </div>
+    </div>
+    <div class="layui-form-item center">
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">修改</button>
+    </div>
+</form>

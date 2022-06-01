@@ -1,0 +1,142 @@
+.footer {
+    background-color: #171b24;
+    margin-top: 80px;
+    @include phone {
+        display: none;
+    }
+    .footer-wrap {
+        max-width: 1200px;
+        padding: 30px 10px 15px 230px;
+        background-color: transparent;
+        position: relative;
+        overflow: unset;
+    }
+    .qrBox {
+        width: 230px;
+        padding: 60px 25px;
+        background: url(/MDassets/img/dlbg.png) no-repeat top center / cover;
+        position: absolute;
+        @include pos(bl, 0);
+        @include rwd(950) {
+            bottom: unset;
+            top: -25px;
+        }
+        li {
+            padding: 12px 20px;
+            border-radius: 5px;
+            background-color: #242831;
+            color: #a0a4ae;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            @include hover {
+                &:hover {
+                    background-color: #363b46;
+                    transform-origin: top left;
+                    .codeImg {
+                        display: block;
+                    }
+                }
+            }
+        }
+        li+li {
+            margin-top: 30px;
+        }
+        .icon {
+            width: 18px;
+            margin-right: 5px;
+        }
+        .codeImg {
+            width: 100%;
+            padding: 10px;
+            position: absolute;
+            bottom: 150%;
+            background-color: #202531;
+            border-radius: 5px;
+            box-shadow: 0 -1px 5px #000;
+            display: none;
+            &::before {
+                content: "";
+                width: 0;
+                height: 0;
+                margin: auto;
+                border-style: solid;
+                border-width: 17.3px 10px 0 10px;
+                border-color: #202531 transparent transparent transparent;
+                position: absolute;
+                @include pos(blr, -17px, 0, 0);
+            }
+        }
+    }
+    .ftTool {
+        padding: 0 20px;
+        .link {
+            margin-bottom: 40px;
+        }
+        ul {
+            display: flex;
+            justify-content: space-around;
+            @include rwd(950) {
+                flex-direction: column;
+            }
+        }
+        li {
+            border-radius: 3px;
+            cursor: pointer;
+            transition: 0.3s;
+            @include hover {
+                &:hover {
+                    background-color: #1e232f;
+                }
+            }
+            a {
+                width: 100%;
+                height: 100%;
+                padding: 15px 20px;
+                display: flex;
+                text-align: left;
+                align-items: center;
+                color: #727680;
+                text-decoration: none;
+                @include rwd(950) {
+                    padding: 15px;
+                }
+            }
+            .icon {
+                width: 50px;
+                flex-shrink: 0;
+                margin-right: 10px;
+                @include rwd(950) {
+                    width: 40px;
+                }
+            }
+            .txt {
+                margin-bottom: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+            }
+            .title {
+                height: 50px;
+                font-size: 2rem;
+                line-height: 2.4rem;
+                margin-bottom: 5px;
+                font-weight: 550;
+                letter-spacing: 2px;
+                display: flex;
+                align-items: center;
+                @include rwd(950) {
+                    height: auto;
+                    font-size: 18px;
+                }
+            }
+            p {
+                line-height: 18px;
+            }
+        }
+    }
+}

@@ -1,0 +1,137 @@
+{include file="../../../application/admin/view/public/head" /} 
+<script type="text/javascript" src="__STATIC__/js/jquery.jscolor.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/addons/ppvod/css/upload.css"/>
+{include file="../../../application/admin/view/public/editor" flag="vod_editor"/}
+<div class="page-container p10">
+  <form class="layui-form layui-form-pane" method="post" action="">
+	 <div id="add">
+	  
+ 
+		 
+	 </div>
+ 
+    <div class="layui-form-item "> 
+	  <a  class="layui-btn " id="download"><i class="layui-icon">&#xe654;</i>添加下载</a>
+	  <a  class="layui-btn " id="addtxt"><i class="layui-icon">&#xe654;</i>批量导入</a>
+      <button type="submit" class="layui-btn layui-bg-red" lay-submit="" lay-filter="systemsave" data-child=""><i class="layui-icon">&#xe601;</i>开始下载</button>
+		
+		
+    </div>
+	  
+  </form>
+	
+	<input type='file' class="file" id="fileadd" accept='text/plain' onchange='openFile(event)'>
+	
+	<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+	  <legend>告别百度网盘，批量离线下载，支持各种链接</legend>
+<p class="p20">
+	虽然PPVOD已经实现了从上传-转码-播放高度的自动化处理视频，但是很多视频要从网络下载，还是一个很烦人的活。
+    现在所有PPVOD系统的客户可以完全脱离刀耕火种式的手工下载，支持网络视频解析下载、直连文件、BT下载、磁力链下载。
+    只需在后台添加批量下载任务即可，软件会在后台默默的为你工作，下载完成后自动获取标题入库，自动重命名保证视频地址支持各种浏览器，并且还支持断点下载哦</p>
+		<p class="p20">支持导入txt文件：格式为 http://www.datll.com|下载名称|分类名|下载类型</p>
+	</fieldset>
+</div>
+<style>
+	.file{visibility:hidden}
+</style>
+{include file="../../../application/admin/view/public/foot" /} 
+<script type="text/javascript">
+    var num = 0;
+	var form;
+    layui.use(['form', 'layer'], function () {
+        // 操作对象
+               form = layui.form
+                , layer = layui.layer
+                , $ = layui.jquery;
+                 
+          $('#download').click(function(){
+			   
+			  var html = '<div class="layui-form-item "><label class="layui-form-label">下载链接：</label><div class="layui-input-inline w500"><input type="text" class="layui-input" value="" placeholder="请输入下载链接" name="data['+num+'][url]" id="url"></div><label class="layui-form-label">下载标题：</label><div class="layui-input-inline w150"> <input type="text" class="layui-input" value="" placeholder="请输入下载标题" name="data['+num+'][title]" id="title"></div> <label class="layui-form-label">参数：</label><div class="layui-input-inline w150"><select name="data['+num+'][category]" lay-filter="type_id"> <option value="">请选择分类</option>{volist name="type" id="vo" key="key"}<option value="{$vo}" >{$vo}</option>{/volist} </select></div><div class="layui-input-inline w150"><select name="data['+num+'][type]"><option value="direct">直链类型</option><option value="jx" >解析类型</option><option value="torrent" >种子类型</option><option value="magnet" >磁力类型</option></select></div></div>';
+			  $('#add').append(html)
+			  form.render();
+			  num++; 
+		  })
+          $('#download').click();
+
+          form.on('submit(systemsave)', function(data){
+			   
+			  
+			  if (data.field.title == "") {
+				  layer.alert("请输入下载名称", {icon: 5});
+                  return false;
+               }
+			  if (data.field.url == "") {
+				  layer.alert("请输入下载地址", {icon: 5});
+                  return false;
+               }
+			  
+			   $.ajax({
+					url: "{$api}/api/importDownload?format=json&key={$apikey}",
+					data: data.field,
+					type: "post", 
+					success: function (data) { 
+						if(data == ""){
+							layer.msg('添加成功，稍后在ppvod离线下载查看下载状态', {icon: data.icon});
+							form.render(); 
+						}
+		
+					},
+					error: function () {
+						layer.alert("保存配置执行异常!", {icon: 5});
+					}
+				});				  
+				return false;	
+		 });
+
+          $('#addtxt').click(function(){
+			  $('#fileadd').click();
+		  })
+		
+		
+		
+	});
+
+  
+	
+	 var openFile = function (event) {
+				var input = event.target;
+				var reader = new FileReader();
+				reader.onload = function() {
+					if(reader.result) {
+						var json = [];
+   						var data = reader.result.split(/[(\r\n)\r\n]+/); 
+						data.forEach((item, index) => { 
+						if (!item) {
+							  data.splice(index, 1);
+							}
+						 });
+						data = Array.from(new Set(data)); 
+ 						var txtHtml = '';
+						for(var i = 0; i < data.length; i++){
+							num=i;
+							txtHtml+='<div class="layui-form-item ">';
+							var vo = data[i];
+							var dat = vo.split('|');
+							txtHtml+='<label class="layui-form-label">下载链接：</label><div class="layui-input-inline w500"><input type="text" class="layui-input" placeholder="请输入下载链接" value="'+dat[0]+'" name="data['+num+'][url]" id="url"></div>';
+							txtHtml+='<label class="layui-form-label">下载标题：</label><div class="layui-input-inline w150"> <input type="text" class="layui-input"  placeholder="请输入下载标题" value="'+dat[1]+'" name="data['+num+'][title]" id="title"></div>';
+							txtHtml+='<label class="layui-form-label">参数：</label><div class="layui-input-inline w150"><select name="data['+num+'][category]" lay-filter="type_id"> <option value="">请选择分类</option>{volist name="type" id="vo" key="key"}<option value="{$vo}" '+(dat[2]=='{$vo}'?'selected=""':'')+'>{$vo}</option>{/volist} </select></div>';
+							txtHtml+='<div class="layui-input-inline w150"><select name="data['+num+'][type]"><option value="direct" '+(dat[3]=='direct'?'selected=""':'')+'>直链类型</option><option value="jx" '+(dat[3]=='jx'?'selected=""':'')+'>解析类型</option><option value="torrent" '+(dat[3]=='torrent'?'selected=""':'')+'>种子类型</option><option value="magnet" '+(dat[3]=='magnet'?'selected=""':'')+'>磁力类型</option></select></div>';
+							txtHtml+='</div>';
+						};
+						$('#add').html('');
+						$('#add').append(txtHtml);
+			   			form.render();
+					}
+				};
+				reader.readAsText(input.files[0]);
+			};
+	
+	
+	
+ 		     
+
+     
+    
+</script>
+</body>
+</html>

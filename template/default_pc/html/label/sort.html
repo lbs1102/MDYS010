@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <title>
+    {:platform_lang('platform/label/sort/sort')} - {$maccms.site_name}
+  </title>
+  <meta name="keywords" content="分类大全 - {$maccms.site_keywords}" />
+  <meta name="description" content="分类大全 - {$maccms.site_description}" />
+  {include file="system/include"}
+</head>
+
+<body class="{$maccms['html_hue']}">
+  {include file="system/headtop"}
+  <div class="container">
+    {include file="system/search"} {include file="system/headmeun"}
+    <div class="content">
+      <div class="main-content">
+        <div class="main-container">
+          <div id="list_playlists_common_playlists_list">
+            <div class="headline">
+              <h1>{:platform_lang('platform/label/sort/popular_sort')}</h1>
+            </div>
+            <div class="box">
+              <div class="list-playlists">
+                <div class="margin-fix" id="list_playlists_common_playlists_list_items">
+                  {maccms:type ids="parent" order="asc" by="sort"} {if
+                  (cookie('platform_lang')=='zh-tw'||cookie('platform_lang')=='zh-cn')}
+                  <div class="item">
+                    <a href="{:mac_url_type($vo)}" title="{$vo.type_name}">
+                      <div class="img">
+                        <img class="thumb video1 lazy-load" src="{:mac_url_img($vo.type_pic)}" alt="{$vo.type_name}" title="{$vo.type_name}" width="320" height="180" />
+                      </div>
+                      <strong class="title"> {$vo.type_name} </strong>
+                      <div class="wrap">
+                        <div class="videos">
+                          {$vo.type_id|mac_data_count=all}{:platform_lang('platform/label/sort/videos')}
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  {else}
+                  <div class="item">
+                    <a href="{:mac_url_type($vo)}" title="{$vo.type_en}">
+                      <div class="img">
+                        <img class="thumb video1 lazy-load" src="{:mac_url_img($vo.type_pic)}" alt="{$vo.type_en}" title="{$vo.type_en}" width="320" height="180" />
+                      </div>
+                      <strong class="title"> {$vo.type_en} </strong>
+                      <div class="wrap">
+                        <div class="videos">
+                          {$vo.type_id|mac_data_count=all}{:platform_lang('platform/label/sort/videos')}
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  {/if} {/maccms:type}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {include file="module/tag"}
+    </div>
+    {include file="module/footer_ad"}
+  </div>
+  {include file="system/footer"} {include file="system/M_menu"}
+</body>
+
+</html>

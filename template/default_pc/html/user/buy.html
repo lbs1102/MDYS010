@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    {:platform_lang('platform/user_buy')} - {:platform_lang('platform/user')}
+    - {$maccms.site_name}
+  </title>
+  <meta name="keywords" content="{:platform_lang('platform/user')},{$maccms.site_keywords}" />
+  <meta name="description" content="{$maccms.site_description}" />
+  {include file="user/include"}
+</head>
+
+<body class="{$maccms['html_hue']} recharge">
+  {include file="system/headtop"}
+  <div class="container">
+    {include file="system/search"} {include file="system/headmeun"}
+    <div class="fed-min">
+      <div class="fed-userBody">
+        <div class="leftBox">{include file="user/menu"}</div>
+        <div class="rightBox">
+          <div class="buyBox">
+            <div class="buyTab" id="buyTab">
+              <ul>
+                <li class="on">{:platform_lang('platform/user/buy/buy_cash')}</li>
+                <li>{:platform_lang('platform/user/buy/buy_card')}</li>
+              </ul>
+            </div>
+            {include file="user/userCard"}
+
+            <div class="list buyList" id="buyList">
+              <!-- buyCash -->
+              <div class="fed-part-rows point on">
+                <div class="title">
+                  {:platform_lang('platform/user/buy/buy_cash')}
+                </div>
+                <div class="alert">
+                  <p>
+                    {:platform_lang('platform/user/buy/buy_cash_tip_1',[$GLOBALS['config']['user']['cash_min'],$GLOBALS['config']['user']['cash_ratio']])}
+                  </p>
+                </div>
+                <div class="coin-list" id="coinList">
+                  <ul class="coin-row">
+                    {maccms:foreach name="bonus_list" id="vo"}
+                    <li class="coin-col on">
+                      <div class="coinItem" data-type="{$vo.id}">
+                        <div class="coinAmount"><span>{$vo.bonus}</span>{:platform_lang('platform/user/upgrade/upgrade_point_unit',[""])}</div>
+                        <p class="coinprice">{:platform_lang('platform/user/upgrade/upgrade_unit',[$vo.cash])}</p>
+                      </div>
+                    </li>
+                    {/maccms:foreach}
+                  </ul>
+                </div>
+                <!-- <div class="coin-list" id="coinList">
+                  <ul class="coin-row">
+                    <li class="coin-col on">
+                      <div class="coinItem" data-points="1">
+                        <div class="coinAmount"><span>100</span>金幣</div>
+                        <p class="coinprice">1元</p>
+                      </div>
+                    </li>
+                    <li class="coin-col">
+                      <div class="coinItem" data-points="5">
+                        <div class="coinAmount"><span>500</span>金幣</div>
+                        <p class="coinprice">5元</p>
+                      </div>
+                    </li>
+                    <li class="coin-col">
+                      <div class="coinItem" data-points="10">
+                        <div class="coinAmount"><span>1000</span>金幣</div>
+                        <p class="coinprice">10元</p>
+                      </div>
+                    </li>
+                    <li class="coin-col">
+                      <div class="coinItem" data-points="20">
+                        <div class="coinAmount"><span>2000</span>金幣</div>
+                        <p class="coinprice">20元</p>
+                      </div>
+                    </li>
+                    <li class="coin-col">
+                      <div class="coinItem" data-points="50">
+                        <div class="coinAmount"><span>5000</span>金幣</div>
+                        <p class="coinprice">50元</p>
+                      </div>
+                    </li>
+                    <li class="coin-col">
+                      <div class="coinItem" data-points="100">
+                        <div class="coinAmount"><span>10000</span>金幣</div>
+                        <p class="coinprice">100元</p>
+                      </div>
+                    </li>
+                    <li class="coin-col">
+                      <div class="coinItem" data-points="500">
+                        <div class="coinAmount"><span>50000</span>金幣</div>
+                        <p class="coinprice">500元</p>
+                      </div>
+                    </li>
+                    <li class="coin-col">
+                      <div class="coinItem" data-points="1000">
+                        <div class="coinAmount"><span>100000</span>金幣</div>
+                        <p class="coinprice">1000元</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div> -->
+                <div class="priv">
+                  <div class="privPay">
+                    <p>
+                      <span id="payTitle"></span>
+                      <span id="payNum"></span>
+                    </p>
+                    <button id="btn_submit_pay">{:platform_lang('platform/user/buy/buy_cash_btn')}</button>
+                  </div>
+                </div>
+              </div>
+              <!-- buyCard -->
+              <div class="fed-part-rows point card">
+                <div>
+                  <div class="title">
+                    {:platform_lang('platform/user/buy/buy_card')}
+                  </div>
+                  <div class="ipt">
+                    <input type="text" name="card_no" maxlength="40" autocomplete="off" placeholder="{:platform_lang('platform/user/buy/placeholder_buy_card')}" />
+                    <button id="btn_submit_card">
+                      {:platform_lang('platform/user/buy/buy_card_btn')}
+                    </button>
+                    <div class="ann">
+                      <a href="{$config.card.url}" target="_blank">{:platform_lang('platform/user/buy/buy_card_link')}</a>
+                      <ul class="tipList">
+                        <li>
+                          {:platform_lang('platform/user/buy/buy_card_link_tip_1')}
+                        </li>
+                        <li>
+                          {:platform_lang('platform/user/buy/buy_card_link_tip_2')}
+                        </li>
+                        <li>
+                          {:platform_lang('platform/user/buy/buy_card_link_tip_3')}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(".go-back").click(function () {
+      var ref = document.referrer;
+      location.href = ref;
+    });
+
+    let payCoin = 1;
+    $("#btn_submit_pay").click(function () {
+      var that = $(this);
+      var price_type = $(".coin-col.on .coinItem").data("type");
+      if (Number(price_type) < 1) {
+        return;
+      }
+      layer.confirm(
+        "<h3>{:platform_lang('platform/user/buy/titp_buy_pay')}</h3>",
+        {
+          title: "{:platform_lang('platform/user/confirm_title')}",
+          btn: [
+            "{:platform_lang('platform/user/confirm_btn')}",
+            "{:platform_lang('platform/user/cancel_btn')}",
+          ], //按钮
+        },
+        function () {
+          $.ajax({
+            url: "{:url('user/buy')}",
+            type: "post",
+            dataType: "json",
+            data: {
+              type: price_type,
+              flag: "type_pay",
+            },
+            beforeSend: function () {
+              $("#btn_submit_pay").val("loading...");
+            },
+            success: function (r) {
+              if (r.code == 1) {
+                location.href = "{:url('user/pay')}?order_code=" + r.data.order_code;
+              } else {
+                layer.msg(r.msg);
+              }
+            },
+            complete: function () {
+              $("#btn_submit_pay").val(
+                "{:platform_lang('platform/user/titp_submit')}"
+              );
+            },
+          });
+        }
+      );
+    });
+
+    $("#btn_submit_card").click(function () {
+      var that = $(this);
+      var no = $('input[name="card_no"]').val();
+      if (no == "") {
+        layer.msg("{:platform_lang('platform/user/buy/titp_buy_card_pw')}");
+        return;
+      }
+      layer.confirm(
+        "<h3>{:platform_lang('platform/user/buy/titp_buy_card')}</h3>",
+        {
+          title: "{:platform_lang('platform/user/confirm_title')}",
+          btn: [
+            "{:platform_lang('platform/user/confirm_btn')}",
+            "{:platform_lang('platform/user/cancel_btn')}",
+          ], //按钮
+        },
+        function () {
+          $.ajax({
+            url: "{:url('user/buy')}",
+            type: "post",
+            dataType: "json",
+            data: {
+              card_no: no,
+              flag: "card",
+            },
+            beforeSend: function () {
+              $("#btn_submit_card").val("loading...");
+            },
+            success: function (r) {
+              layer.msg(r.msg);
+            },
+            complete: function () {
+              $("#btn_submit_card").val(
+                "{:platform_lang('platform/user/titp_submit')}"
+              );
+            },
+          });
+        }
+      );
+    });
+
+    $(".face").imageUpload({
+      formAction: "{:url('user/portrait')}",
+      inputFileName: "file",
+      browseButtonValue: "",
+      browseButtonClass:
+        "btn btn-default btn-xs fed-user-alter fed-part-roun fed-icon-font fed-icon-xiugai",
+      automaticUpload: true,
+      hideDeleteButton: true,
+      hover: true,
+    });
+    $(".jQuery-image-upload-controls").mouseenter(function () {
+      $(".jQuery-image-upload-controls").css("display", "block");
+    });
+    $(".jQuery-image-upload-controls").mouseleave(function () {
+      $(".jQuery-image-upload-controls").css("display", "none");
+    });
+    $(".face").on("imageUpload.uploadFailed", function (ev, err) {
+      layer.msg(err);
+    });
+    // 現金充值、卡密切換選擇
+    $('#buyTab li').click(function () {
+      let index = $('#buyTab li').index(this);
+      $('#buyTab li, #buyList .fed-part-rows').removeClass('on');
+      $(`#buyList .fed-part-rows:eq(${index})`).addClass('on');
+      $(this).addClass('on');
+      reset();
+    })
+    // 金幣選項選擇
+    $('#coinList li').click(function () {
+      $('#coinList li').removeClass('on');
+      $(this).addClass('on');
+      let coinData = $(this).find('.coinItem').attr('data-points');
+      payCoin = coinData;
+
+      $('#payNum').text($(this).find('.coinprice').text());
+      $('#payTitle').text($(this).find('.coinAmount').text());
+    })
+
+    // 金幣位元轉換
+    function calcCoin() {
+      $('#coinList .coinAmount span').each(function () {
+        let coin = $(this).text();
+        let lestC = coin >= 10000 ? `${Math.floor((coin / 10000) * 10)}k` : coin;
+        $(this).text(lestC);
+      })
+    }
+
+    // 還原初始設定值
+    function reset() {
+      payCoin = 1;
+      $('#payNum').text($('#coinList .coinprice:eq(0)').text());
+      $('#payTitle').text($('#coinList .coinAmount:eq(0)').text());
+      $('#coinList li').removeClass('on');
+      $('#coinList li:eq(0)').addClass('on')
+      $('input[name="card_no"]').val('');
+
+    }
+    $(document).ready(function () {
+      calcCoin();
+      reset();
+    })
+
+
+
+  </script>
+  {include file="system/footer"} {include file="system/M_menu"}
+</body>
+
+</html>

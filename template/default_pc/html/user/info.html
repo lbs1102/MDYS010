@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{:platform_lang('platform/user_info')} - {:platform_lang('platform/user')} - {$maccms.site_name}</title>
+    <meta name="keywords" content="{:platform_lang('platform/user')},{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" /> {include file="user/include"}
+</head>
+
+<body class="{$maccms['html_hue']} special">
+    <a class="fed-close" href="{:mac_url('user/index')}"></a>
+    {include file="system/headtop"}
+    <div class="container">
+        {include file="system/search"} {include file="system/headmeun"}
+        <div class="fed-min">
+            <div class="userTitle">{:platform_lang('platform/user/info/title')}</div>
+            <div class="fed-userBody">
+                <div class="leftBox">
+                    {include file="user/menu"}
+                </div>
+
+                <div class="rightBox">
+                    <form id="fm" name="fm" method="post">
+                        <div class="userForm">
+                            <div class="userIpt">
+                                <ul>
+                                    <li>
+                                        <input type="password" name="user_pwd" placeholder="{:platform_lang('platform/user/info/placeholder_old_pw')}" maxlength="20"  autocomplete="false"/>
+                                    </li>
+                                    <li>
+                                        <input type="password" name="user_pwd1" placeholder="{:platform_lang('platform/user/info/placeholder_new_pw')}" maxlength="20"  autocomplete="false"/>
+                                    </li>
+                                    <li>
+                                        <input type="password" name="user_pwd2" placeholder="{:platform_lang('platform/user/info/placeholder_re_pw')}" maxlength="20"  autocomplete="false"/>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="userBtn">
+                                <button id="btn_submit" class="btn">{:platform_lang('platform/user/edit_btn')}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+    <script>
+        $('.btn_unbind').click(function () {
+            var ac = $(this).attr('ac');
+            if (ac != 'email' && ac != 'phone') {
+                layer.msg("{:platform_lang('platform/user/titp_var_error')}");
+            }
+            if (confirm("{:platform_lang('platform/user/info/unbind_confirm_titp')}")) {
+                $.ajax({
+                    url: "{:url('user/unbind')}",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        ac: ac
+                    },
+                    beforeSend: function () {
+                        //开启loading
+                    },
+                    success: function (r) {
+                        layer.msg(r.msg);
+                        if (r.code == 1) {
+                            location.href = "{:url('user/info')}";
+                        }
+                    },
+                    complete: function () {
+                        //结束loading
+                    }
+                });
+            }
+        });
+
+        $("#fm").submit(function (event) {
+            event.preventDefault();
+        });
+        $("#btn_submit").click(function () {
+            var data = $("#fm").serialize();
+            $.ajax({
+                url: "{:url('user/info')}",
+                type: "post",
+                dataType: "json",
+                data: data,
+                beforeSend: function () {
+                    //开启loading
+                    //$(".loading_box").css("display","block");
+                    $("#btn_submit").val("loading...");
+                },
+                success: function (r) {
+                    layer.msg(r.msg);
+                    if (r.code == 1) {
+                        location.href = "{:url('user/index')}";
+                    }
+                },
+                complete: function () {
+                    //结束loading
+                    //$(".loading_box").css("display","none");
+                    $("#btn_submit").val("{:platform_lang('platform/user/titp_submit')}");
+                }
+            });
+        });
+
+        $(".face").imageUpload({
+            formAction: "{:url('user/portrait')}",
+            inputFileName: 'file',
+            browseButtonValue: '',
+            browseButtonClass: 'btn btn-default btn-xs fed-user-alter fed-part-roun fed-icon-font fed-icon-xiugai',
+            automaticUpload: true,
+            hideDeleteButton: true,
+            hover: true
+        })
+        $(".jQuery-image-upload-controls").mouseenter(function () {
+            $(".jQuery-image-upload-controls").css("display", "block");
+        });
+        $(".jQuery-image-upload-controls").mouseleave(function () {
+            $(".jQuery-image-upload-controls").css("display", "none");
+        });
+        $(".face").on("imageUpload.uploadFailed", function (ev, err) {
+            layer.msg(err);
+        });
+    </script>
+    {include file="system/footer"}
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<div class="top-links">
+    <div class="center-hold">
+        <div class="network">
+            <ul>
+                <ul>
+                    <li><a href="">{:platform_lang('platform/system/headtop/announcement')}</a></li>
+                    <li><a href="{:mac_url('label/question')}">{:platform_lang('platform/system/headtop/faq')}</a></li>
+                    <li><a href="">{:platform_lang('platform/system/headtop/live_service')}</a></li>
+                </ul>
+            </ul>
+        </div>
+
+        <div class="network">
+            <ul>
+                <li class="lang">
+                    <select name="platform_lang" class="lang_switch">
+                        <option {if mac_get_platform_lang()=='vi-vn' }selected {/if} value="vi-vn">{:platform_lang('platform/system/headtop/lang_vi-vn')}</option>
+                        <option {if mac_get_platform_lang()=='en-us' }selected {/if} value="en-us">{:platform_lang('platform/system/headtop/lang_en-us')}</option>
+                        <option {if mac_get_platform_lang()=='zh-tw' }selected {/if} value="zh-tw">{:platform_lang('platform/system/headtop/lang_zh-tw')}</option>
+                    </select>
+                </li>
+                <li>
+                    <div class="icon">
+                        <img src="/MDassets/img/ios.png" />
+                    </div>
+                    <span>{:platform_lang('platform/system/headtop/app_download')}</span>
+                </li>
+                <li>
+                    <div class="icon">
+                        <img src="/MDassets/img/proxy.png" />
+                    </div>
+                    <span>{:platform_lang('platform/system/headtop/partner')}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .lang_switch {
+        border: none;
+        background-color: inherit;
+        color: inherit;
+        font-size: inherit;
+    }
+</style>

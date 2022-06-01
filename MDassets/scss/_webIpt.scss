@@ -1,0 +1,133 @@
+.fed-min-width {
+    background: url(../img/loginBg.jpg) no-repeat center top/ cover;
+    .fed-close {
+        width: 35px;
+        height: 35px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+        cursor: pointer;
+        display: block;
+        &::before,
+        &::after {
+            content: "";
+            width: 100%;
+            height: 2px;
+            margin: auto;
+            background-color: #999;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+        }
+        &::before {
+            transform: rotate(45deg);
+        }
+        &::after {
+            transform: rotate(-45deg);
+        }
+    }
+    .container {
+        height: 100vh;
+        padding: 65px 20px 10px;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    .fed-min {
+        width: 100%;
+        max-width: 600px;
+        max-height: calc(100vh - 65px);
+        overflow: auto;
+    }
+    form {
+        overflow: hidden;
+    }
+    form+form {
+        margin-top: 50px;
+    }
+    .fed-part-height {
+        height: unset;
+        min-height: unset;
+        background-color: transparent !important;
+    }
+    .fed-part-layout {
+        padding: 0;
+        margin: 0;
+        box-shadow: unset;
+    }
+    .fed-part-core {
+        padding: 0;
+        position: unset;
+        transform: unset;
+        top: 0;
+        left: 0;
+    }
+    .loginTitle {
+        margin-bottom: 15px;
+        color: #999;
+        font-size: 22px;
+        line-height: 26px;
+        font-weight: bold;
+        letter-spacing: 5px;
+        opacity: 0.7;
+    }
+    input {
+        height: 45px;
+        border-radius: 5px;
+        font-weight: bold;
+        color: #999 !important;
+        background-color: rgba(85, 85, 85, 0.5);
+        border-bottom: none;
+        font-size: 14px;
+        &:-webkit-autofill {
+            box-shadow: unset;
+            box-shadow: 0 0 0 50px rgba(85, 85, 85, 0.5) inset !important;
+            -webkit-text-fill-color: #333;
+            opacity: 0.5;
+        }
+        &#verify {
+            border-radius: 5px 0 0 5px;
+        }
+        &:focus {
+            font-size: 16px;
+        }
+    }
+    input+input {
+        margin-top: 10px;
+    }
+    .fed-btn {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        outline: none;
+        border: none;
+        color: #ccc;
+        font-weight: bold;
+        font-size: 16px;
+        letter-spacing: 5px;
+        background: linear-gradient(90deg, #9f2f54, #ad4647);
+    }
+    .fed-user-code {
+        margin-top: 10px;
+    }
+    a {
+        color: #ad4647;
+        font-weight: bold;
+    }
+    .iptLink {
+        display: flex;
+        justify-content: space-between;
+        a {
+            flex: 1;
+            text-align: center;
+        }
+    }
+}
+
+// ========= rwd =========
+@media (min-width: 48rem) {
+    .fed-part-case {
+        width: auto !important;
+    }
+}

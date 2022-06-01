@@ -1,0 +1,44 @@
+<div class="layui-tab-item">
+  <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px">
+    <legend>
+      777支付设置
+    </legend>
+  </fieldset>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">支付商家序號：</label>
+    <div class="layui-input-inline w400">
+      <input
+        type="text"
+        name="pay[zf777pay][appid]"
+        placeholder=""
+        value="{$config['pay']['zf777pay']['appid']}"
+        class="layui-input"
+      />
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">商戶編號：</label>
+    <div class="layui-input-inline w400">
+      <input
+        type="text"
+        name="pay[zf777pay][appacc]"
+        placeholder=""
+        value="{$config['pay']['zf777pay']['appacc']}"
+        class="layui-input"
+      />
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">交易密鑰：</label>
+    <div class="layui-input-inline w400">
+      <input
+        type="text"
+        name="pay[zf777pay][appkey]"
+        placeholder=""
+        value="{$config['pay']['zf777pay']['appkey']}"
+        class="layui-input"
+      />
+    </div>
+  </div>
+</div>

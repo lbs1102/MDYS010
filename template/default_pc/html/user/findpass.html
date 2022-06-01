@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+        {:platform_lang('platform/user_findpass')} - {:platform_lang('platform/user')} - {$maccms.site_name}
+    </title>
+    <meta name="keywords" content="{:platform_lang('platform/user')},{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" /> {include file="user/include"}
+    <link rel="stylesheet" href="/MDassets/scss/systemSelf.css?ver={:rand(0,10000)}" />
+</head>
+
+<body class="{$maccms['html_hue']} fed-min-width">
+    <a class="fed-close" href="/"></a>
+    <div class="container">
+        <div class="fed-min">
+            <div class="fed-part-case">
+                <div class="fed-part-layout fed-back-whits fed-part-height" style="min-height: 35rem">
+                    <div class="fed-user-login fed-part-core">
+                        <div class="fed-list-head fed-part-rows fed-padding">
+                            <p class="loginTitle">
+                                {:platform_lang('platform/user/findpass/title')}
+                            </p>
+                        </div>
+                        <form method="post" id="fm" action="">
+                            <input class="fed-user-text fed-col-xs12" type="text" id="user_name" name="user_name" placeholder="{:platform_lang('platform/user/findpass/placeholder_acc')}" />
+                            <input class="fed-user-text fed-col-xs12" type="text" id="user_question" name="user_question" placeholder="{:platform_lang('platform/user/findpass/placeholder_find_qs')}" />
+                            <input class="fed-user-text fed-col-xs12" type="text" id="user_answer" name="user_answer" placeholder="{:platform_lang('platform/user/findpass/placeholder_find_aw')}" />
+                            <input class="fed-user-text fed-col-xs12" type="password" id="user_pwd" name="user_pwd" placeholder="{:platform_lang('platform/user/findpass/placeholder_new_pw')}" maxlength="20" />
+                            <input class="fed-user-text fed-col-xs12" type="password" id="user_pwd2" name="user_pwd2" placeholder="{:platform_lang('platform/user/findpass/placeholder_new_pw_again')}" maxlength="20" />
+                            <input class="fed-user-text fed-col-xs8" type="tel" id="verify" name="verify" placeholder="{:platform_lang('platform/user/findpass/placeholder_verify')}" maxlength="4" />
+                            <img class="fed-user-code fed-user-text fed-col-xs4" height="45" src="{:mac_url('verify/index')}" onclick="this.src=this.src+'?'" title="{:platform_lang('platform/user/findpass/placeholder_verify_change')}" />
+                            <span class="
+                    fed-user-tips
+                    fed-text-gules
+                    fed-padding-v
+                    fed-visible
+                    fed-col-xs12
+                  ">　</span
+                >
+                <button class="fed-btn" type="button" id="btn_submit">
+                  {:platform_lang('platform/user/submit_btn')}
+                </button>
+                <div class="iptLink">
+                  <a
+                  class="fed-padding fed-col-xs3 fed-text-left"
+                  href="{:mac_url('user/login')}"
+                  >{:platform_lang('platform/user/login_btn')}</a
+                >
+                <a
+                  class="fed-padding fed-col-xs3 fed-text-center"
+                  href="{:mac_url('user/findpass')}"
+                  >{:platform_lang('platform/user/find_pw_by_qs_btn')}</a
+                >
+                <a
+                  class="fed-padding fed-col-xs3 fed-text-center"
+                  href="{:mac_url('user/findpass_msg')}?ac=email"
+                  >{:platform_lang('platform/user/find_pw_by_mail_btn')}</a
+                >
+                <a
+                  class="fed-padding fed-text-right"
+                  style="float: right"
+                  href="{:mac_url('user/findpass_msg')}?ac=phone"
+                  >{:platform_lang('platform/user/find_pw_by_phone_btn')}</a
+                >
+                </div>
+               
+                <span
+                  class="
+                    fed-user-tips
+                    fed-text-gules
+                    fed-padding-v
+                    fed-visible
+                    fed-col-xs12
+                  "
+                  >　</span
+                >
+                      </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(function () {
+        $("body").bind("keyup", function (event) {
+          if (event.keyCode == 13) {
+            $("#btnLogin").click();
+          }
+        });
+        $("#btn_submit").click(function () {
+          if ($("#user_name").val() == "") {
+            alert("{:platform_lang('platform/user/titp_acc_enter')}");
+            $("#user_name").focus();
+            return false;
+          }
+          if ($("#user_pwd").val() == "") {
+            layer.msg("{:platform_lang('platform/user/titp_pw_enter')}");
+            $("#user_pwd").focus();
+            return false;
+          }
+          if ($("#verify").val() == "") {
+            layer.msg("{:platform_lang('platform/user/titp_verify_enter')}");
+            $("#verify").focus();
+            return false;
+          }
+
+          $.ajax({
+            url: "{:mac_url('user/findpass')}",
+            type: "post",
+            dataType: "json",
+            data: $("#fm").serialize(),
+            beforeSend: function () {
+              $("#btn_submit").val("loading...");
+            },
+            success: function (r) {
+              if (r.code == 1) {
+                location.href = "{:mac_url('user/index')}";
+              } else {
+                layer.msg(r.msg);
+              }
+            },
+            complete: function () {
+              $("#verify").click();
+              $("#btn_submit").val(
+                "{:platform_lang('platform/user/titp_find_pw')}"
+              );
+            },
+          });
+        });
+      });
+    </script>
+    {include file="system/footer"}
+  </body>
+</html>

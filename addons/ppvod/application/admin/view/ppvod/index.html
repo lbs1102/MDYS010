@@ -1,0 +1,284 @@
+{include file="../../../application/admin/view/public/head" /}
+<style>
+table {table-layout: fixed;}
+td {overflow: hidden;white-space: nowrap;text-overflow: ellipsis;} 
+.layui-bg-b{    margin-left: 5px;}
+.layui-bg-0{background-color: #009688!important;color: #fff;}
+.layui-bg-1{background-color: #FFB800!important;color: #fff;}
+.layui-bg-2{background-color: #FF5722!important;color: #fff;}
+.layui-bg-3{background-color: #393D49!important;color: #fff;}
+</style>
+</style>
+<div class="page-container p10">
+  <div class="my-toolbar-box">
+    <div class="center mb10"> </div>
+    <div class="layui-btn-group">
+		<a data-href="{:url('info')}" data-full="1" class="layui-btn layui-btn-primary j-iframe"><i class="layui-icon">&#xe654;</i>发布上传</a>
+		<a class="layui-btn layui-btn-primary j-iframe" data-href="{:url('download')}" href="javascript:;" title="同步远程图片"><i class="layui-icon">&#xe620;</i>离线下载</a>
+		<a data-href="{:url('del')}" class="layui-btn layui-btn-primary j-page-btns confirm"><i class="layui-icon">&#xe640;</i>远程删除</a>
+		<a class="layui-btn layui-btn-primary j-select" data-href="{:url('add')}" href="javascript:;" title=""><i class="layui-icon">&#xe620;</i>采集选中</a>
+		<a class="layui-btn layui-btn-primary j-iframe" data-href="{:url('ppvod/config')}" href="javascript:;" title=""><i class="layui-icon">&#xe620;</i>采集设置</a>
+		<a class="layui-btn layui-btn-primary " href="javascript:;"  onClick="CopyDest('{$push_url}','txt')" title=""><i class="layui-icon">&#xe620;</i>推送地址</a>
+	    <a class="layui-btn layui-btn-primary j-iframe" href="javascript:;" data-href="{:url('log')}"title=""><i class="layui-icon">&#xe620;</i>推送日志</a>
+	  </div>
+	  
+	  <div class="layui-btn-group fr">	
+		 
+		<a href="http://www.datll.com/ask.html" class="layui-btn" target="_blank">问答交流社区</a>
+		<a href="https://gitee.com/datll_admin/ppvod" class="layui-btn layui-btn-normal" target="_blank">官方更新地址</a>
+		<a href="http://www.datll.com/cms/c/template.html" class="layui-btn layui-btn-warm" target="_blank">苹果cms模板</a>
+		<a href="http://www.datll.com/cms/c/plugin.html" class="layui-btn layui-btn-danger" target="_blank">苹果cms插件</a>
+		 
+	  </div>
+  </div>
+  <form class="layui-form " method="post" id="pageListForm">
+    <table class="layui-table" lay-size="sm">
+      <thead>
+        <tr>
+          <th width="30"><input type="checkbox" lay-skin="primary" lay-filter="allChoose"></th>
+          <th width="180">ID编号</th>
+          <th >视频名称</th>
+          <th width="50">视频分类</th>
+          <th width="50">视频时长</th>
+          <th width="50">文件大小</th>
+          <th width="100">转码状态</th>
+          <th width="100">分享地址</th>
+          <th width="130" >操作</th>
+        </tr>
+      </thead>
+      <tbody id="ajaxlist">
+      </tbody>
+    </table>
+    <div id="pages" class="center"></div>
+  </form>
+</div>
+{include file="../../../application/admin/view/public/foot" /} 
+<script type="text/javascript">
+    var getObj = {key:'{$ppvod.apikey}',limit:20,page:1};
+    layui.use(['laypage', 'layer','laytpl','laydate','form'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer
+          ,laytpl = layui.laytpl
+         ,laydate = layui.laydate
+         ,form = layui.form;
+        laydate.render({elem: '#date'});
+         ppvod_get(getObj,form,laypage);
+    });
+  function CopyDest(vo,type){
+	vo=vo.replace(/\\/g,"\\\\");
+	vo=vo.replace(/\n/g,"\\n");
+	vo=vo.replace(/\r/g,"\\r");
+	vo=vo.replace(/\t/g,"\\t");
+	vo=vo.replace(/("")+/g,"\"\"");
+	vo=vo.replace(/\'/g,"&#39;");
+	vo=vo.replace(/</g,"&lt;");
+	vo=vo.replace(/>/g,"&gt;");
+	  let url='';
+	  if(type == 'txt'){
+		  //用于复制指定文字
+		  url = vo;
+	  }else{
+		  vo = JSON.parse(vo);
+		  var site = '${$ppvod.site}';//设定播放域名
+		  if(vo.rpath.substr(0, 1) !== "/") {
+			  //判断路径第一个字符
+			  site = '${$ppvod.site}/'
+		  }
+		  let copy_num = 'all';//默认全部复制
+		  let video_mun = vo.output.video.length;
+		  if(copy_num == 'all'){
+			  copy_num = video_mun; 
+		  }else{
+			  copy_num = Number(copy_num);//复制设定的数量
+			  if(copy_num > video_mun){
+				  copy_num = video_mun;//如果设定数量大于现有数量就复制现有数量
+			  }
+		  };
+		  if(type == 0){
+			  //type 为0 复制分享地址
+			  url = '{$ppvod.site}/share/'+vo.shareid;
+			  
+		  }else if(type == 3){
+			  //type 为3 是复制多条单码率
+			  for(let c = 0 ; c < copy_num; c++){
+				  let u = vo.output.video[c];
+					url+= u.resolution.split(":")[0]+site+vo.rpath+'/'+u.bitrate+'kb/hls/index.m3u8';
+				  if( (c+1) < copy_num ){
+					  url+='\n';
+				  }
+			  }
+		  }else if(type == 4){
+			  //type 为3 是复制单条 多码率
+			  url = vo.title+site+vo.rpath+'/index.m3u8';
+		  }else{
+			  url = vo.title+site+vo.rpath+'/'+type+'kb/hls/index.m3u8';
+		  }
+	  }
+      var flag = copyText(url); //传递文本
+      alert(flag ? "复制成功！" : "复制失败！");
+  }
+  function copyText(text) {
+      var textarea = document.createElement("textarea");//创建input对象
+      var currentFocus = document.activeElement;//当前获得焦点的元素
+      document.body.appendChild(textarea);//添加元素
+      textarea.value = text;
+      textarea.focus();
+      if(textarea.setSelectionRange)
+          textarea.setSelectionRange(0, textarea.value.length);//获取光标起始位置到结束位置
+      else
+          textarea.select();
+      try {
+          var flag = document.execCommand("copy");//执行复制
+      } catch(eo) {
+          var flag = false;
+      }
+      document.body.removeChild(textarea);//删除元素
+      currentFocus.focus();
+      return flag;
+  }	
+  function ppvod_get(obj,form,laypage){
+      let ajaxlist = $('#ajaxlist');
+      $.ajax({
+          type: 'GET',
+          dataType: "json",
+          timeout: 5000,
+          url: '{$ppvod.api}/api/gettask2',
+          data:getObj,
+          error: function(){
+              alert('请求解析服务器失败');
+          },
+          success:function(r){
+              let html = '';
+			  if(r.err_code !==-1){
+				for(let i = 0; i < r.data.length; i++){
+                  let vo = r.data[i];
+                  html+='<tr>';
+                      html+='<td><input type="checkbox" name="ids[]" value="'+JSON.stringify(vo).replace(/"/g, '&quot;')+'" class="layui-checkbox checkbox-ids" lay-skin="primary"></td>';
+                      html+='<td>'+vo._id+'</td>';
+                      html+='<td>'+vo.title;
+                        for(let a = 0; a < vo.output.video.length; a++){
+                             let vo1 = vo.output.video[a];
+                             html+='<span class="layui-badge layui-bg-b layui-bg-'+a+'" onClick="CopyDest(\'' + JSON.stringify(vo).replace(/"/g, '&quot;') + '\','+vo1.bitrate+')">'+vo1.resolution.split(":")[0]+'</span>';
+                         };
+                      html+='</td>';
+                      html+='<td>'+(vo.category?vo.category:'无分类')+'</td>';
+                      html+='<td>'+sTime(vo.metadata.time)+'</td>';
+                      html+='<td>'+bytesToSize(vo.metadata.length)+'</td>';
+                      html+='<td ><span class="layui-badge layui-bg-cyan">'+(vo.result=='ok'?'转码完成':'正在转码')+'</span></td>';
+                      html+=' <td><a class="layui-badge-rim" href="javascript:;"  onClick="CopyDest(\'' + JSON.stringify(vo).replace(/"/g, '&quot;') + '\',0)">点击复制</a></td>';
+                       
+                      html+=' <td><a class="layui-badge-rim" href="javascript:;" onClick="add(\'' + JSON.stringify(vo).replace(/"/g, '&quot;') + '\',this)" >添加到</a><a class="layui-badge-rim" href="javascript:;" onClick="CopyDest(\'' + JSON.stringify(vo).replace(/"/g, '&quot;') + '\',4)">复制多码率</a></td>';
+                  html+='</tr>';
+              }
+              	ajaxlist.append(html);
+              	listpage(form,laypage,r.total,r.limit,r.page)  
+              	form.render();
+			  }
+ 
+          }
+      });
+  };
+  function add(obj,t){
+	  
+ 
+	obj=obj.replace(/\\/g,"\\\\");
+	obj=obj.replace(/\n/g,"\\n");
+	obj=obj.replace(/\r/g,"\\r");
+	obj=obj.replace(/\t/g,"\\t");
+	obj=obj.replace(/("")+/g,"\"\"");
+	obj=obj.replace(/\'/g,"&#39;");
+	obj=obj.replace(/</g,"&lt;");
+	obj=obj.replace(/>/g,"&gt;");
+
+	 localStorage.setItem("vod",obj);
+	var info_url = '{:url('info')}';
+	
+	 var that = $(this),
+            _url = info_url,
+            _title = that.attr('data-title'),
+            _width = that.attr('data-width') ? that.attr('data-width')+'' : '85%',
+            _height = that.attr('data-height') ? that.attr('data-height')+'' : '80%',
+            _full = that.attr('data-full'),
+            _checkbox = that.attr('data-checkbox');
+	
+	
+	
+	
+	
+	var jsons = JSON.parse(obj);
+	$.ajax({
+		type: 'GET',
+
+		dataType: "json",
+		timeout: 5000,
+		url: '{:url('wd')}',
+		data:{wd:jsons.title},
+		error: function(){
+			alert('请求解析服务器失败');
+		},
+		success:function(r){
+			if(r.total==0){
+				
+				var lay = layer.open({type:2, title:_title, content:info_url,maxmin: true, area: [_width+'', _height+'']});
+				 
+					layer.full(lay);
+				 
+			}else{
+				 layer.alert("影片名《"+jsons.title+"》已存在", {icon: 5});
+			}
+			  
+		}
+	});
+	
+}	
+  function listpage (form,laypage,total,limit,page){  
+      laypage.render({
+          elem: 'pages'
+          ,count: total
+          ,limit: limit
+          ,limits:[10,20,50,200,500]
+          ,curr: page
+          ,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+          ,jump: function(obj,first){
+              if(!first){
+                  $('#ajaxlist').html('');
+                  getObj.page = obj.curr;
+                  getObj.limit = obj.limit;
+                  ppvod_get(getObj,form,laypage)
+              }
+          }
+      });
+  }	
+  function sTime(value){
+      let theTime = parseInt(value);// 秒
+      let middle= 0;// 分
+      let hour= 0;// 小时
+  
+          if(theTime > 60) {
+              middle= parseInt(theTime/60);
+              theTime = parseInt(theTime%60);
+              if(middle> 60) {
+                  hour= parseInt(middle/60);
+                  middle= parseInt(middle%60);
+              }
+          }
+          let result = ""+parseInt(theTime);
+          if(middle > 0) {
+              result = ""+parseInt(middle)+":"+result;
+          }
+          if(hour> 0) {
+              result = ""+parseInt(hour)+":"+result;
+          }
+      return result;
+  
+  }	
+  function bytesToSize(bytes) {
+      if (bytes === 0) {return '0 B'};
+      var k = 1024;
+      sizes = ['B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+      i = Math.floor(Math.log(bytes) / Math.log(k));
+      var num = bytes / Math.pow(k, i);
+      return num.toPrecision(3) + ' ' + sizes[i];
+  }	
+  </script>
+</body></html>

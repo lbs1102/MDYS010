@@ -1,0 +1,129 @@
+<strong class="popup-title"
+  >{:platform_lang('platform/label/login/welcome')}</strong
+>
+<div class="popup-holder">
+  <form id="madouym-login" action="" data-form="ajax" method="post">
+    <div class="generic-error hidden"></div>
+    <div>
+      <div class="row">
+        <!-- <label for="login_username" class="field-label required">用户名</label> -->
+        <input
+          type="text"
+          id="login_name"
+          name="user_name"
+          class="textfield"
+          placeholder="{:platform_lang('platform/label/login/enter_account')}"
+        />
+        <div class="field-error down"></div>
+      </div>
+
+      <div class="row">
+        <!-- <label for="login_pass" class="field-label required">密码</label> -->
+        <input
+          type="password"
+          id="login_pwd"
+          name="user_pwd"
+          class="textfield"
+          placeholder="{:platform_lang('platform/label/login/enter_password')}"
+        />
+        <div class="field-error down"></div>
+      </div>
+      <!-- <div class="row">
+				<input type="checkbox" name="remember_me" id="login_remember_me" class="checkbox" value="1" />
+				<label for="login_remember_me">记住我</label>
+			</div> -->
+
+      <div class="bottom">
+        {if condition="$GLOBALS['config']['user']['login_verify'] eq 1"}
+        <label
+          >{:platform_lang('platform/label/login/enter_verification')}。</label
+        >
+        <div class="captcha-control">
+          <div class="image">
+            <img
+              id="verify_img"
+              src="{:url('verify/index')}"
+              onClick="this.src=this.src+'?'"
+              alt="{:platform_lang('platform/label/login/enter_refresh')}"
+            />
+            <label for="signup_code" class="field-label required"
+              >{:platform_lang('platform/label/login/verification')}</label
+            >
+            <input
+              type="text"
+              id="verify"
+              name="verify"
+              class="textfield"
+              autocomplete="off"
+            />
+            <div class="field-error up"></div>
+          </div>
+        </div>
+        {/if}
+        <button class="submit" id="btn_login">
+          {:platform_lang('platform/label/login/login')}
+        </button>
+        <div class="links">
+          <p>
+            <a href="{:mac_url('label/reset-password')}" data-fancybox="ajax"
+              >{:platform_lang('platform/label/login/forget')}？</a
+            >
+          </p>
+          <p>
+            <a href="{:mac_url('label/signup')}" data-fancybox="ajax"
+              >{:platform_lang('platform/label/login/signup')}</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  $(function () {
+    $("#madouym-login").submit(function (event) {
+      event.preventDefault();
+    });
+    $("#btn_login").click(function () {
+      if ($("#login_name").val() == "") {
+        layer.msg(
+          "{:platform_lang('platform/label/reset-password/enter_account')}"
+        );
+        $("#login_name").focus();
+        return false;
+      }
+      if ($("#login_pwd").val() == "") {
+        layer.msg(
+          "{:platform_lang('platform/label/reset-password/enter_password')}"
+        );
+        $("#login_pwd").focus();
+        return false;
+      }
+      if ($("#verify").val() == "") {
+        layer.msg(
+          "{:platform_lang('platform/label/reset-password/enter_verification')}"
+        );
+        $("#verify").focus();
+        return false;
+      }
+
+      $.ajax({
+        url: "{:mac_url('user/login')}",
+        type: "post",
+        dataType: "json",
+        data: $("#madouym-login").serialize(),
+        beforeSend: function () {
+          $("#btn_login").val("loading...");
+        },
+        success: function (r) {
+          layer.msg(r.msg);
+          if (r.code == 1) {
+            location.href = $(location).attr("href");
+          } else {
+            $("#verify_img").click();
+          }
+        },
+      });
+    });
+  });
+</script>

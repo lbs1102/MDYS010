@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{:platform_lang('platform/user')} - {$maccms.site_name}</title>
+    <meta name="keywords" content="{:platform_lang('platform/user')},{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" /> {include file="user/include"}
+</head>
+{include file="system/headtop"}
+
+<body class="{$maccms['html_hue']}">
+
+    <div class="container">
+        {include file="system/search"} {include file="system/headmeun"}
+        <div class="fed-min">
+            <div class="fed-userBody userIndex">
+                <div class="leftBox">
+                    {include file="user/menu"}
+                </div>
+                <div class="rightBox">
+                    <div class="indexTool">
+                        <div class="user_priv">
+                            <div class="inner">
+                                <div class="priv">
+                                    <div class="diff">{:platform_lang('group_'.$user.group_id)}</div>
+                                    {if $user.group_id > 2}
+                                    <p><span id="rtTxt"></span>：<span id="rtNum"></span></p>
+                                    {else}
+                                    <p>{:platform_lang('free_watch_count')}：<span>{$user.user_free_watch}</span></p>
+                                    {/if}
+                                </div>
+                                <div class="checkIn">
+                                    <button id="user_getfreepoint">{:platform_lang('platform/user/sing_btn')}</button>
+                                    <p>{:platform_lang('platform/user_get_coin')}+{$GLOBALS['config']['user']['free_day_point']}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="user_upgrade">
+                            <div class="inner">
+                                <a href="{:mac_url('user/upgrade')}">
+                                    <h4>{:platform_lang('platform/user_upgrade')}</h4>
+                                    <p>{:platform_lang('platform/user_get_member')}</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="user_coin">
+                            <div class="inner">
+                                <a href="{:mac_url('user/buy')}">
+                                    <h5>{:platform_lang('platform/user_balance')}：<span id="rtPoint"></span>
+                                    </h5>
+                                    <p>{:platform_lang('platform/user_wallet')}</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="user_promote">
+                            <div class="inner">
+                                <a href="{:mac_url('user/promote')}">
+                                    <h5>{:platform_lang('platform/user_promoted')}：<span>{$user.user_downline}</span></h5>
+                                    <p>{:platform_lang('promotion_member_count')}</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(".face").imageUpload({
+            formAction: "{:url('user/portrait')}",
+            inputFileName: 'file',
+            browseButtonValue: '',
+            browseButtonClass: 'btn btn-default btn-xs fed-user-alter fed-part-roun fed-icon-font fed-icon-xiugai',
+            automaticUpload: true,
+            hideDeleteButton: true,
+            hover: true
+        })
+        $(".jQuery-image-upload-controls").mouseenter(function () {
+            $(".jQuery-image-upload-controls").css("display", "block");
+        });
+        $(".jQuery-image-upload-controls").mouseleave(function () {
+            $(".jQuery-image-upload-controls").css("display", "none");
+        });
+        $(".face").on("imageUpload.uploadFailed", function (ev, err) {
+            layer.msg(err);
+        });
+        $("#user_getfreepoint").on("click", function (el) {
+            $.post(
+                `{:mac_url('user/getfreepoint')}`, {},
+                function (data) {
+                    layer.msg(data)
+                    location.reload();
+                }
+            );
+        });
+    </script>
+    {include file="system/footer"} {include file="system/M_menu"}
+</body>
+
+<script>
+    function calcTime() {
+        let endTime = `{$user.user_end_time}`;
+        let nowTime = new Date();
+        let timeCut = endTime * 1000 - nowTime.getTime();
+        let tt = timeCut < 0 ? 0 : timeCut;
+        let lastDay = parseInt(tt / (60 * 60 * 24 * 1000));
+        let lastHonr = parseInt(tt / (60 * 60 * 1000));
+
+        let getTime;
+        if (lastDay > 0) {
+            getTime = {
+                sort: "{:platform_lang('platform/user/menu/vip_title_day')}",
+                data: lastDay,
+            };
+        } else {
+            getTime = {
+                sort: "{:platform_lang('platform/user/menu/vip_title_hour')}",
+                data: lastHonr,
+            };
+        }
+
+        $("#rtTxt").text(getTime.sort);
+        $("#rtNum").text(getTime.data);
+        `{$user.user_end_time}` > 0 ? $("#rtNum").text(getTime.data) : $("#rtNum").text('0');
+
+    }
+
+    function calcPoint() {
+        let point = `{$user.user_points}`;
+        let lestP = point > 1000 ? `${Math.floor((point / 1000) * 10) / 10}k` : point;
+
+        if (`{$user.user_points}` == '') {
+            $("#rtPoint").text('0');
+        } else {
+            $("#rtPoint").text(lestP);
+        }
+    }
+
+    setInterval(function () {
+        calcTime();
+    }, 1000);
+    calcTime();
+    calcPoint();
+</script>
+
+</html>

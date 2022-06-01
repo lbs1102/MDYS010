@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{:platform_lang('platform/user')} - {$maccms.site_name}</title>
+    <meta name="keywords" content="{:platform_lang('platform/user')},{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" /> {include file="user/include"}
+</head>
+{include file="system/headtop"}
+
+<body class="{$maccms['html_hue']} promote">
+    <div class="container ">
+        {include file="system/search"} {include file="system/headmeun"}
+        <div class="fed-min">
+            <div class="fed-userBody">
+                <div class="leftBox">
+                    {include file="user/menu"}
+                </div>
+                <div class="rightBox">
+                    <div class="promoBox">
+                        <div class="promoPic">
+                            <div class="capture" id="capture">
+                                <div class="title">
+                                    <img src="/MDassets/img/bg/promote/picTxt.png" id="aaa">
+                                </div>
+                                <div class="qrcode">
+                                    {if $user_config.invite_switch == 0}
+                                    <div id="test_qrcode_1"></div>
+                                    {else}
+                                    <div id="test_qrcode_2"></div>
+                                    {/if}
+                                </div>
+                                <p>{:platform_lang('platform/user/promote/QRcode_link')}</p>
+                            </div>
+                            <div class="tag">{:platform_lang('platform/user/promote/QRcode_link_tag')}</div>
+                        </div>
+
+                        <div class="promoTool">
+                            <ul>
+                                {if $user_config.invite_switch == 0}
+                                <li onclick="copyUrl()">
+                                    {:platform_lang('platform/user/promote/promote_register')}
+                                    <input type="text" id="url" value="{$maccms.http_type}{$maccms.site_url}{:mac_url('user/reg')}?uid={$obj.user_id}">
+                                </li>
+                                {else}
+                                <li onclick="copyUrl2()">
+                                    {:platform_lang('platform/user/promote/promote_access')}
+                                    <input type="text" id="url2" value="{$maccms.http_type}{$maccms.site_url}{:mac_url('user/visit')}?uid={$obj.user_id}">
+                                </li>
+                                {/if}
+                                <li onclick="copyPic()" class="copyPic">{:platform_lang('platform/user/promote/copy_img')}</li>
+                            </ul>
+                        </div>
+                        <div class="promoShare">
+                            <div class="item">
+                                <div class="icon video"></div>
+                                <p>{:platform_lang('platform/user/promote/promoShare_tag_1')}</p>
+                            </div>
+                            <div class="item link">
+                                <a href="{:mac_url('user/upgrade')}">
+                                    <div class="icon vip"></div>
+                                    <p>{:platform_lang('platform/user/promote/promoShare_tag_2')}</p>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="promoStep">
+                            <div class="stepTitle">
+                                <div class="titleLine"></div>
+                                <p>
+                                    <span>{:platform_lang('platform/user/promote/promoStep')}</span>
+                                </p>
+                                <div class="titleLine right"></div>
+                            </div>
+                            <div class="stepList">
+                                <ul>
+                                    <li>
+                                        <div class="icon sent"></div>
+                                        <p>{:platform_lang('platform/user/promote/promoStep_tag_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="icon share"></div>
+                                        <p>{:platform_lang('platform/user/promote/promoStep_tag_2')}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="promoSocial">
+                            <div class="stepTitle">
+                                <div class="titleLine"></div>
+                                <p>
+                                    <span>{:platform_lang('platform/user/promote/promoSocial')}</span>
+                                </p>
+                                <div class="titleLine right"></div>
+                            </div>
+                            <div class="socialList">
+                                <ul>
+                                    <li>
+                                        <div class="icon weibo"></div>
+                                        <p>{:platform_lang('platform/user/promote/promoSocial_tag_1')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="icon wechat"></div>
+                                        <p>{:platform_lang('platform/user/promote/promoSocial_tag_2')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="icon friends"></div>
+                                        <p>{:platform_lang('platform/user/promote/promoSocial_tag_3')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="icon QQ"></div>
+                                        <p>{:platform_lang('platform/user/promote/promoSocial_tag_4')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="icon baidu"></div>
+                                        <p>{:platform_lang('platform/user/promote/promoSocial_tag_5')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="icon Qzone"></div>
+                                        <p>{:platform_lang('platform/user/promote/promoSocial_tag_6')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="icon mail"></div>
+                                        <p>{:platform_lang('platform/user/promote/promoSocial_tag_7')}</p>
+                                    </li>
+                                    <li>
+                                        <div class="icon meaasge"></div>
+                                        <p>{:platform_lang('platform/user/promote/promoSocial_tag_8')}</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="copyList">
+                        <p>{:platform_lang('platform/user/promote/promote_title')}</p>
+                        <ul>
+                            {if $user_config.invite_switch == 0}
+                            <li>
+                                <span>{:platform_lang('platform/user/promote/promote_register')}</span>
+                                <div id="test_qrcode_1"></div>
+                                <div class="item">
+                                    <input type="text" id="url" value="{$maccms.http_type}{$maccms.site_url}{:mac_url('user/reg')}?uid={$obj.user_id}">
+                                    <div class="copyBtn" onclick="copyUrl()">{:platform_lang('platform/user/copy_btn')}</div>
+                                </div>
+                            </li>
+                            {else}
+                            <li>
+                                <span>{:platform_lang('platform/user/promote/promote_access')}</span>
+                                <div id="test_qrcode_2"></div>
+                                <div class="item">
+                                    <input type="text" id="url2" value="{$maccms.http_type}{$maccms.site_url}{:mac_url('user/visit')}?uid={$obj.user_id}">
+                                    <div class="copyBtn" onclick="copyUrl2()">{:platform_lang('platform/user/copy_btn')}</div>
+                                </div>
+                            </li>
+                            {/if}
+                        </ul>
+                    </div> -->
+
+                    <!-- <div class="tipList">
+                        <ul>
+                            <li>{:platform_lang('platform/user/promote/promote_tip_1')}</li>
+                            <li>{:platform_lang('platform/user/promote/promote_tip_2')}</li>
+                            <li>{:platform_lang('platform/user/promote/promote_tip_3')}</li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyUrl() {
+            var Url = document.getElementById("url");
+            Url.select(); /*选择对象*/
+            document.execCommand("Copy"); /*执行浏览器复制命令*/
+            Url.blur();
+            layer.msg("{:platform_lang('platform/user/titp_copy_promote')}");
+        }
+
+        function copyUrl2() {
+            var Url = document.getElementById("url2");
+            Url.select(); /*选择对象*/
+            document.execCommand("Copy"); /*执行浏览器复制命令*/
+            Url.blur();
+            layer.msg("{:platform_lang('platform/user/titp_copy_promote')}");
+        }
+        var qrcode_1 = "{$maccms.http_type}{$maccms.site_url}{:mac_url('user/reg')}?uid={$obj.user_id}",
+            qrcode_2 = "{$maccms.http_type}{$maccms.site_url}{:mac_url('user/visit')}?uid={$obj.user_id}";
+        $("#test_qrcode_1").qrcode({
+            width: 100,
+            height: 100,
+            text: qrcode_1
+        });
+        $("#test_qrcode_2").qrcode({
+            width: 100,
+            height: 100,
+            text: qrcode_2
+        });
+        $(".face").imageUpload({
+            formAction: "{:url('user/portrait')}",
+            inputFileName: 'file',
+            browseButtonValue: '',
+            browseButtonClass: 'btn btn-default btn-xs fed-user-alter fed-part-roun fed-icon-font fed-icon-xiugai',
+            automaticUpload: true,
+            hideDeleteButton: true,
+            hover: true
+        })
+        $(".jQuery-image-upload-controls").mouseenter(function() {
+            $(".jQuery-image-upload-controls").css("display", "block");
+        });
+        $(".jQuery-image-upload-controls").mouseleave(function() {
+            $(".jQuery-image-upload-controls").css("display", "none");
+        });
+        $(".face").on("imageUpload.uploadFailed", function(ev, err) {
+            layer.msg(err);
+        });
+
+
+        // 產生推廣分享圖
+        function initPromoPic() {
+            html2canvas(document.querySelector("#capture")).then(canvas => {
+                let embed = document.querySelector("#capture");
+                let createCanvas = canvas;
+                createCanvas.setAttribute('class', 'promoCanvas')
+                embed.appendChild(createCanvas);
+
+                let creatImg = new Image();
+                creatImg.setAttribute('class', 'promoImg')
+                creatImg.src = canvas.toDataURL("image/png");
+                embed.appendChild(creatImg);
+            });
+        }
+        initPromoPic();
+        $(window).resize(function() {
+            $('#capture .promoCanvas,#capture .promoImg').remove();
+            initPromoPic();
+        })
+
+        function copyPic() {
+            let canvas = document.querySelector('#capture .promoCanvas');
+            let url = canvas.toDataURL('image/jpeg');
+
+            let a = document.createElement('a');
+            let event = new MouseEvent('click');
+            a.download = '18caress Promoto'
+            a.href = url
+            a.dispatchEvent(event)
+        }
+    </script>
+    {include file="system/footer"} {include file="system/M_menu"}
+</body>
+
+<!-- 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.js" integrity="sha512-UNbeFrHORGTzMn3HTt00fvdojBYHLPxJbLChmtoyDwB6P9hX5mah3kMKm0HHNx/EvSPJt14b+SlD8xhuZ4w9Lg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script> 
+    function copyPic() {
+        let targetPic = document.querySelector('#capture .promoCanvas');
+
+        let canvas = document.querySelector('#capture .promoCanvas');
+        canvas.toBlob((blob) => {
+            const clipboardItem = new ClipboardItem({
+                'image/png': blob
+             });
+            navigator.clipboard.write([clipboardItem]);
+         }, 'image/png');
+
+        layer.msg("您的推廣圖片已複製");
+    }
+
+
+    function copyPicTest() {
+        let canvas = document.querySelector('#capture>canvas');
+        canvas.toBlob(function(blob) {
+            var newImg = document.createElement("img"),
+                url = URL.createObjectURL(blob);
+            newImg.onload = function() {
+                URL.revokeObjectURL(url);
+            };
+            newImg.src = url
+            document.body.appendChild(newImg)
+        });
+    }
+
+    function copyPicTest2() {
+        let canvas = document.querySelector('#capture>canvas');
+        canvas.toBlob((blob) => {
+            const clipboardItem = new ClipboardItem({
+                'image/png': blob
+            });
+            navigator.clipboard.write([clipboardItem]);
+        }, 'image/png');
+    }
+
+
+    function copyPicTest3() {
+        let canvas = document.querySelector('#capture>canvas');
+        let url = canvas.toDataURL('image/jpeg');
+        saveAs(url, "18caress Promoto");
+
+        // let a = document.createElement('a');
+        // let event = new MouseEvent('click');
+        // a.download = '18caress Promoto'
+        // a.href = url
+        // a.dispatchEvent(event)
+    }
+    
+</script>
+-->
+
+</html>

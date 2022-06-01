@@ -1,0 +1,761 @@
+// 全域顏色變數
+$types: (
+    primary: #f66063,
+    secondary: #f54f64,
+    secondary-light: #ffe0e4,
+    tertiary: #eb4a76,
+    tertiary-dark: #a5284a,
+    accent: #f78161,
+    rating: #276fdb,
+    golden: #b38d79,
+    golden-light: #f7c3a7,
+    vip-credit: #506aff,
+    vip-buy: #db7640,
+);
+
+// 灰階
+$grey: (
+    0: #000000,
+    10: #0f1012,
+    20: #2e3136,
+    30: #3d4148,
+    40: #5c616c,
+    50: #8f95a0,
+    60: #abafb8,
+    70: #c7cacf,
+    80: #e3e4e7,
+    90: #ecedef,
+    100: #ffffff,
+);
+
+// 色調調整
+body.style_w {
+    background-color: lighten(map-get($grey, 90), 2%);
+    &.recharge {
+        @include phone {
+            .container {
+                &::before {
+                    content: "";
+                    width: 100%;
+                    height: 250px;
+                    background-color: #f2f2f4;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    @include rwd(1280) {
+                        background-size: 100% 80vw;
+                    }
+                }
+            }
+        }
+    }
+
+    .header {
+        // 會員中心彈出區塊
+        .member-links {
+            li {
+                a,
+                p,
+                span {
+                    color: map-get($grey, 60);
+                }
+            }
+            .userTool .hoverBox {
+                background-color: lighten(map-get($grey, 80), 3%);
+                color: map-get($grey, 30);
+                .msg {
+                    .num {
+                        span {
+                            &:hover {
+                                color: map-get($types, secondary) !important;
+                            }
+                        }
+                    }
+                    .btn {
+                        background: linear-gradient(180deg, map-get($types, accent), map-get($types, secondary));
+                    }
+                }
+                .tool {
+                    border-color: map-get($grey, 70);
+                }
+            }
+        }
+        // 手機板
+        .header-inner .lang_switch {
+            background: linear-gradient(180deg, lighten(map-get($types, accent), 8%), map-get($types, secondary));
+            option {
+                background-color: lighten(map-get($grey, 80), 2%);
+                color: map-get($grey, 20);
+            }
+        }
+    }
+    // 選單
+    .navigation {
+        .primary {
+            a {
+                color: map-get($grey, 50);
+                &:hover {
+                    color: map-get($types, primary) !important;
+                }
+                &::before {
+                    background-color: map-get($types, primary);
+                }
+            }
+            li.selected a {
+                color: map-get($types, primary);
+            }
+        }
+        .search {
+            background-color: lighten(map-get($grey, 80), 2%);
+            .search-text input {
+                color: map-get($grey, 60);
+            }
+            .search-button {
+                background: linear-gradient(180deg, map-get($types, accent), map-get($types, secondary));
+            }
+            form {
+                box-shadow: 0 3px 7px rgb(236, 237, 239);
+            }
+            input {
+                &:-webkit-autofill {
+                    box-shadow: 0 0 0 40px #e8e9ec inset !important;
+                    -webkit-text-fill-color: map-get($grey, 40);
+                }
+            }
+        }
+    }
+    // 分類標題
+    .headline {
+        h1,
+        h2 {
+            color: map-get($grey, 50);
+        }
+        .button,
+        .more {
+            background-color: map-get($types, rating);
+            color: map-get($grey, 100);
+        }
+        strong {
+            a {
+                color: map-get($grey, 50);
+            }
+            @include hover {
+                &:hover a {
+                    color: #f67361;
+                }
+            }
+        }
+    }
+    // 篩選器
+    .sort {
+        background-color: map-get($types, secondary-light);
+        color: map-get($types, secondary);
+        &:hover {
+            color: map-get($grey, 100);
+        }
+        ul {
+            background-color: lighten(map-get($grey, 80), 2%);
+            a {
+                color: map-get($grey, 20);
+                &:hover {
+                    color: map-get($types, secondary);
+                    background: map-get($types, secondary-light);
+                }
+            }
+        }
+    }
+    // 影片區塊
+    .item {
+        .title {
+            color: map-get($grey, 30);
+        }
+        &:hover {
+            .title {
+                color: map-get($types, primary);
+            }
+        }
+    }
+    // 彈窗
+    .fancybox-wrap {
+        background-color: map-get($grey, 100);
+    }
+    .popup-title {
+        color: map-get($grey, 50);
+    }
+    // 彈窗: 登入
+    .popup-holder {
+        .row {
+            input {
+                background: map-get($grey, 80);
+                color: map-get($grey, 50);
+                &:-webkit-autofill {
+                    box-shadow: 0 0 0 40px map-get($grey, 80) inset !important;
+                    -webkit-text-fill-color: map-get($grey, 50);
+                }
+                &[type="button"] {
+                    background-color: map-get($types, primary);
+                    color: map-get($grey, 100);
+                }
+            }
+        }
+        .bottom {
+            .submit {
+                background-color: map-get($types, primary);
+                &:hover {
+                    background-color: darken(map-get($types, primary), 28%) !important;
+                }
+            }
+            .links a {
+                color: map-get($types, primary) !important;
+            }
+        }
+    }
+    // 忘記密碼: 驗證碼
+    .diaCode .textfield {
+        background: map-get($grey, 80);
+        color: map-get($grey, 50);
+    }
+    // 影片頁
+    .video-holder,
+    .block-channel {
+        box-shadow: -1px 1px 5px transparent;
+    }
+    .block-video {
+        .item {
+            span em {
+                color: map-get($grey, 50);
+            }
+        }
+        a {
+            background-color: map-get($types, secondary-light);
+            color: map-get($types, secondary);
+            &:hover {
+                background-color: map-get($types, secondary) !important;
+                color: map-get($grey, 100);
+            }
+        }
+    }
+
+    //相關影片列表
+    .related-videos,
+    .related-albums {
+        .list-sort {
+            span,
+            a {
+                color: map-get($grey, 10);
+                &::before {
+                    background-color: map-get($grey, 10);
+                }
+            }
+        }
+    }
+    .item .wrap {
+        color: map-get($grey, 40);
+    }
+    .item .positive {
+        color: map-get($types, rating);
+    }
+    // 頁碼
+    .pagination {
+        li {
+            color: map-get($grey, 50);
+        }
+        a,
+        span {
+            background-color: map-get($grey, 80);
+            color: map-get($grey, 50);
+        }
+        a {
+            &:hover {
+                background-color: map-get($grey, 60);
+                color: map-get($grey, 100);
+            }
+        }
+        .page-current {
+            a,
+            span {
+                background-color: map-get($types, secondary);
+                color: map-get($grey, 100);
+            }
+        }
+    }
+    // 手機板
+    .navigation .primary {
+        border-color: map-get($grey, 80);
+    }
+    // 手機板底部選單
+    .M_menu {
+        box-shadow: 0 1px 5px map-get($grey, 20);
+        background-color: map-get($grey, 100);
+        span {
+            color: map-get($grey, 50);
+        }
+        .icon {
+            &.home {
+                background-image: url(../img/icons/ftMenu/home.png);
+            }
+            &.find {
+                background-image: url(../img/icons/ftMenu/find.png);
+            }
+            &.topic {
+                background-image: url(../img/icons/ftMenu/topic.png);
+            }
+            &.user {
+                background-image: url(../img/icons/ftMenu/user.png);
+            }
+        }
+    }
+    // 背景
+    &.special {
+        .container {
+            &::before {
+                @include background-opacity(map-get($grey, 100), 0.8);
+            }
+        }
+    }
+    &.noIndex {
+        &::after {
+            @include background-opacity(map-get($grey, 100), 0.8);
+        }
+
+        .userTitle {
+            color: map-get($grey, 100);
+        }
+    }
+    &.special,
+    &.noIndex {
+        .fed-userBody {
+            .rightBox {
+                @include phone {
+                    background: transparent !important;
+                }
+            }
+        }
+    }
+
+    // 會員中心
+    .fed-userBody {
+        .leftBox {
+            .infoBox {
+                background: url(../img/bg/avatar/avatarBg_w.jpg) no-repeat center / 100% 100%;
+                @include phone {
+                    background: transparent;
+                }
+                .name {
+                    @include phone {
+                        color: #999;
+                    }
+                }
+            }
+            .msg {
+                .btn {
+                    border-color: map-get($grey, 100);
+                    color: map-get($grey, 100);
+                }
+                .tag,
+                p {
+                    color: map-get($grey, 80);
+                }
+            }
+            .userMenu li {
+                @include rwd(1024) {
+                    background: linear-gradient(125deg, #ffbbce, #b26782);
+                }
+                @include phone {
+                    background: linear-gradient(125deg, #ffbbce, #b26782);
+                }
+                a {
+                    color: map-get($grey, 50);
+                    @include rwd(1024) {
+                        color: #fff;
+                    }
+                    @include phone {
+                        color: #fff;
+                    }
+                }
+                option {
+                    color: #555;
+                }
+                &.logout {
+                    @include phone {
+                        background: transparent;
+                    }
+                }
+            }
+        }
+        .leftBox .userMenu,
+        .rightBox {
+            background-color: lighten(map-get($grey, 80), 2%);
+            @include rwd(1024) {
+                background: transparent;
+            }
+            @include phone {
+                background: transparent;
+            }
+        }
+        .rightBox {
+            .btnBox {
+                border-color: map-get($grey, 70);
+            }
+            .copyList {
+                p {
+                    color: map-get($grey, 40);
+                }
+                .item {
+                    background-color: darken(map-get($grey, 80), 4%);
+                    input {
+                        color: map-get($grey, 50);
+                        &:focus {
+                            background-color: map-get($grey, 70);
+                        }
+                    }
+                }
+            }
+            .copyBtn {
+                background-color: map-get($types, secondary);
+            }
+            .tipList {
+                color: map-get($grey, 40);
+            }
+        }
+    }
+    .userForm {
+        .userIpt {
+            input {
+                color: map-get($grey, 50);
+                background-color: darken(map-get($grey, 80), 7%);
+                &:focus {
+                    background-color: map-get($grey, 70);
+                }
+                @include rwd(1024) {
+                    color: map-get($grey, 50);
+                    background-color: lighten(map-get($grey, 60), 8%);
+                    &:focus {
+                        background-color: map-get($grey, 60);
+                        color: map-get($grey, 40);
+                    }
+                }
+            }
+        }
+        .userBtn {
+            .btn {
+                background-color: map-get($types, primary);
+                color: map-get($grey, 100);
+            }
+        }
+    }
+    // 充值VIP 清空 按鈕
+    .vipBtn,
+    .clearBtn {
+        background: linear-gradient(180deg, map-get($types, golden-light), map-get($types, golden));
+    }
+    // 播放紀錄頁碼
+    .fed-page-info a:hover,
+    .fed-page-info span,
+    .fed-btns-green,
+    .fed-btns-info:hover {
+        .deadline {
+            background-color: map-get($types, secondary) !important;
+            border-color: map-get($types, secondary) !important;
+        }
+        .fed-btns-disad,
+        .fed-btns-disad:hover {
+            border-color: map-get($grey, 50) !important;
+            color: map-get($grey, 40) !important;
+        }
+    }
+    // 播放記錄標題
+    .recordList li a {
+        color: map-get($grey, 30);
+        &:hover {
+            color: map-get($types, secondary);
+        }
+    }
+
+    // 常見問題
+    .questionBox {
+        .selBox{
+            border-color: lighten(map-get($grey, 70), 6%);
+            li{
+                background: lighten(map-get($grey, 80), 2%);
+                box-shadow: 2px 2px 4px map-get($grey, 60);
+                @include phone{
+                    &.on{
+                        background: linear-gradient(180deg, #FA7E8D 0%, #F44B60 100%);
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        .infoBox .info {
+            .title {
+                color: map-get($grey, 20);
+            }
+            p {
+                color: map-get($grey, 50);
+            }
+            > ul li{
+                color: map-get($grey, 50);
+            }
+            > ul li + li {
+                &::before {
+                    background-color: lighten(map-get($grey, 70), 4%);
+                }
+            }
+        }
+    }
+    // 會員升級
+    .recharge {
+        .list {
+            li {
+                &.on {
+                    .rechItem {
+                        p {
+                            color: #fff !important;
+                        }
+                    }
+                }
+                .rechItem {
+                    background-color: #e7e7ea;
+                    box-shadow: 2px 2px 4px map-get($grey, 60);
+                }
+                .deadline {
+                    background-color: rgba(0, 0, 0, 0.2);
+                }
+                .cardPay {
+                    color: #5d616c;
+                }
+            }
+        }
+        .priv {
+            .title {
+                p {
+                    color: #5d616c;
+                }
+            }
+            .privList {
+                .icon {
+                    &.route {
+                        background-image: url(../img/icons/priv/route-white.svg);
+                    }
+                    &.money {
+                        background-image: url(../img/icons/priv/money-white.svg);
+                    }
+                    &.hd {
+                        background-image: url(../img/icons/priv/hd-white.svg);
+                    }
+                    &.gift {
+                        background-image: url(../img/icons/priv/gift-white.svg);
+                    }
+                    &.girl {
+                        background-image: url(../img/icons/priv/girl-white.svg);
+                    }
+                    &.persons {
+                        background-image: url(../img/icons/priv/persons-white.svg);
+                    }
+                    &.video {
+                        background-image: url(../img/icons/priv/video-white.svg);
+                    }
+                    &.crown {
+                        background-image: url(../img/icons/priv/crown-white.svg);
+                    }
+                }
+                p {
+                    color: #c18e6b;
+                }
+            }
+            .privPay {
+                background: linear-gradient(215deg, #f4f6fb 3.76%, #ebecf1 96.24%);
+                box-shadow: 0 -2px 4px #bfbfc0;
+                p {
+                    color: #5d616c;
+                }
+            }
+        }
+    }
+    // 充值中心
+    .buyBox {
+        .title {
+            color: map-get($grey, 50);
+            @include rwd(1024) {
+                color: map-get($grey, 30);
+            }
+        }
+        .ipt {
+            .ann {
+                color: map-get($grey, 40);
+                a {
+                    color: map-get($types, primary);
+                }
+            }
+            input {
+                color: darken(map-get($grey, 50), 8%);
+                background-color: darken(map-get($grey, 80), 5%);
+                &::placeholder{
+                    color: map-get($grey, 60);
+                }
+                &:focus {
+                    background-color: map-get($grey, 70);
+                }
+                @include rwd(1024) {
+                    &:focus {
+                        background-color: map-get($grey, 70);
+                        color: map-get($grey, 40) !important;
+                    }
+                    &:-webkit-autofill {
+                        opacity: 0.6;
+                    }
+                }
+            }
+            button {
+                background-color: map-get($types, primary);
+            }
+        }
+        .buyTab{
+            ul{
+                background-color: map-get($grey, 70);
+                li{
+                    color: map-get($grey, 40);
+                    &.on{
+                        color: map-get($grey, 100);
+                    }
+                }
+            }
+            @include phone {
+                ul{
+                    background-color: rgba(255, 255, 255, 0.2);
+                    li{
+                        color: map-get($grey, 100);
+                    }
+                }
+            }
+        }
+        .buyList{
+            .coin-list{
+                .coinItem{
+                    background-color: map-get($grey, 90);
+                    color: map-get($grey, 50);
+                    border-color: lighten(map-get($grey, 70), 6%);
+                }
+                .coin-col{
+                    &.on{
+                        .coinItem{
+                            color: map-get($grey, 100);
+                            border-color: lighten(map-get($types, primary), 20%);
+                        }
+                    }
+                }
+            }
+            .point{
+                .alert{
+                    p{
+                        color: map-get($grey, 40);
+                        @include phone {
+                            background-color: #f8d7da;
+                            color: map-get($types, primary);
+                        }
+                    }
+                }
+            }
+        }
+        .priv{
+            .privPay{
+                background: linear-gradient(215deg, #f4f6fb 3.76%, #ebecf1 96.24%);
+                box-shadow: 0 -2px 4px #bfbfc0;
+                p {
+                    color: #5d616c;
+                }
+            }
+        }
+    }
+    //購買表單頁面
+    .payBox{
+        li{
+            .msg{
+                color: darken(map-get($grey, 50), 8%);
+                background-color: darken(map-get($grey, 80), 5%);
+            }
+        }
+        .patySel{
+            color: darken(map-get($grey, 50), 8%);
+            background-color: darken(map-get($grey, 80), 5%);
+            border-color: darken(map-get($grey, 80), 5%);
+        }
+        button{
+            background-color: map-get($types, primary);
+        }
+    }
+    // 推廣分頁
+    .promoBox {
+        .stepTitle {
+            p {
+                color: #5d616c;
+            }
+        }
+        .stepList,
+        .socialList {
+            background-color: rgba(196, 196, 196, 0.2);
+        }
+    }
+
+    // 影片紀錄清單
+    .recordMv {
+        .favTool {
+            @include phone {
+                background-color: #f2f2f4;
+                box-shadow: 0 1px 5px map-get($grey, 40);
+            }
+        }
+    }
+
+    // 會員中心-手機板
+    .userTitle {
+        color: map-get($grey, 10);
+    }
+    // 手機版登入註冊
+    &.fed-min-width {
+        .container {
+            @include background-opacity(map-get($grey, 100), 0.8);
+        }
+        .loginTitle {
+            color: map-get($grey, 10);
+        }
+        input {
+            color: map-get($grey, 50) !important;
+            background-color: lighten(map-get($grey, 60), 7%);
+            &:focus {
+                background-color: map-get($grey, 60);
+                color: map-get($grey, 40) !important;
+            }
+            &:-webkit-autofill {
+                opacity: 0.6;
+            }
+        }
+        .fed-btn {
+            background: map-get($types, primary);
+            color: map-get($grey, 100);
+        }
+        a {
+            color: map-get($types, primary);
+        }
+    }
+
+    // 特別設定 - 浮動標籤
+    .floatTag {
+        color: map-get($grey, 50);
+        background: linear-gradient(45deg, #dcdde0, #eff0f3, #dcdde0);
+        box-shadow: 0 1px 5px map-get($grey, 40);
+    }
+    // 特別設定 - 分類頁
+    .selfType,
+    .selfSearch {
+        .topTool {
+            @include phone {
+                background-color: #f2f2f4;
+                box-shadow: 0 2px 8px map-get($grey, 40);
+            }
+        }
+    }
+
+
+}

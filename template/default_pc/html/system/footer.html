@@ -1,0 +1,245 @@
+<div class="footer">
+    <div class="footer-wrap">
+        <div class="qrBox">
+            <ul>
+                <li>
+                    <div class="icon">
+                        <img src="/MDassets/img/ios.png" />
+                    </div>
+                    <span>{:platform_lang('platform/system/footer/iphone_download')}</span>
+                    <div class="codeImg">
+                        <img src="/MDassets/img/qrCode.png" />
+                    </div>
+                </li>
+                <li>
+                    <div class="icon">
+                        <img src="/MDassets/img/android.png" />
+                    </div>
+                    <span>{:platform_lang('platform/system/footer/android_download')}</span>
+                    <div class="codeImg">
+                        <img src="/MDassets/img/qrCode.png" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="ftTool">
+            <div class="link">
+                <ul>
+                    <li>
+                        <a href="">
+                            <div class="icon">
+                                <img src="/MDassets/img/concur.png" />
+                            </div>
+                            <div class="txt">
+                                <div class="title">
+                                    {:platform_lang('platform/system/footer/partner_title')}
+                                </div>
+                                <p>{:platform_lang('platform/system/footer/partner_msg')}</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:mac_url('label/question')}">
+                            <div class="icon">
+                                <img src="/MDassets/img/wt.png" />
+                            </div>
+                            <div class="txt">
+                                <div class="title">
+                                    {:platform_lang('platform/system/footer/faq_title')}
+                                </div>
+                                <p>{:platform_lang('platform/system/footer/faq_msg')}</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{$maccms.site_service_url}">
+                            <div class="icon">
+                                <img src="/MDassets/img/kefu.png" />
+                            </div>
+                            <div class="txt">
+                                <div class="title">
+                                    {:platform_lang('platform/system/footer/service_title')}
+                                </div>
+                                <p>{:platform_lang('platform/system/footer/service_msg')}</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <p class="copyright">
+                {:platform_lang('platform/system/footer/copyright')}
+            </p>
+        </div>
+    </div>
+
+    <script src="{$maccms.path}MDassets/js/main.min.js"></script>
+    <script>
+        $.blockUI.defaults.overlayCSS = {};
+    </script>
+</div>
+<div id="gototop" title="回到顶部" style="position: fixed; bottom: 200px; right: 30px; cursor: pointer">
+    <img src="{$maccms.path}MDassets/images/gototop.png" />
+</div>
+<script src="{$maccms.path}MDassets/js/layer.js"></script>
+
+<script>
+    /** 自動採集 **/
+    var Task_arr = JSON.parse(`{:json_encode($timming_list)}`);
+    Task_arr.map((el) => {
+        $.get(el);
+    });
+
+    function favs(id, type) {
+        var userstatus = "{$user.user_id}";
+        var target = $('#add_fav_0')
+        if (type == 1) {
+            $.get(
+                "/index.php/user/ajax_ulog/?ac=set&mid=1&id=" + id + "&type=2",
+                function (data) {
+                    if (data.code == 1) {
+                        layer.msg("{:platform_lang('platform/system/footer/add_to_favorite_success')}");
+                        let func = "favs(" + data.info.ulog_id + ",0)";
+                        target.attr('onclick', func)
+                        target.addClass("on");
+                    } else {
+                        layer.msg("{:platform_lang('platform/system/footer/login_required')}");
+                    }
+                },
+                "json"
+            );
+
+        } else {
+            $.post("{:url('user/ulog_del')}", {
+                ids: id,
+                type: 2,
+                all: 0
+            }, function (data) {
+                if (data.code == '1') {
+                    layer.msg("{:platform_lang('platform/user/titp_del_success')}");
+                    let func = "favs(" + target.data('id') + ",1)";
+                    target.attr('onclick', func)
+                    target.removeClass("on");
+                } else {
+                    layer.msg("{:platform_lang('platform/user/titp_del_false')}" + data.msg);
+                }
+            }, 'json')
+        }
+    }
+
+    function artfavs(id) {
+        var userstatus = "{$user.user_id}";
+        $.get(
+            "/index.php/user/ajax_ulog/?ac=set&mid=2&id=" + id + "&type=2",
+            function (data) {
+                if (data.msg == "获取成功") {
+                    layer.msg("{:platform_lang('platform/system/footer/isFavorite')}");
+                } else if (userstatus == "0") {
+                    layer.msg(
+                        "{:platform_lang('platform/system/footer/login_required')}"
+                    );
+                } else if (userstatus == "1") {
+                    layer.msg(
+                        "{:platform_lang('platform/system/footer/add_to_favorite_success')}"
+                    );
+                }
+            },
+            "json"
+        );
+    }
+
+    function actorfavs(id) {
+        var userstatus = "{$user.user_id}";
+        $.get(
+            "/index.php/user/ajax_ulog/?ac=set&mid=8&id=" + id + "&type=2",
+            function (data) {
+                if (data.msg == "获取成功") {
+                    layer.msg("{:platform_lang('platform/system/footer/isFavorite')}");
+                } else if (userstatus == "0") {
+                    layer.msg(
+                        "{:platform_lang('platform/system/footer/login_required')}"
+                    );
+                } else if (userstatus == "1") {
+                    layer.msg(
+                        "{:platform_lang('platform/system/footer/add_to_favorite_success')}"
+                    );
+                }
+            },
+            "json"
+        );
+    }
+
+    function topicfavs(id) {
+        var userstatus = "{$user.user_id}";
+        $.get(
+            "/index.php/user/ajax_ulog/?ac=set&mid=3&id=" + id + "&type=2",
+            function (data) {
+                if (data.code == 1) {
+                    layer.msg("{:platform_lang('platform/system/footer/add_to_favorite_success')}");
+                } else if (userstatus == "0") {
+                    layer.msg(
+                        "{:platform_lang('platform/system/footer/login_required')}"
+                    );
+                } else if (userstatus == "1") {
+                    layer.msg(data.mag);
+                }
+            },
+            "json"
+        );
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $(".lang_switch").on("change", function (el) {
+            $.post(
+                `{:mac_url('lang/set_platform_lang')}`, {
+                lang: $(this).val(),
+            },
+                function (data) {
+                    location.reload();
+                }
+            );
+        });
+        $(function () {
+            var json = {};
+            var $div = $("#tags");
+            var $diva = $div.find("a");
+            $diva.each(function () {
+                var key = $(this).html();
+                json[key] = key;
+            });
+            $div.empty();
+            for (var key in json) {
+                $div.append(
+                    "<a href='/index.php/vod/search/tag/" +
+                    key +
+                    ".html' style='font-weight: bold; font-size: 15px;'>" +
+                    key +
+                    "</a>"
+                );
+            }
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $("#gototop").hide();
+        $(function () {
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 300) {
+                    $("#gototop").fadeIn(300);
+                } else {
+                    $("#gototop").fadeOut(200);
+                }
+            });
+            $("#gototop").click(function () {
+                $("body,html").animate({
+                    scrollTop: 0,
+                },
+                    300
+                );
+                return false;
+            });
+        });
+    });
+</script>
+<div style="display: none">{$maccms.site_tj}</div>

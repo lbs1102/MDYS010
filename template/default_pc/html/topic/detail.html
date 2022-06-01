@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+{if (cookie('platform_lang')=='zh-tw'||cookie('platform_lang')=='zh-cn')}
+<html lang="zh">
+
+<head>
+  <title>
+    {$obj.topic_name}{:platform_lang('platform/topic/detail_title')} {$maccms.site_name}
+  </title>
+  <meta name="keywords" content="{:platform_lang('platform/topic/detail/meta_keywords',[$obj.topic_name, $obj.topic_name, $obj.topic_name, $obj.topic_name, $obj.topic_name])}" />
+  <meta name="description" content="{:platform_lang('platform/topic/detail/meta_description',[$obj.topic_name])}" /> {include file="system/include"}
+</head>
+
+<body class="{$maccms['html_hue']}">
+  {include file="system/headtop"}
+  <div class="container selfDetail">
+     <!-- ===== 頁面標籤 ===== -->
+     <div class="floatTag">
+      <span>{$obj.topic_name}</span>
+    </div>
+    <!-- ===================== -->
+    {include file="system/search"} {include file="system/headmeun"}
+    <div class="content">
+      <div class="main-content">
+        <div class="main-container">
+          <div class="block-channel">
+            <div class="img">
+              <img class="thumb" src="{:mac_url_img($obj.topic_pic)}" alt="{$obj.topic_name}" />
+              <div class="quantityBox">
+                <div class="minImg" style="background-image: url({:mac_url_img($obj.topic_pic)})">
+                </div>
+                <div class="numTxt">共 {$obj.topic_vod_count} 部作品</div>
+              </div>
+            </div>
+            <a onclick="topicfavs({$obj.topic_id})" class="collect">
+              <span>{:platform_lang('platform/topic/detail/favorite')}</span>
+            </a>
+            <div class="channel-rating">
+              <strong>{$obj.topic_score}</strong>
+              <a target="_blank" class="disabled">{:platform_lang('platform/topic/detail/rating')}</a>
+            </div>
+            <div class="channel-info">
+              <div class="desc long" title="{$obj.topic_blurb}">
+                {$obj.topic_blurb}
+              </div>
+            </div>
+          </div>
+
+          <div class="headline">
+            <div class="mainTitle">
+              <h2>{$obj.topic_name}</h2>
+              <p>{$obj.topic_sub}</p>
+            </div>
+            <a onclick="topicfavs({$obj.topic_id})" class="button">
+              <span>{:platform_lang('platform/topic/detail/favorite')}</span>
+            </a>
+          </div>
+          <div id="list_videos_common_videos_list" class="detailList">
+            <div class="headline">
+              <h1>
+                {$obj.topic_name}{:platform_lang('platform/topic/detail/vod_content')}
+              </h1>
+            </div>
+
+            <div class="box">
+              <div class="list-videos">
+                <div class="margin-fix" id="list_videos_common_videos_list_items">
+                  {maccms:foreach name="$obj.vod_list"} {include
+                  file="module/vodlist"} {/maccms:foreach}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {include file="module/tag"}
+    </div>
+    {include file="module/footer_ad"}
+  </div>
+  {include file="system/footer"}
+</body>
+
+</html>
+{else}
+<html lang="zh">
+
+<head>
+  <title>
+    {$obj.topic_en}{:platform_lang('platform/topic/detail_title')}
+    {$maccms.site_name}
+  </title>
+  <meta name="keywords" content="{:platform_lang('platform/topic/detail/meta_keywords',[$obj.topic_en, $obj.topic_en, $obj.topic_en, $obj.topic_en, $obj.topic_en])}" />
+  <meta name="description" content="{:platform_lang('platform/topic/detail/meta_description',[$obj.topic_en])}" />
+  {include file="system/include"}
+</head>
+
+<body class="{$maccms['html_hue']}">
+  {include file="system/headtop"}
+  <div class="container selfDetail">
+     <!-- ===== 頁面標籤 ===== -->
+     <div class="floatTag">
+      <span>{$obj.topic_en}</span>
+    </div>
+    {include file="system/search"} {include file="system/headmeun"}
+    <div class="content">
+      <div class="main-content">
+        <div class="main-container">
+
+          <div class="block-channel">
+            <div class="img">
+              <img class="thumb" src="{:mac_url_img($obj.topic_pic)}" alt="{$obj.topic_en}" />
+              <div class="quantityBox">
+                <div class="minImg" style="background-image: url({:mac_url_img($obj.topic_pic)})">
+                </div>
+                <div class="numTxt">共 {$obj.topic_vod_count} 部作品</div>
+              </div>
+            </div>
+            <a onclick="topicfavs({$obj.topic_id})" class="collect">
+              <span>{:platform_lang('platform/topic/detail/favorite')}</span>
+            </a>
+            <div class="channel-rating">
+              <strong>{$obj.topic_score}</strong>
+              <a target="_blank" class="disabled">{:platform_lang('platform/topic/detail/rating')}</a>
+            </div>
+            <div class="channel-info">
+              <div class="desc long" title="{$obj.topic_blurb}">
+                {$obj.topic_blurb}
+              </div>
+            </div>
+          </div>
+
+          <div class="headline">
+            <div class="mainTitle">
+              <h2>{$obj.topic_en}</h2>
+              <p>{$obj.topic_sub_en}</p>
+            </div>
+            <a onclick="topicfavs({$obj.topic_id})" class="button"><span>{:platform_lang('platform/topic/detail/favorite')}</span></a>
+          </div>
+
+          <div id="list_videos_common_videos_list" class="detailList">
+            <div class="headline">
+              <h1>
+                {$obj.topic_en}{:platform_lang('platform/topic/detail/vod_content')}
+              </h1>
+            </div>
+
+            <div class="box">
+              <div class="list-videos">
+                <div class="margin-fix" id="list_videos_common_videos_list_items">
+                  {maccms:foreach name="$obj.vod_list"} {include
+                  file="module/vodlist"} {/maccms:foreach}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {include file="module/tag"}
+    </div>
+    {include file="module/footer_ad"}
+  </div>
+  {include file="system/footer"}
+</body>
+
+</html>
+{/if}
+
+{include file="system/M_menu"}
+
+<script>
+  let nowScroll;
+  $(window).scroll(function(){
+    if($(window).scrollTop() > $('.block-channel').height()){
+      nowScroll < $(window).scrollTop()?  $('.floatTag').addClass('on') : $('.floatTag').removeClass('on');
+    }else{
+      $('.floatTag').removeClass('on');
+    }
+    nowScroll = $(window).scrollTop();
+  })
+</script>

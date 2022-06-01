@@ -1,0 +1,171 @@
+<div class="infoBox">
+    <div class="userAvatar">
+        <a class="face_wrap fl" href="javascript:;">
+            <img class="face" src="{$user.user_id|mac_get_user_portrait}">
+        </a>
+    </div>
+    <div class="name">{$user.user_name}</div>
+    <!-- <div class="msg">
+        <ul>
+            <li>
+                <div class="tag">
+                    {:platform_lang('platform/user/menu/point_title')}
+                </div>
+                <div class="num">
+                    <span id="vipPoint"></span>
+                </div>
+                <a href="{:mac_url('user/upgrade')}">
+                    <div class="btn">
+                        {:platform_lang('platform/user/point_recharge_btn')}
+                    </div>
+                </a>
+            </li>
+            <li>
+                <p id="vipSort"></p>
+                <div class="num">
+                    <span id="vipTime"></span>
+                </div>
+                <a href="{:mac_url('user/upgrade')}">
+                    <div class="btn">
+                        {:platform_lang('platform/user/vip_extend_btn')}
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <a class="vipBtn" href="{:mac_url('user/upgrade')}">{:platform_lang('platform/user/vip_recharge_btn')}</a> -->
+
+    
+    <!-- <div class="name">{$user.user_name}</div>
+    <div class="name">{:platform_lang('group_'.$user.group_id)}</div>
+    <a class="vipBtn" href="{:mac_url('user/upgrade')}">{:platform_lang('platform/user/vip_recharge_btn')}</a>
+    <a class="face_wrap fl" href="javascript:;"><img class="face" src="{$user.user_id|mac_get_user_portrait}"></a> -->
+</div>
+
+<div class="userMenu">
+    <ul>
+        <li class="index">
+            <a href="{:mac_url('user/index')}">
+                <div class="icon">
+                    <img src="/MDassets/img/icons/userMenu/crown.svg" />
+                </div>
+                <span>{:platform_lang('platform/user')}</span>
+            </a>
+        </li>
+        <li>
+            <a href="{:mac_url('user/info')}">
+                <div class="icon">
+                    <img src="/MDassets/img/icons/userMenu/lock.svg" />
+                </div>
+                <span>{:platform_lang('platform/user_info')}</span>
+            </a>
+        </li>
+        <li>
+            <a href="{:mac_url('user/plays')}">
+                <div class="icon">
+                    <img src="/MDassets/img/icons/userMenu/video.svg" />
+                </div>
+                <span>{:platform_lang('platform/user_plays')}</span>
+            </a>
+        </li>
+        <li>
+            <a href="{:mac_url('user/favs')}">
+                <div class="icon">
+                    <img src="/MDassets/img/icons/userMenu/star.svg" />
+                </div>
+                <span>{:platform_lang('platform/user_favs')}</span>
+            </a>
+        </li>
+        <li class="lang">
+            <a>
+                <div class="icon">
+                    <img src="/MDassets/img/icons/userMenu/lang.svg" />
+                </div>
+                <select name="platform_lang" class="lang_switch">
+                    <option {if mac_get_platform_lang()=='vi-vn' }selected {/if} value="vi-vn">{:platform_lang('platform/system/headtop/lang_vi-vn')}</option>
+                    <option {if mac_get_platform_lang()=='en-us' }selected {/if} value="en-us">{:platform_lang('platform/system/headtop/lang_en-us')}</option>
+                    <option {if mac_get_platform_lang()=='zh-tw' }selected {/if} value="zh-tw">{:platform_lang('platform/system/headtop/lang_zh-tw')}</option>
+                </select>
+            </a>
+        </li>
+        <li>
+            <a href="{:mac_url('label/question')}">
+                <div class="icon">
+                    <img src="/MDassets/img/icons/userMenu/wallet.svg" />
+                </div>
+                <span>{:platform_lang('platform/label_question')}</span>
+            </a>
+        </li>
+        <li>
+            <a href="{$maccms.site_service_url}">
+                <div class="icon">
+                    <img src="/MDassets/img/icons/userMenu/hp.svg" />
+                </div>
+                <span>{:platform_lang('platform/user_help_center')}</span>
+            </a>
+        </li>
+        <li class="logout">
+            <a href="{:mac_url('user/logout')}">
+                <div class="icon">
+                    <img src="/MDassets/img/icons/userMenu/signout.svg" />
+                </div>
+                <span>{:platform_lang('platform/logout')}</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<script>
+
+
+    // function calcTime() {
+    //     let endTime = `{$user.user_end_time}`;
+    //     let nowTime = new Date();
+    //     let timeCut = endTime * 1000 - nowTime.getTime();
+    //     let tt = timeCut < 0 ? 0 : timeCut;
+    //     let lastDay = parseInt(tt / (60 * 60 * 24 * 1000));
+    //     let lastHonr = parseInt(tt / (60 * 60 * 1000));
+
+    //     let getTime;
+    //     if (lastDay > 0) {
+    //         getTime = {
+    //             sort: "{:platform_lang('platform/user/menu/vip_title_day')}",
+    //             data: lastDay,
+    //         };
+    //     } else {
+    //         getTime = {
+    //             sort: "{:platform_lang('platform/user/menu/vip_title_hour')}",
+    //             data: lastHonr,
+    //         };
+    //     }
+
+    //     $("#vipSort").text(getTime.sort);
+    //     if (`{$user.user_end_time}` == '') {
+    //         $("#vipTime").text('*');
+    //     } else {
+    //         if (`{$user.user_end_time}` > 0) {
+    //             $("#vipTime").text(getTime.data);
+    //         } else {
+    //             $("#vipTime").text('0');
+    //         }
+    //     }
+
+    // }
+
+    // function calcPoint() {
+    //     let point = `{$user.user_points}`;
+    //     let lestP = point > 1000 ? `${Math.floor((point / 1000) * 10) / 10}k` : point;
+
+    //     if (`{$user.user_points}` == '') {
+    //         $("#vipPoint").text('*');
+    //     } else {
+    //         $("#vipPoint").text(lestP);
+    //     }
+    // }
+
+    // setInterval(function() {
+    //     calcTime();
+    // }, 1000);
+    // calcTime();
+    // calcPoint();
+</script>

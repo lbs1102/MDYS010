@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title>
+        {:platform_lang('platform/vod/type_title',[$obj.type_title, $obj.type_title, $param.page, $maccms.site_name])}
+    </title>
+    <meta name="keywords" content="{$obj.type_key}" />
+    <meta name="description" content="{$obj.type_des}" /> {include file="system/include"}
+    <script>
+        let TypeId = "{$obj.type_id}";
+
+        let test_arr = `{maccms:vod num="1000" pageurl="vod/type" order="desc" by="time"}
+                            {
+                            "vod_name":"{$vo.vod_name}",
+                            "vod_url":"{:mac_url_vod_play($vo)}",
+                            "vod_img":"{:mac_url_img($vo.vod_pic)}",
+                            "vod_id":"{$vo.vod_id}",
+                            "vod_hits":"{$vo.vod_hits}",
+                            "vod_points":"{$vo.vod_points_play}",
+                            "vod_typeMode":"{$vo.type_mode}"
+                            },
+                        {/maccms:vod}`;
+        test_arr = test_arr.trim()
+        test_arr = test_arr.substring(0, test_arr.length - 1)
+        test_arr = `[${test_arr}]`
+
+        let mvData = JSON.parse(test_arr);
+        let mvLen = mvData.length;
+        // 影片模板                 
+        function videoTemplate(vod_hits, vod_id, vod_img, vod_name, vod_url, vod_points,vod_typeMode) {
+            
+            return `<div class="item">
+                    <a href="${vod_url}" title="${vod_name}">
+                        <div class="img">
+                            <img class="thumb lazy-load" src="${vod_img}" alt="${vod_name}">
+                            <div class="vodTag ${vod_points>0 ? 'point': vod_typeMode == 2? 'vip' : vod_typeMode == 1? 'free':''}">
+                                <span>${vod_points>0 ? vod_points : ''}</span>
+                            </div>
+                        </div>
+                        <div class="title">${vod_name}</div>
+                        <div class="wrap">
+                            <div class="views">${vod_hits}</div>
+                        </div>
+                    </a>
+                </div>`
+        }
+    </script>
+</head>
+
+<body class="{$maccms['html_hue']}">
+    {include file="system/headtop"}
+    <div class="container selfType">
+        <div class="topTool">
+            {include file="system/search"} {include file="system/headmeun"}
+            <!-- ===== 頁面標籤 ===== -->
+            <div class="floatTag flex">
+                <div class="total">{:platform_lang('platform/vod/type/type_vod_count', [$obj.type_vod_count])}</div>
+                <div class="nowShow">
+                    {:platform_lang('platform/vod/type/show_vod_count')}<span id="nowShow"></span>{:platform_lang('platform/label/sort/videos')}
+                </div>
+            </div>
+        </div>
+
+        <div class="fullAdb">
+            <img src="{$maccms.site_classification_ad|mac_url_img}">
+        </div>
+        <div class="content">
+            <div class="main-content">
+                <div class="sidebar">
+                    <div class="headline">
+                        <h2>
+                            <a class="icon icon-categories" href="{:mac_url('label/sort')}">{:platform_lang('platform/vod/type/show_more_categories')}</a>
+                        </h2>
+                    </div>
+                    <ul class="list">
+                        {maccms:type ids="parent" order="asc" by="sort"} {if (cookie('platform_lang')=='zh-tw'||cookie('platform_lang')=='zh-cn')}
+                        <li>
+                            <a href="{:mac_url_type($vo)}">{$vo.type_name}<span class="rating">{$vo.type_id|mac_data_count=all}</span></a>
+                        </li>
+                        {else}
+                        <li>
+                            <a href="{:mac_url_type($vo)}">{$vo.type_en}<span class="rating">{$vo.type_id|mac_data_count=all}</span></a>
+                        </li>
+                        {/if} {/maccms:type}
+                    </ul>
+                </div>
+                <div class="main-container">
+                    <div id="list_videos_latest_videos_list">
+                        <div class="headline">
+                            <div class="mainTitle">
+                                {if (cookie('platform_lang')=='zh-tw'||cookie('platform_lang')=='zh-cn')}
+                                <h1>
+                                    {:platform_lang('platform/vod/type/category_new_vod',[$obj.type_name])}
+                                </h1>
+                                {else}
+                                <h1>
+                                    {:platform_lang('platform/vod/type/category_new_vod',[$obj.type_en])}
+                                </h1>
+                                {/if}
+                                <p>{$obj.type_id|mac_data_count=all} {:platform_lang('platform/label/sort/videos')}</p>
+                            </div>
+
+                            <div class="sort">
+                                <span class="icon type-sort"></span>
+                                <strong>{:platform_lang('platform/vod/type/vod_new')}</strong>
+                                <ul id="list_videos_common_videos_list_sort_list">
+                                    <li>
+                                        <a href="{:mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'time' ],'show')}">{:platform_lang('platform/vod/type/vod_newest')}</a>
+                                    </li>
+                                    <li>
+                                        <a href="{:mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'hits' ],'show')}">{:platform_lang('platform/vod/type/vod_popular')}</a>
+                                    </li>
+                                    <li>
+                                        <a href="{:mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'up' ],'show')}">{:platform_lang('platform/vod/type/vod_liked')}</a>
+                                    </li>
+                                    <li>
+                                        <a href="{:mac_url_type($obj,['area'=>$param['area'],'lang'=>$param['lang'],'year'=>$param['year'],'level'=>$param['level'],'letter'=>$param['letter'],'state'=>$param['state'],'tag'=>$param['tag'],'class'=>$param['class'],'order'=>$param['order'],'by'=>'score' ],'show')}">{:platform_lang('platform/vod/type/vod_rating')}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="box">
+                            <div class="list-videos pc">
+                                <div class="margin-fix" id="list_videos_latest_videos_list_items">
+                                    {maccms:vod num="24" paging="yes" pageurl="vod/type" order="desc" by="time"} {include file="module/vodlist"} {/maccms:vod}
+                                </div>
+                            </div>
+
+                            <div class="list-videos web" id="mvBox_web">
+                                <div class="margin-fix" id="min_videoList">
+                                </div>
+                            </div>
+                        </div>
+                        {include file="system/paging"}
+                    </div>
+                </div>
+            </div>
+            {include file="module/tag"}
+        </div>
+
+        {include file="module/footer_ad"}
+    </div>
+    {include file="system/footer"} {include file="system/M_menu"}
+
+    <script>
+        let menuSerial = 0;
+        // 變更menu class=>on
+        $('#primaryWeb li').removeClass('on');
+        $('#primaryWeb li').each(function() {
+            if ($(this).attr('data-id') == TypeId) {
+                $(this).addClass('on');
+                menuSerial = $('#primaryWeb li').index(this);
+            }
+        })
+
+        // 移動menu卷軸位置
+        let menuList = $('#primaryWeb li');
+        let scrollMove = 0;
+        let menuSeat;
+        $('#primaryWeb li').each(function() {
+            if ($(this).attr('data-id') == TypeId) {
+                menuSeat = $('#primaryWeb li').index(this)
+            }
+        })
+
+        for (let i = 0; i < menuSeat; i++) {
+            scrollMove += $(menuList[i]).width();
+        }
+        $('#primaryWeb').scrollLeft(scrollMove + menuSerial * 15)
+
+        // 自動加載影片列表(移動裝置下)
+        let pagNum = 0;
+        let pagSw = true;
+        let winSp = $('.container').height() - $(window).height();
+        if (mvLen >= 12) {
+            for (let num = 0; num < 3; num++) {
+                pagNum++;
+                addVideo();
+            }
+        } else {
+            pagNum = mvLen % 4 + 1;
+            addVideo_one();
+        }
+
+        $('#nowShow').text($('#min_videoList>.item').length);
+
+        $(window).scroll(function() {
+            let move = $(window).scrollTop();
+            if (move > winSp - 50 && pagSw) {
+                pagNum++;
+                pagSw = false;
+                pagNum < mvLen / 4 ? addVideo() : addVideo_one();
+                $('#nowShow').text($('#min_videoList>.item').length);
+            }
+        })
+
+        function addVideo() {
+            for (let num = (pagNum - 1) * 4; num < pagNum * 4; num++) {
+                let now = mvData[num]
+                $('#min_videoList').append(videoTemplate(now.vod_hits, now.vod_id, now.vod_img, now.vod_name, now.vod_url,now.vod_points,now.vod_typeMode));
+            }
+            winSp = $('.container').height() - $(window).height();
+            pagSw = true;
+        }
+
+        function addVideo_one() {
+            for (let num = $('#min_videoList>.item').length; num < mvLen; num++) {
+                let now = mvData[num]
+                $('#min_videoList').append(videoTemplate(now.vod_hits, now.vod_id, now.vod_img, now.vod_name, now.vod_url,now.vod_points,now.vod_typeMode));
+            }
+            winSp = $('.container').height() - $(window).height();
+            pagSw = true;
+        }
+
+        // 變更影片容器高度
+        $(window).resize(function() {
+            chMvBoxH();
+        })
+        chMvBoxH();
+        function chMvBoxH() {
+            let topH = $('.topTool').height()
+            $('#mvBox_web').css('padding-top', `${topH + 15}px`);
+        }
+    </script>
+</body>
+
+</html>

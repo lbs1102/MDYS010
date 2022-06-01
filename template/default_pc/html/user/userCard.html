@@ -1,0 +1,25 @@
+<div class="myUserCard">
+    <div class="vipCrown">
+        <img src="/MDassets/img/icons/vip-crown.webp">
+    </div>
+    <div class="name">{$user.user_name}</div>
+    <div class="diff">{:platform_lang('group_'.$user.group_id)}</div>
+    <div class="wallet">
+        {:platform_lang('platform/user_wallet')}{:platform_lang('platform/user_balance')}
+        <p id="rtPoint">
+    </div>
+</div>
+
+<script>
+    function calcPoint() {
+        let point = `{$user.user_points}`;
+        let lestP = point > 1000 ? `${Math.floor((point / 1000) * 10) / 10}k` : point;
+
+        if (`{$user.user_points}` == '') {
+            $("#rtPoint").text('0');
+        } else {
+            $("#rtPoint").text(lestP);
+        }
+    }
+    calcPoint()
+</script>

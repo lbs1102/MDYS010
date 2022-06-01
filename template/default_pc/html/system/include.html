@@ -1,0 +1,42 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" user-scalable=no />
+<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link href="{$maccms.path}MDassets/css/all-responsive-metal.css" rel="stylesheet" type="text/css" />
+<link href="{$maccms.path}MDassets/css/jquery.fancybox-metal.css" rel="stylesheet" type="text/css" />
+<link href="{:mac_url('rss/index')}" rel="alternate" type="application/rss+xml" />
+<link href="{$maccms.site_url}" rel="canonical" />
+<script src="{$maccms.path}static/js/jquery.js"></script>
+<script src="{$maccms.path}static/js/jquery.qrcode.min.js"></script>
+<link rel="shortcut icon" href="/MDassets/img/logo.ico" type="image/x-icon" />
+<script>
+    var maccms = {
+        path: "__ROOT__",
+        mid: "{$maccms['mid']}",
+        aid: "{$maccms['aid']}",
+        url: "{$maccms['site_url']}",
+        wapurl: "{$maccms['site_wapurl']}",
+        mob_status: "{$maccms['mob_status']}",
+        html_hue: "{$maccms['html_hue']}",
+    };
+ 
+</script>
+<script src="{$maccms.path}static/js/home.js"></script>
+
+<link rel="stylesheet" id="systemSelf" href="/MDassets/scss/systemSelf.css?ver={:rand(0,10000)}" />
+<script>
+
+    
+    $(function () {
+        $(".lang_switch").on("change", function (el) {
+            $.post(
+                `{:mac_url('lang/set_platform_lang')}`, {
+                lang: $(this).val(),
+            },
+                function (data) {
+                    location.reload();
+                }
+            );
+        });
+    });
+</script>

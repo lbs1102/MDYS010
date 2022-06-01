@@ -1,0 +1,119 @@
+<div class="M_menu">
+  <!-- <ul>
+    <li>
+      <a href="{:mac_url('label/new')}">
+        <div class="icon find"></div>
+        <span>{:platform_lang('platform/system/M_menu/find')}</span>
+      </a>
+    </li>
+    <li>
+      <a href="{:mac_url('topic/index')}">
+        <div class="icon topic"></div>
+        <span>{:platform_lang('platform/system/M_menu/topic')}</span>
+      </a>
+    </li>
+  </ul>
+  <a href="/" class="frontPage"></a>
+  <ul>
+    <li>
+      <a href="{:mac_url('user/index')}">
+        <div class="icon user"></div>
+        <span>{:platform_lang('platform/system/M_menu/user')}</span>
+      </a>
+    </li>
+    <li>
+      <div class="langSel" id="M_lang">
+        <div class="icon lang"></div>
+        <span>{:platform_lang('lang')}</span>
+      </div>
+    </li>
+  </ul> -->
+
+  <ul>
+    <li>
+      <a href="/">
+        <div class="icon home"></div>
+        <span>{:platform_lang('platform/system/M_menu/homepage')}</span>
+      </a>
+    </li>
+    <li>
+      <a href="{:mac_url('label/new')}">
+        <div class="icon find"></div>
+        <span>{:platform_lang('platform/system/M_menu/find')}</span>
+      </a>
+    </li>
+    <li>
+      <a href="{:mac_url('topic/index')}">
+        <div class="icon topic"></div>
+        <span>{:platform_lang('platform/system/M_menu/topic')}</span>
+      </a>
+    </li>
+    <li>
+      <a href="{:mac_url('user/index')}">
+        <div class="icon user"></div>
+        <span>{:platform_lang('platform/system/M_menu/user')}</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- <select name="platform_lang" class="lang_switch">
+    <option {if mac_get_platform_lang()=='vi-vn' }selected {/if} value="vi-vn">{:platform_lang('platform/system/headtop/lang_vi-vn')}</option>
+    <option {if mac_get_platform_lang()=='en-us' }selected {/if} value="en-us">{:platform_lang('platform/system/headtop/lang_en-us')}</option>
+    <option {if mac_get_platform_lang()=='zh-tw' }selected {/if} value="zh-tw">{:platform_lang('platform/system/headtop/lang_zh-tw')}</option>
+</select> -->
+
+<div class="M_langSel" id="M_langSel">
+  <div class="selCnt">
+    <div class="close"></div>
+    <div class="title">{:platform_lang('admin/vod/select_lang')}</div>
+    <div class="selList">
+      <ul>
+        <li>
+          <label>
+            <input type="radio" name="M_lang" {if mac_get_platform_lang()=='vi-vn' }checked {/if} value="vi-vn">
+            <p>{:platform_lang('platform/system/headtop/lang_vi-vn')}</p>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="M_lang" {if mac_get_platform_lang()=='en-us' }checked {/if} value="en-us">
+            <p>{:platform_lang('platform/system/headtop/lang_en-us')}</p>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="radio" name="M_lang" {if mac_get_platform_lang()=='zh-tw' }checked {/if} value="zh-tw">
+            <p>{:platform_lang('platform/system/headtop/lang_zh-tw')}</p>
+          </label>
+        </li>
+      </ul>
+    </div>
+    <button class="selBtn">{:platform_lang('platform/user/confirm_btn')}</button>
+  </div>
+</div>
+
+<script>
+  $('#M_lang').click(function () {
+    $('#M_langSel').addClass('on');
+  })
+  $('#M_langSel .close').click(function () {
+    $('#M_langSel').removeClass('on');
+  })
+
+  let radionum = document.querySelectorAll('#M_langSel input');
+  $('#M_langSel .selBtn').click(function () {
+    for (let item of radionum) {
+      if (item.checked) {
+        $.post(
+          `{:mac_url('lang/set_platform_lang')}`, {
+          lang: item.value,
+        },
+          function (data) {
+            location.reload();
+          }
+        );
+      }
+    }
+  })
+</script>

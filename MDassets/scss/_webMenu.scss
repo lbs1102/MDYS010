@@ -1,0 +1,189 @@
+.M_menu {
+    width: 100%;
+    height: 60px;
+    padding-bottom: 10px;
+    background-color: #121123;
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.7);
+    position: fixed;
+    bottom: 0;
+    /* iOS 11.0 */
+    bottom: constant(safe-area-inset-bottom);
+    /* 11.2+ */
+    bottom: env(safe-area-inset-bottom);
+    left: 0;
+    z-index: 90;
+    display: none;
+    &::before {
+        content: "";
+        width: 100%;
+        height: constant(safe-area-inset-bottom);
+        height: env(safe-area-inset-bottom);
+        position: absolute;
+        top: 55px;
+        background-color: #121123;
+    }
+    @include phone {
+        display: flex;
+    }
+
+    .frontPage {
+        width: 60px;
+        height: 60px;
+        margin: 0 5px;
+        display: block;
+        border: 2px solid #666ec9;
+        background: #2432d3 url(../img/icons/ftMenu/logo_w.png) no-repeat center 45% / 60%;
+        box-shadow: 0 4px 10px #060b41 inset;
+        border-radius: 50%;
+        transform: translateY(-7px);
+        flex-shrink: 0;
+    }
+    ul {
+        width: 100%;
+        height: 100%;
+        display: flex;
+    }
+    li {
+        flex: 1;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        a,
+        .langSel {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        &.on {
+            span {
+                color: #c55355;
+            }
+            .icon {
+                &.home {
+                    background-image: url(../img/icons/ftMenu/home_active.png);
+                }
+                &.find {
+                    background-image: url(../img/icons/ftMenu/find_active.png);
+                }
+                &.topic {
+                    background-image: url(../img/icons/ftMenu/topic_active.png);
+                }
+                &.user {
+                    background-image: url(../img/icons/ftMenu/user_active.png);
+                }
+            }
+        }
+    }
+    .icon {
+        width: 20px;
+        height: 20px;
+        margin: 0 auto 5px;
+        background: no-repeat center / cover;
+        &.home {
+            background-image: url(../img/icons/ftMenu/homeW.png);
+        }
+        &.find {
+            background-image: url(../img/icons/ftMenu/findW.png);
+        }
+        &.topic {
+            background-image: url(../img/icons/ftMenu/topicW.png);
+        }
+        &.user {
+            background-image: url(../img/icons/ftMenu/userW.png);
+        }
+        &.lang {
+            background-image: url(../img/icons/ftMenu/langW.png);
+        }
+    }
+    span {
+        color: #fff;
+    }
+}
+
+.M_langSel {
+    width: 100%;
+    height: 100vh;
+    padding: 50px 15px;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    position: fixed;
+    @include pos(tl, 0);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    &.on{
+        display: flex;
+    }
+    .selCnt {
+        width: 100%;
+        max-width: 320px;
+        padding: 35px 20px 15px;
+        border-radius: 10px;
+        background-color: #fff;
+        color: #000;
+        position: relative;
+        .close {
+            width: 22px;
+            height: 22px;
+            position: absolute;
+            @include pos(tr, 10px);
+            &::before,
+            &::after {
+                content: "";
+                width: 100%;
+                height: 2px;
+                border-radius: 2px;
+                margin: auto;
+                background-color: #000;
+                position: absolute;
+                @include pos(tbl, 0);
+            }
+            &::before {
+                transform: rotate(45deg);
+            }
+            &::after {
+                transform: rotate(-45deg);
+            }
+        }
+        .title {
+            margin-bottom: 10px;
+            font-size: 17px;
+            font-weight: bold;
+            color: #0075ff;
+        }
+    }
+    .selList {
+        margin-bottom: 30px;
+        li + li {
+            border-top: 1px solid #ddd;
+        }
+        label {
+            width: 100%;
+            height: 45px;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+        }
+        p {
+            margin-left: 10px;
+        }
+    }
+    .selBtn{
+        width: 100%;
+        height: 40px;
+        border-radius: 40px;
+        @include fullNone;
+        background: linear-gradient(180deg, #0075ff, #86b6ef);
+        color: #fff;
+        font-weight: bold;
+        box-shadow: 1px 1px 2px #181769;
+        transition: .3s;
+        &:active{
+            transform: translateY(2px);
+            box-shadow: unset;
+        }
+    }
+}

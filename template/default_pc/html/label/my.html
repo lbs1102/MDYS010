@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title>{:platform_lang('platform/label/my/hot_video')}-{$maccms.site_name}</title>
+    <meta name="keywords" content="{$maccms.site_keywords}" />
+    <meta name="description" content="{$maccms.site_description}" /> {include file="system/include"}
+</head>
+
+<body class="{$maccms['html_hue']}">
+    <div class="M_Tool">
+        <div class="mainTitle">{:platform_lang('platform/label/my/personal')}</div>
+        <div class="annBox">
+            <div class="title">{:platform_lang('platform/label/my/announcement')}</div>
+            <ul>
+                <li>{:platform_lang('platform/label/my/1')}</li>
+                <li>{:platform_lang('platform/label/my/2')}</li>
+                <li>{:platform_lang('platform/label/my/3')}</li>
+                <li>{:platform_lang('platform/label/my/4')}</li>
+            </ul>
+        </div>
+        <div class="infoBox">
+            <div class="msg">
+                <ul>
+                    <li>
+                        <div class="tag">{:platform_lang('platform/label/my/rank')}</div>
+                        <div class="num">10</div>
+                        <div class="btn">{:platform_lang('platform/label/my/recharge')}</div>
+                    </li>
+                    <li>
+                        <div class="tag">{:platform_lang('platform/label/my/VIPtime')}</div>
+                        <div class="num">18</div>
+                        <div class="btn">{:platform_lang('platform/label/my/continue')}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="toolList">
+            <ul>
+                <li>
+                    <a href="{:mac_url('user/info')}">
+                        <div class="icon">
+                            <img src="/MDassets/img/pass.png">
+                        </div>
+                        <span>{:platform_lang('platform/label/my/modify')}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:mac_url('user/plays')}">
+                        <div class="icon">
+                            <img src="/MDassets/img/plays.png">
+                        </div>
+                        <span>{:platform_lang('platform/label/my/record')}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:mac_url('user/favs')}">
+                        <div class="icon">
+                            <img src="/MDassets/img/favs.png">
+                        </div>
+                        <span>{:platform_lang('platform/label/my/collect')}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="icon">
+                            <img src="/MDassets/img/question.png">
+                        </div>
+                        <span>{:platform_lang('platform/label/my/question')}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:mac_url('user/upgrade')}">
+                        <div class="icon">
+                            <img src="/MDassets/img/wallet.svg">
+                        </div>
+                        <span>{:platform_lang('platform/label/my/upgrade')}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <div class="icon">
+                            <img src="/MDassets/img/headset.svg">
+                        </div>
+                        <span>{:platform_lang('platform/label/my/online_service')}</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{:mac_url('user/cash')}">
+                        <div class="icon">
+                            <img src="/MDassets/img/pass.png">
+                        </div>
+                        <span>{:platform_lang('platform/label/my/card_change')}</span>
+                    </a>
+                </li>
+                <li>               
+                    <a href="{:mac_url('user/logout')}">
+                        <div class="icon user">
+                            <!-- <img src="/MDassets/img/smil.svg"> -->
+                            <img src="/MDassets/img/login.svg">
+                        </div>
+                        <!-- <span>登出帳號</span> -->
+                        <span>{:platform_lang('platform/label/my/login')}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="copyList">
+            <ul>
+                <li>
+                    <span>{:platform_lang('platform/label/my/pro_signup')}</span>
+                    <div class="item">
+                        <input type="text" value="http://ys07.madouym.com/index.php/user/reg.html?uid=158">
+                        <div class="copyBtn">{:platform_lang('platform/label/my/copy')}</div>
+                    </div>
+                </li>
+                <li>
+                    <span>{:platform_lang('platform/label/my/pro_ask')}</span>
+                    <div class="item">
+                        <input type="text" value="http://ys07.madouym.com/index.php/user/reg.html?uid=158">
+                        <div class="copyBtn">{:platform_lang('platform/label/my/copy')}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tipList">
+            <ul>
+                <li>{:platform_lang('platform/label/my/11')}</li>
+                <li>{:platform_lang('platform/label/my/22')}</li>
+                <li>{:platform_lang('platform/label/my/33')}</li>
+            </ul>
+        </div>
+    </div>
+    {include file="system/footer"}
+    {include file="system/M_menu"}
+</body>
+
+</html>
